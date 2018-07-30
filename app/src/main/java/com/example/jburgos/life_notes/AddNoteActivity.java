@@ -6,6 +6,9 @@ import android.os.Bundle;
 
 public class AddNoteActivity extends AppCompatActivity {
 
+    // Extra for the note ID to be received in the intent
+    public static final String EXTRA_NOTE_ID = "extraNoteId";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

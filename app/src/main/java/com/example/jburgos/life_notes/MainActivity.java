@@ -1,7 +1,10 @@
 package com.example.jburgos.life_notes;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +12,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.jburgos.life_notes.ViewModel.MainViewModel;
 import com.example.jburgos.life_notes.adapter.MainNoteListAdapter;
 import com.example.jburgos.life_notes.data.AppDatabase;
 import com.example.jburgos.life_notes.data.NoteEntry;
@@ -83,6 +88,10 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
             }
         }).attachToRecyclerView(mRecyclerView);
 
+        //initialize database and set up the ViewModel on the List of notes
+        dataBase = AppDatabase.getInstance(getApplicationContext());
+        setUpViewModel();
+
     }
 
     @Override
@@ -106,8 +115,22 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         return super.onOptionsItemSelected(item);
     }
 
+    public void setUpViewModel(){
+        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        viewModel.getNotes().observe(this, new Observer<List<NoteEntry>>() {
+            @Override
+            public void onChanged(@Nullable List<NoteEntry> noteEntries) {
+                Log.d(TAG,"updating ist of tasks from LiveData in ViewModel");
+                mAdapter.setNotes(noteEntries);
+            }
+        });
+    }
+
     @Override
-    public void onItemClickListener(int itemId) {
+    public void onItemClickListener(int noteId) {
+        Intent intent = new Intent(MainActivity.this,AddNoteActivity.class);
+        intent.putExtra(AddNoteActivity.EXTRA_NOTE_ID, noteId);
+        startActivity(intent);
 
     }
 }
