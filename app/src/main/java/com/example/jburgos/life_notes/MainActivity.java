@@ -8,11 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.jburgos.life_notes.Data.AppDatabase;
+import com.example.jburgos.life_notes.adapter.MainNoteListAdapter;
+import com.example.jburgos.life_notes.data.AppDatabase;
+import com.example.jburgos.life_notes.data.NoteEntry;
+import com.example.jburgos.life_notes.utils.AppExecutors;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
         setSupportActionBar(toolbar);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +60,28 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mAdapter = new MainNoteListAdapter(this, this);
         mRecyclerView.setAdapter(mAdapter);
+        /*
+         Add a touch helper to the RecyclerView to recognize when a user swipes to delete an item.
+         */
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+            // Called when a user swipes left or right on a ViewHolder
+            @Override
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                // Here is where you'll implement swipe to delete
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        int position = viewHolder.getAdapterPosition();
+                        List<NoteEntry> note = mAdapter.getNotes();
+                        dataBase.noteDao().deleteNote(note.get(position));
+                    }
+                });
+            }
+        }).attachToRecyclerView(mRecyclerView);
 
     }
 

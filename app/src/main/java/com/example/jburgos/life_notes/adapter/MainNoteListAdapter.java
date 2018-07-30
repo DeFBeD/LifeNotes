@@ -1,4 +1,4 @@
-package com.example.jburgos.life_notes;
+package com.example.jburgos.life_notes.adapter;
 
 
 import android.content.Context;
@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-import com.example.jburgos.life_notes.Data.NoteEntry;
+import com.example.jburgos.life_notes.R;
+import com.example.jburgos.life_notes.data.NoteEntry;
 
 import java.text.SimpleDateFormat;
 import java.util.List;

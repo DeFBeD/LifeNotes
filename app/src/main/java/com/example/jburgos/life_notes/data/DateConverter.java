@@ -1,4 +1,4 @@
-package com.example.jburgos.life_notes.Data;
+package com.example.jburgos.life_notes.data;
 
 import android.arch.persistence.room.TypeConverter;
 
