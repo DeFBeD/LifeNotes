@@ -14,19 +14,19 @@ public class NoteEntry {
     private int id;
     private String description;
     @ColumnInfo(name = "updated_at")
-    private Date updatedAt;
+    private Date updatedAtDateView;
 
     @Ignore
-    public NoteEntry(String description, Date updatedAt){
+    public NoteEntry(String description, Date updatedAtDateView){
         this.description = description;
-        this.updatedAt = updatedAt;
+        this.updatedAtDateView = updatedAtDateView;
 
     }
 
-    public NoteEntry(int id, String description, Date updatedAt){
+    public NoteEntry(int id, String description, Date updatedAtDateView){
         this.id = id;
         this.description = description;
-        this.updatedAt = updatedAt;
+        this.updatedAtDateView = updatedAtDateView;
 
     }
 
@@ -46,12 +46,12 @@ public class NoteEntry {
         this.description = description;
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
+    public Date getUpdatedAtDateView() {
+        return updatedAtDateView;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpdatedAtDateView(Date updatedAtDateView) {
+        this.updatedAtDateView = updatedAtDateView;
     }
 }
 
