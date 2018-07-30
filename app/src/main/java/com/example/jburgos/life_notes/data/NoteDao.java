@@ -14,7 +14,7 @@ import java.util.List;
 public interface NoteDao {
 
     //to query all entries (notes)
-    @Query("SELECT * FROM notes ORDER BY updatedAtDateView")
+    @Query("SELECT * FROM notes ORDER BY updated_at")
     //every time we need to know if there is change in the database we have to call this method
     //so we wrap with LiveData
     LiveData<List<NoteEntry>> loadAllNotes();
