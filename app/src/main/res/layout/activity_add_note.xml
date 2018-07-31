@@ -24,7 +24,7 @@
             android:layout_width="56dp"
             android:layout_height="?actionBarSize"
             android:background="?selectableItemBackgroundBorderless"
-            android:contentDescription="@string/string_up_button"
+            android:contentDescription="up"
             android:src="@drawable/ic_arrow_back" />
     </FrameLayout>
 

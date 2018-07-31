@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
 
     // Constant for logging
     private static final String TAG = MainActivity.class.getSimpleName();
-    // Member variables for the adapter and RecyclerView
+
+    public static final String EXTRA_NOTE_ID = "extraNoteId";
 
     private MainNoteListAdapter mAdapter;
     private AppDatabase dataBase;
@@ -129,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
     @Override
     public void onItemClickListener(int noteId) {
         Intent intent = new Intent(MainActivity.this,AddNoteActivity.class);
-        intent.putExtra(AddNoteActivity.EXTRA_NOTE_ID, noteId);
+        intent.putExtra(EXTRA_NOTE_ID, noteId);
         startActivity(intent);
 
     }

@@ -1,26 +1,64 @@
 package com.example.jburgos.life_notes;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+
+import com.example.jburgos.life_notes.ViewModel.AddNoteViewModel;
+import com.example.jburgos.life_notes.ViewModel.AddNoteViewModelFactory;
+import com.example.jburgos.life_notes.data.AppDatabase;
+import com.example.jburgos.life_notes.data.NoteEntry;
+import com.example.jburgos.life_notes.utils.AppExecutors;
+
+import java.util.Date;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link NoteFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link NoteFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class NoteFragment extends Fragment {
 
+    private View mRootView;
+    // Extra for the task ID to be received in the intent
+    public static final String EXTRA_NOTE_ID = "extraNoteId";
+    // Extra for the task ID to be received after rotation
+    public static final String INSTANCE_TASK_ID = "instanceTaskId";
 
+    // Constant for default task id to be used when not in update mode
+    private static final int DEFAULT_TASK_ID = -1;
+    // Constant for logging
+    private static final String TAG = NoteFragment.class.getSimpleName();
 
+    //Member Variable for database
+    private AppDatabase database;
+
+    // Fields for views
+    @BindView(R.id.editTextNoteDescription)
+    EditText mEditText;
+    @BindView(R.id.saveButton)
+    Button mButton;
+
+    private int mTaskId = DEFAULT_TASK_ID;
 
     public NoteFragment() {
         // Required empty public constructor
@@ -30,16 +68,14 @@ public class NoteFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+
      * @return A new instance of fragment NoteFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static NoteFragment newInstance(String param1, String param2) {
+    public static NoteFragment newInstance(int noteId) {
         NoteFragment fragment = new NoteFragment();
         Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
+        args.putInt(EXTRA_NOTE_ID, noteId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,8 +84,7 @@ public class NoteFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            //mParam1 = getArguments().getString(ARG_PARAM1);
-            //mParam2 = getArguments().getString(ARG_PARAM2);
+            mTaskId = getArguments().getInt(EXTRA_NOTE_ID);
         }
     }
 
@@ -57,9 +92,114 @@ public class NoteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_note, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_note, container, false);
+        ButterKnife.bind(this,mRootView);
+
+        initViews();
+
+        //initialize database
+        database = AppDatabase.getInstance(getContext());
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(INSTANCE_TASK_ID)) {
+            mTaskId = savedInstanceState.getInt(INSTANCE_TASK_ID, DEFAULT_TASK_ID);
+        }
+
+
+        Intent intent = getActivity().getIntent();
+        if (intent != null && intent.hasExtra(EXTRA_NOTE_ID)) {
+            mButton.setText(R.string.update_button);
+            if (mTaskId == DEFAULT_TASK_ID) {
+                // populate the UI
+                mTaskId = intent.getIntExtra(EXTRA_NOTE_ID, DEFAULT_TASK_ID);
+
+                // COMPLETED (9) Remove the logging and the call to loadTaskById, this is done in the ViewModel now
+                // COMPLETED (10) Declare a AddNoteViewModelFactory using mDb and mTaskId
+                AddNoteViewModelFactory factory = new AddNoteViewModelFactory(database, mTaskId);
+                // COMPLETED (11) Declare a AddNoteViewModel variable and initialize it by calling ViewModelProviders.of
+                // for that use the factory created above AddNoteViewModel
+                final AddNoteViewModel viewModel
+                        = ViewModelProviders.of(this, factory).get(AddNoteViewModel.class);
+
+                // COMPLETED (12) Observe the LiveData object in the ViewModel. Use it also when removing the observer
+                viewModel.getNote().observe(this, new Observer<NoteEntry>() {
+                    @Override
+                    public void onChanged(@Nullable NoteEntry noteEntry) {
+                        viewModel.getNote().removeObserver(this);
+                        populateUI(noteEntry);
+                    }
+                });
+            }
+        }
+        return mRootView;
     }
 
 
+
+
+
+
+    /**
+     * initViews is called from onCreate to init the member variable views
+     */
+    private void initViews() {
+
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSaveButtonClicked();
+            }
+        });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(INSTANCE_TASK_ID, mTaskId);
+        super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * onSaveButtonClicked is called when the "save" button is clicked.
+     * It retrieves user input and inserts that new task data into the underlying database.
+     */
+    public void onSaveButtonClicked() {
+        String description = mEditText.getText().toString();
+        Date date = new Date();
+
+        final NoteEntry note = new NoteEntry(description,date);
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                if (mTaskId == DEFAULT_TASK_ID) {
+                    // insert new task
+                    database.noteDao().insertNotes(note);
+                    Log.d(TAG,"insert");
+
+                } else {
+                    //update task
+                    note.setId(mTaskId);
+                    database.noteDao().updateNotes(note);
+                    Log.d(TAG,"update");
+                }
+
+
+            }
+        });
+    }
+
+    /**
+     * populateUI would be called to populate the UI when in update mode
+     *
+     * @param note the taskEntry to populate the UI
+     */
+    private void populateUI(NoteEntry note) {
+
+        if(note == null){
+            return;
+        }
+
+        mEditText.setText(note.getDescription());
+
+
+    }
 
 }

@@ -92,8 +92,8 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
      * When data changes, this method updates the list of noteEntries
      * and notifies the adapter to use the new values on it
      */
-    public void setNotes(List<NoteEntry> noteEntries) {
-        noteEntries = noteEntries;
+    public void setNotes(List<NoteEntry> notes) {
+        noteEntries = notes;
         notifyDataSetChanged();
     }
 
