@@ -2,12 +2,8 @@ package com.example.jburgos.life_notes;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,7 +54,7 @@ public class NoteFragment extends Fragment {
     @BindView(R.id.saveButton)
     Button mButton;
 
-    private int mTaskId = DEFAULT_TASK_ID;
+    private int noteId = DEFAULT_TASK_ID;
 
     public NoteFragment() {
         // Required empty public constructor
@@ -70,23 +66,14 @@ public class NoteFragment extends Fragment {
      *
 
      * @return A new instance of fragment NoteFragment.
+     * public static NoteFragment newInstance(int noteId) {
+    NoteFragment fragment = new NoteFragment();
+    Bundle args = new Bundle();
+    args.putInt(EXTRA_NOTE_ID, noteId);
+    fragment.setArguments(args);
+    return fragment;
+    }
      */
-    // TODO: Rename and change types and number of parameters
-    public static NoteFragment newInstance(int noteId) {
-        NoteFragment fragment = new NoteFragment();
-        Bundle args = new Bundle();
-        args.putInt(EXTRA_NOTE_ID, noteId);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mTaskId = getArguments().getInt(EXTRA_NOTE_ID);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,26 +88,22 @@ public class NoteFragment extends Fragment {
         database = AppDatabase.getInstance(getContext());
 
         if (savedInstanceState != null && savedInstanceState.containsKey(INSTANCE_TASK_ID)) {
-            mTaskId = savedInstanceState.getInt(INSTANCE_TASK_ID, DEFAULT_TASK_ID);
+            noteId = savedInstanceState.getInt(INSTANCE_TASK_ID, DEFAULT_TASK_ID);
         }
 
 
-        Intent intent = getActivity().getIntent();
-        if (intent != null && intent.hasExtra(EXTRA_NOTE_ID)) {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
             mButton.setText(R.string.update_button);
-            if (mTaskId == DEFAULT_TASK_ID) {
+            if (noteId == DEFAULT_TASK_ID) {
                 // populate the UI
-                mTaskId = intent.getIntExtra(EXTRA_NOTE_ID, DEFAULT_TASK_ID);
+                noteId = bundle.getInt(EXTRA_NOTE_ID, DEFAULT_TASK_ID);
 
-                // COMPLETED (9) Remove the logging and the call to loadTaskById, this is done in the ViewModel now
-                // COMPLETED (10) Declare a AddNoteViewModelFactory using mDb and mTaskId
-                AddNoteViewModelFactory factory = new AddNoteViewModelFactory(database, mTaskId);
-                // COMPLETED (11) Declare a AddNoteViewModel variable and initialize it by calling ViewModelProviders.of
-                // for that use the factory created above AddNoteViewModel
+                AddNoteViewModelFactory factory = new AddNoteViewModelFactory(database, noteId);
+
                 final AddNoteViewModel viewModel
                         = ViewModelProviders.of(this, factory).get(AddNoteViewModel.class);
 
-                // COMPLETED (12) Observe the LiveData object in the ViewModel. Use it also when removing the observer
                 viewModel.getNote().observe(this, new Observer<NoteEntry>() {
                     @Override
                     public void onChanged(@Nullable NoteEntry noteEntry) {
@@ -132,11 +115,6 @@ public class NoteFragment extends Fragment {
         }
         return mRootView;
     }
-
-
-
-
-
 
     /**
      * initViews is called from onCreate to init the member variable views
@@ -153,7 +131,7 @@ public class NoteFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putInt(INSTANCE_TASK_ID, mTaskId);
+        outState.putInt(INSTANCE_TASK_ID, noteId);
         super.onSaveInstanceState(outState);
     }
 
@@ -169,14 +147,14 @@ public class NoteFragment extends Fragment {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                if (mTaskId == DEFAULT_TASK_ID) {
+                if (noteId == DEFAULT_TASK_ID) {
                     // insert new task
                     database.noteDao().insertNotes(note);
                     Log.d(TAG,"insert");
 
                 } else {
                     //update task
-                    note.setId(mTaskId);
+                    note.setId(noteId);
                     database.noteDao().updateNotes(note);
                     Log.d(TAG,"update");
                 }

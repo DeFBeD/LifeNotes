@@ -47,7 +47,7 @@ public class AddNoteActivity extends AppCompatActivity {
             NoteFragment notesDetailFragment = new NoteFragment();
             notesDetailFragment.setArguments(bundle);
             fragmentManager.beginTransaction()
-                    .replace(R.id.note_container, notesDetailFragment)
+                    .add(R.id.note_container, notesDetailFragment)
                     .commit();
 
         }
