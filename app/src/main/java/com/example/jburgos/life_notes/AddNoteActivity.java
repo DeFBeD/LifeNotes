@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.jburgos.life_notes.ViewModel.AddNoteViewModel;
-import com.example.jburgos.life_notes.ViewModel.AddNoteViewModelFactory;
+import com.example.jburgos.life_notes.viewModel.AddNoteViewModel;
+import com.example.jburgos.life_notes.viewModel.AddNoteViewModelFactory;
 import com.example.jburgos.life_notes.data.AppDatabase;
 import com.example.jburgos.life_notes.data.NoteEntry;
 import com.example.jburgos.life_notes.utils.AppExecutors;

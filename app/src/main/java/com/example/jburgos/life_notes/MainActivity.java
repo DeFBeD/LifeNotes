@@ -3,13 +3,17 @@ package com.example.jburgos.life_notes;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
@@ -17,7 +21,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.jburgos.life_notes.ViewModel.MainViewModel;
+import com.example.jburgos.life_notes.settings.SettingsActivity;
+import com.example.jburgos.life_notes.viewModel.MainViewModel;
 import com.example.jburgos.life_notes.adapter.MainNoteListAdapter;
 import com.example.jburgos.life_notes.data.AppDatabase;
 import com.example.jburgos.life_notes.data.NoteEntry;
@@ -30,6 +35,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements MainNoteListAdapter.ItemClickListener {
 
+    static final int SETTINGS_INTENT_REPLY = 1;
     // Constant for logging
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -63,9 +69,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
             }
         });
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        mAdapter = new MainNoteListAdapter(this, this);
-        mRecyclerView.setAdapter(mAdapter);
+      chooseLayout();
         /*
          Add a touch helper to the RecyclerView to recognize when a user swipes to delete an item.
          */
@@ -91,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
 
         //initialize database and set up the ViewModel on the List of notes
         dataBase = AppDatabase.getInstance(getApplicationContext());
-        setUpViewModel();
 
     }
 
@@ -104,18 +107,57 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_list) {
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(getApplication(), SettingsActivity.class);
+            startActivityForResult(settingsIntent, SETTINGS_INTENT_REPLY);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    //Getting intent from settings and launching a desired layoutManager
+    @Override
+    public void onActivityResult(int settingsRequestCode, int settingsResultcode, Intent resultData) {
+        super.onActivityResult(settingsRequestCode, settingsResultcode, resultData);
+
+        if (settingsRequestCode == SETTINGS_INTENT_REPLY) {
+            chooseLayout();
+        }
+    }
+
+    //gets shared preference and sets appropriate layout and sets up views
+    private void chooseLayout() {
+        SharedPreferences sharedPrefs =
+                PreferenceManager.getDefaultSharedPreferences(getApplication());
+        String orderType = sharedPrefs.getString(
+                getString(R.string.pref_order_key),
+                getString(R.string.pref_list_view));
+
+        if (orderType.equals(getString(R.string.pref_list_view))) {
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            mAdapter = new MainNoteListAdapter(this, this);
+            mRecyclerView.setAdapter(mAdapter);
+            setUpViewModel();
+        } else if (orderType.equals(getString(R.string.pref_grid_view))) {
+            GridLayoutManager grid =
+                    new GridLayoutManager(getApplicationContext(), 2);
+            mRecyclerView.setLayoutManager(grid);
+            mAdapter = new MainNoteListAdapter(this, this);
+            mRecyclerView.setAdapter(mAdapter);
+            setUpViewModel();
+        } else if (orderType.equals(getString(R.string.pref_staggered_view))) {
+            StaggeredGridLayoutManager grid =
+                    new StaggeredGridLayoutManager(2, 1);
+            mRecyclerView.setLayoutManager(grid);
+            mAdapter = new MainNoteListAdapter(this, this);
+            mRecyclerView.setAdapter(mAdapter);
+            setUpViewModel();
+        }
+    }
+
+    //sets all the notes from the database as a viewModel
     public void setUpViewModel(){
         MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         viewModel.getNotes().observe(this, new Observer<List<NoteEntry>>() {

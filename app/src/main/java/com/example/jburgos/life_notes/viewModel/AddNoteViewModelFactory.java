@@ -1,4 +1,4 @@
-package com.example.jburgos.life_notes.ViewModel;
+package com.example.jburgos.life_notes.viewModel;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
