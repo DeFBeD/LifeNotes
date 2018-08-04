@@ -6,5 +6,17 @@
     <string name="add_button">Add</string>
     <string name="update_button">Update</string>
     <string name="edit_text">How was your Day Today?</string>
+    <string name="pref_change_view_title">Change note view</string>
+
+    <!--Preference menu strings -->
+    <string name="pref_order_key" translatable="false">order</string>
+
+    <string name="pref_order_list_view">List</string>
+    <string name="pref_order_grid_view">Grid View</string>
+    <string name="pref_order_staggered_view">Staggered Grid</string>
+
+    <string name="pref_list_view" translatable="false">list view</string>
+    <string name="pref_grid_view" translatable="false"> grid view</string>
+    <string name="pref_staggered_view" translatable="false"> staggered view</string>
 
 </resources>

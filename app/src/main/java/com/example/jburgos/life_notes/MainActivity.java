@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_list) {
             return true;
         }
         return super.onOptionsItemSelected(item);
