@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,12 +36,15 @@ public class AddNoteActivity extends AppCompatActivity {
 
     //Member Variable for database
     private AppDatabase database;
+    private int isFavorite;
 
     // Fields for views
     @BindView(R.id.editTextNote)
     EditText mEditText;
     @BindView(R.id.saveButton)
     Button mButton;
+    @BindView(R.id.favButton)
+    Button favButton;
 
     private int mTaskId = DEFAULT_TASK_ID;
 
@@ -49,7 +53,7 @@ public class AddNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_note);
         ButterKnife.bind(this);
 
-        setSaveButtonClick();
+        setButtons();
 
         //initialize database
         database = AppDatabase.getInstance(getApplicationContext());
@@ -89,14 +93,25 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     /**
-     * setSaveButtonClick is called from onCreate to init the onclick for the save button
+     * setButtons is called from onCreate to init the onclick for the save button
      */
-    private void setSaveButtonClick() {
+    private void setButtons() {
 
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onSaveButtonClicked();
+            }
+        });
+
+        favButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isFavorite == 0) {
+                    isFavorite = 1;
+                } else if (isFavorite == 1) {
+                    isFavorite = 0;
+                }
             }
         });
     }
@@ -108,6 +123,7 @@ public class AddNoteActivity extends AppCompatActivity {
         }
 
         mEditText.setText(note.getDescription());
+        isFavorite = note.getIsFavorite();
 
     }
 
@@ -116,20 +132,23 @@ public class AddNoteActivity extends AppCompatActivity {
      * It retrieves user input and inserts that new task data into the underlying database.
      */
     public void onSaveButtonClicked() {
-        String description = mEditText.getText().toString();
-        Date date = new Date();
+        final String description = mEditText.getText().toString();
+        final Date date = new Date();
+        final int favorite = isFavorite;
 
-        final NoteEntry note = new NoteEntry(description, date);
+        final NoteEntry note = new NoteEntry(description, date, favorite);
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 if (mTaskId == DEFAULT_TASK_ID) {
                     // insert new task
                     database.noteDao().insertNotes(note);
+                    Log.d(TAG, "inserted:" + description + "favorite:" + String.valueOf(favorite));
                 } else {
                     //update task
                     note.setId(mTaskId);
                     database.noteDao().updateNotes(note);
+                    Log.d(TAG, "inserted:" + description + "favorite:" + String.valueOf(favorite));
                 }
                 finish();
             }

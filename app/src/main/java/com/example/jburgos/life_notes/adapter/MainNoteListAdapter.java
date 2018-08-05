@@ -69,7 +69,7 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
         // Determine the values of the wanted data
         NoteEntry noteEntry = noteEntries.get(position);
         String description = noteEntry.getDescription();
-        String updatedAtDateView = dateFormat.format(noteEntry.getUpdatedAtDateView());
+        String updatedAtDateView = dateFormat.format(noteEntry.getDateView());
 
         //Set values
         holder.taskDescriptionView.setText(description);

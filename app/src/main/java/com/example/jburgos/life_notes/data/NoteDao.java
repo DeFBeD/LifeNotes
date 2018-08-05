@@ -14,7 +14,7 @@ import java.util.List;
 public interface NoteDao {
 
     //to query all entries (notes)
-    @Query("SELECT * FROM notes ORDER BY updated_at")
+    @Query("SELECT * FROM notes ORDER BY date_updated_at")
     //every time we need to know if there is change in the database we have to call this method
     //so we wrap with LiveData
     LiveData<List<NoteEntry>> loadAllNotes();
@@ -31,4 +31,8 @@ public interface NoteDao {
     //to query individual task by id
     @Query("SELECT * FROM notes WHERE id = :id")
     LiveData<NoteEntry> loadNoteById(int id);
+
+    //to query all task by favorite
+    @Query("SELECT * FROM notes WHERE is_favorite = 1")
+    LiveData<List<NoteEntry>> loadAllFavorites();
 }

@@ -31,4 +31,16 @@
         android:text="@string/add_button"
         android:textColor="@android:color/primary_text_dark" />
 
+    <!-- Add button -->
+    <Button
+        android:id="@+id/favButton"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/default_16_padding"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:text="favorite"
+        android:textColor="@android:color/primary_text_dark" />
+
 </LinearLayout>
