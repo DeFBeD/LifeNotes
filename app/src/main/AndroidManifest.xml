@@ -23,7 +23,8 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".settings.SettingsActivity"
-                  android:theme="@style/AppTheme.NoActionBar">
+                  android:theme="@style/Theme.AppCompat.Light"
+            android:parentActivityName=".MainActivity">
         </activity>
     </application>
 

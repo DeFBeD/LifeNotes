@@ -28,7 +28,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     @Override
     public void onResume() {
         super.onResume();
-        //unregister the preferenceChange listener
+        //register the pref change listener
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
     }
@@ -51,7 +51,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     @Override
     public void onPause() {
         super.onPause();
-        //unregister the preference change listener
+        //unregister the pref change listener
         getPreferenceScreen().getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(this);
     }

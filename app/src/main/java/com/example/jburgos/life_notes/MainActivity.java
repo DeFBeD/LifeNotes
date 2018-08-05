@@ -137,24 +137,26 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
 
         if (orderType.equals(getString(R.string.pref_list_view))) {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-            mAdapter = new MainNoteListAdapter(this, this);
-            mRecyclerView.setAdapter(mAdapter);
+            setUpAdapter();
             setUpViewModel();
         } else if (orderType.equals(getString(R.string.pref_grid_view))) {
             GridLayoutManager grid =
                     new GridLayoutManager(getApplicationContext(), 2);
             mRecyclerView.setLayoutManager(grid);
-            mAdapter = new MainNoteListAdapter(this, this);
-            mRecyclerView.setAdapter(mAdapter);
+            setUpAdapter();
             setUpViewModel();
         } else if (orderType.equals(getString(R.string.pref_staggered_view))) {
             StaggeredGridLayoutManager grid =
-                    new StaggeredGridLayoutManager(2, 1);
+                    new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(grid);
-            mAdapter = new MainNoteListAdapter(this, this);
-            mRecyclerView.setAdapter(mAdapter);
+            setUpAdapter();
             setUpViewModel();
         }
+    }
+
+    private void setUpAdapter() {
+        mAdapter = new MainNoteListAdapter(this, this);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     //sets all the notes from the database as a viewModel
