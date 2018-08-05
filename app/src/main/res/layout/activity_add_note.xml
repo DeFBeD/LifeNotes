@@ -10,7 +10,6 @@
               android:paddingStart="@dimen/activity_horizontal_margin"
               android:paddingTop="@dimen/activity_vertical_margin">
 
-    <!-- EditText for getttaskEntrytask description input -->
     <EditText
         android:id="@+id/editTextNote"
         android:layout_width="match_parent"
@@ -31,7 +30,7 @@
         android:text="@string/add_button"
         android:textColor="@android:color/primary_text_dark" />
 
-    <!-- Add button -->
+    <!-- archive button -->
     <Button
         android:id="@+id/favButton"
         style="@style/TextAppearance.AppCompat.Large"

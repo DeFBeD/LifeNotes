@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.recyclerViewTasks)
+    @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.fab)
     FloatingActionButton fab;
@@ -112,6 +112,12 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         if (id == R.id.action_settings) {
             Intent settingsIntent = new Intent(getApplication(), SettingsActivity.class);
             startActivityForResult(settingsIntent, SETTINGS_INTENT_REPLY);
+            return true;
+        }
+
+        if (id == R.id.action_favorite) {
+            Intent settingsIntent = new Intent(getApplication(), FavoriteActivity.class);
+            startActivity(settingsIntent);
             return true;
         }
         return super.onOptionsItemSelected(item);

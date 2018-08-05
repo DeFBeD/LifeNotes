@@ -9,9 +9,8 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <!-- RecyclerView that is responsible for holding a listtaskEntrytask data -->
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewTasks"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"

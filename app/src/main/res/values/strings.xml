@@ -18,5 +18,8 @@
     <string name="pref_list_view" translatable="false">list view</string>
     <string name="pref_grid_view" translatable="false"> grid view</string>
     <string name="pref_staggered_view" translatable="false"> staggered view</string>
+    <string name="go_to_archived">Go to Archived</string>
+    <string name="archive_title">Archive</string>
+    <string name="settings_tittle">Settings</string>
 
 </resources>

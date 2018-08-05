@@ -19,12 +19,19 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".AddNoteActivity"
+        <activity
+            android:name=".AddNoteActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".settings.SettingsActivity"
-                  android:theme="@style/Theme.AppCompat.Light"
-            android:parentActivityName=".MainActivity">
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name=".FavoriteActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 

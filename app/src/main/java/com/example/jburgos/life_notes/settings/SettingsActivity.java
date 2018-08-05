@@ -15,7 +15,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Settings");
+            getSupportActionBar().setTitle(R.string.settings_tittle);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
