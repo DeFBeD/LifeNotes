@@ -3,6 +3,9 @@ package com.example.jburgos.life_notes;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.jburgos.life_notes.viewModel.AddNoteViewModel;
 import com.example.jburgos.life_notes.viewModel.AddNoteViewModelFactory;
@@ -21,6 +25,8 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.os.Build.VERSION.SDK_INT;
 
 public class AddNoteActivity extends AppCompatActivity {
 
@@ -45,6 +51,12 @@ public class AddNoteActivity extends AppCompatActivity {
     Button mButton;
     @BindView(R.id.favButton)
     Button favButton;
+    /*
+    @BindView(R.id.take_pic_Button)
+    Button picButton;
+    @BindView(R.id.image)
+    ImageView image;
+    */
 
     private int mTaskId = DEFAULT_TASK_ID;
 
@@ -54,6 +66,18 @@ public class AddNoteActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setButtons();
+
+        /*
+        picButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,0);
+            }
+        });
+        */
+
+
 
         //initialize database
         database = AppDatabase.getInstance(getApplicationContext());
@@ -85,7 +109,15 @@ public class AddNoteActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+        image.setImageBitmap(bitmap);
+    }
 
+*/
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(NOTE_INSTANCE_ID, mTaskId);

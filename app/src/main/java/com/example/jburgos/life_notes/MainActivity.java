@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.evernote.android.job.JobManager;
 import com.example.jburgos.life_notes.settings.SettingsActivity;
 import com.example.jburgos.life_notes.viewModel.MainViewModel;
 import com.example.jburgos.life_notes.adapter.MainNoteListAdapter;
@@ -58,6 +59,11 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
+        JobManager.create(this).addJobCreator(new LifeNotesJobCreator());
+        //test only - M and below
+        //JobManager.instance().getConfig().setAllowSmallerIntervalsForMarshmallow(true);
+        ReminderNotificationJob.schedulePeriodic();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
             }
         });
 
-      chooseLayout();
+        chooseLayout();
         /*
          Add a touch helper to the RecyclerView to recognize when a user swipes to delete an item.
          */
@@ -78,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 return false;
             }
+
             // Called when a user swipes left or right on a ViewHolder
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
@@ -153,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
             setUpViewModel();
         } else if (orderType.equals(getString(R.string.pref_staggered_view))) {
             StaggeredGridLayoutManager grid =
-                    new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+                    new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(grid);
             setUpAdapter();
             setUpViewModel();
@@ -166,12 +173,12 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
     }
 
     //sets all the notes from the database as a viewModel
-    public void setUpViewModel(){
+    public void setUpViewModel() {
         MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         viewModel.getNotes().observe(this, new Observer<List<NoteEntry>>() {
             @Override
             public void onChanged(@Nullable List<NoteEntry> noteEntries) {
-                Log.d(TAG,"updating ist of tasks from LiveData in ViewModel");
+                Log.d(TAG, "updating ist of tasks from LiveData in ViewModel");
                 mAdapter.setNotes(noteEntries);
             }
         });
@@ -179,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
 
     @Override
     public void onItemClickListener(int noteId) {
-        Intent intent = new Intent(MainActivity.this,AddNoteActivity.class);
+        Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
         intent.putExtra(EXTRA_NOTE_ID, noteId);
         startActivity(intent);
 
