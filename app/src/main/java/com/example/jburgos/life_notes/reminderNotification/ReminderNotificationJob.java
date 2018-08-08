@@ -54,9 +54,9 @@ public class ReminderNotificationJob extends Job {
         return Result.SUCCESS;
     }
 
-    public static void schedulePeriodic() {
+    public static void schedule() {
         new JobRequest.Builder(ReminderNotificationJob.TAG)
-                .setPeriodic(TimeUnit.MINUTES.toMillis(15), TimeUnit.MINUTES.toMillis(5))
+                .setPeriodic(TimeUnit.HOURS.toMillis(18), TimeUnit.MINUTES.toMillis(10))
                 .setUpdateCurrent(true)
                 .build()
                 .schedule();

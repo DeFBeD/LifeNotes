@@ -36,6 +36,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
 public class MainActivity extends AppCompatActivity implements MainNoteListAdapter.ItemClickListener {
 
     static final int SETTINGS_INTENT_REPLY = 1;
@@ -62,9 +63,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         setSupportActionBar(toolbar);
 
         JobManager.create(this).addJobCreator(new LifeNotesJobCreator());
-        //test only - M and below
-        //JobManager.instance().getConfig().setAllowSmallerIntervalsForMarshmallow(true);
-        ReminderNotificationJob.schedulePeriodic();
+        ReminderNotificationJob.schedule();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
