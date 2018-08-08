@@ -1,10 +1,9 @@
-package com.example.jburgos.life_notes;
+package com.example.jburgos.life_notes.reminderNotification;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -14,6 +13,8 @@ import android.support.v4.app.NotificationManagerCompat;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobRequest;
+import com.example.jburgos.life_notes.MainActivity;
+import com.example.jburgos.life_notes.R;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -21,25 +22,27 @@ import java.util.concurrent.TimeUnit;
 public class ReminderNotificationJob extends Job {
     static final String TAG = "show_notification_job_tag";
 
-
     @NonNull
     @Override
     protected Result onRunJob(Params params) {
 
-        createChannel(getContext());
-
-
-        PendingIntent pi = PendingIntent.getActivity(getContext(), 0,
+        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0,
                 new Intent(getContext(), MainActivity.class), 0);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(TAG, "Life-Notes Reminder", NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("Life-Notes Friendly Reminders");
+            getContext().getSystemService(NotificationManager.class).createNotificationChannel(channel);
+        }
 
-
-        Notification notification = new NotificationCompat.Builder(getContext())
+        Notification notification = new NotificationCompat.Builder(getContext(), TAG)
                 .setContentTitle("Life-Notes")
-                .setContentText("Friendly reminder to log your thoughts!")
+                .setContentText("Friendly Reminder to get your thoughts down!")
                 .setAutoCancel(true)
-                .setContentIntent(pi)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setChannelId(TAG)
+                .setSound(null)
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ic_launcher_background)
                 .setShowWhen(true)
                 .setColor(Color.GREEN)
                 .setLocalOnly(true)
@@ -51,29 +54,17 @@ public class ReminderNotificationJob extends Job {
         return Result.SUCCESS;
     }
 
-    static void schedulePeriodic() {
+    public static void schedulePeriodic() {
         new JobRequest.Builder(ReminderNotificationJob.TAG)
                 .setPeriodic(TimeUnit.MINUTES.toMillis(15), TimeUnit.MINUTES.toMillis(5))
                 .setUpdateCurrent(true)
-                .setPersisted(true)
                 .build()
                 .schedule();
     }
 
-private void createChannel(Context context){
-
-    NotificationManager notificationManager = (NotificationManager)
-            context.getSystemService(Context.NOTIFICATION_SERVICE);
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        NotificationChannel mChannel = new NotificationChannel(
-                "Life_notes",
-                "Life-Notes reminder",
-                NotificationManager.IMPORTANCE_HIGH);
-        notificationManager.createNotificationChannel(mChannel);
-    }
 
 
-    }
+
 }
 
 

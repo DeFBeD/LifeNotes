@@ -22,6 +22,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.evernote.android.job.JobManager;
+import com.example.jburgos.life_notes.reminderNotification.LifeNotesJobCreator;
+import com.example.jburgos.life_notes.reminderNotification.ReminderNotificationJob;
 import com.example.jburgos.life_notes.settings.SettingsActivity;
 import com.example.jburgos.life_notes.viewModel.MainViewModel;
 import com.example.jburgos.life_notes.adapter.MainNoteListAdapter;

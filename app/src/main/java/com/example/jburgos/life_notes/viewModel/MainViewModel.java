@@ -20,7 +20,7 @@ public class MainViewModel extends AndroidViewModel {
     public MainViewModel(@NonNull Application application) {
         super(application);
         AppDatabase database = AppDatabase.getInstance(this.getApplication());
-        Log.d(TAG,"Actively Retrieving task from database");
+        Log.d(TAG,"Actively Retrieving all Notes from database");
         notes = database.noteDao().loadAllNotes();
     }
 

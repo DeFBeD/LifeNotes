@@ -1,9 +1,9 @@
-package com.example.jburgos.life_notes;
+package com.example.jburgos.life_notes.reminderNotification;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobCreator;
 
-class LifeNotesJobCreator implements JobCreator {
+public class LifeNotesJobCreator implements JobCreator {
 
     @Override
     public Job create(String tag) {
