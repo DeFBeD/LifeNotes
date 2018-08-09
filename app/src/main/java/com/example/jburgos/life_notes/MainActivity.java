@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        JobManager.create(this).addJobCreator(new LifeNotesJobCreator());
         ReminderNotificationJob.schedule();
 
         fab.setOnClickListener(new View.OnClickListener() {

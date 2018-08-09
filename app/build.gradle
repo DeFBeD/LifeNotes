@@ -47,4 +47,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     implementation 'com.evernote:android-job:1.2.6'
+    implementation "com.google.android.gms:play-services-gcm:15.0.1"
 }

@@ -16,22 +16,19 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * This MainNoteListAdapter creates and binds ViewHolders, that hold the description and date of a note,
- * to a RecyclerView to efficiently display data.
- */
 public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapter.NoteViewHolder> {
 
-    // Constant for date format
+    // Constant for date format & Date formatter
     private static final String DATE_FORMAT = "dd/MM/yyy";
+    private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
 
-    // Member variable to handle item clicks
-    final private ItemClickListener mItemClickListener;
-    // Class variables for the List that holds note data and the Context
+    // variables for the List of notes and Context
     private List<NoteEntry> noteEntries;
     private Context mContext;
-    // Date formatter
-    private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+
+    //handle item clicks
+    final private ItemClickListener mItemClickListener;
+
 
     /**
      * Constructor for the MainNoteListAdapter that initializes the Context.
@@ -72,8 +69,8 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
         String updatedAtDateView = dateFormat.format(noteEntry.getDateView());
 
         //Set values
-        holder.taskDescriptionView.setText(description);
-        holder.updatedAtDateView.setText(updatedAtDateView);
+        holder.noteContentsView.setText(description);
+        holder.updateTheDateView.setText(updatedAtDateView);
 
     }
 
@@ -109,8 +106,8 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
     class NoteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // Class variables for the note description and date TextViews
-        TextView taskDescriptionView;
-        TextView updatedAtDateView;
+        TextView noteContentsView;
+        TextView updateTheDateView;
 
 
         /**
@@ -121,8 +118,8 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
         public NoteViewHolder(View itemView) {
             super(itemView);
 
-            taskDescriptionView = itemView.findViewById(R.id.taskDescription);
-            updatedAtDateView = itemView.findViewById(R.id.taskUpdatedAtDate);
+            noteContentsView = itemView.findViewById(R.id.contentInNotes);
+            updateTheDateView = itemView.findViewById(R.id.updateTheDate);
             itemView.setOnClickListener(this);
         }
 

@@ -14,7 +14,7 @@
 
         <!-- TextView that displays the description -->
         <TextView
-            android:id="@+id/taskDescription"
+            android:id="@+id/contentInNotes"
             style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
 
         <!-- TextView that displays the update date -->
         <TextView
-            android:id="@+id/taskUpdatedAtDate"
+            android:id="@+id/updateTheDate"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
