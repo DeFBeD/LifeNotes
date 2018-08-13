@@ -6,9 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.example.jburgos.life_notes.R;
 import com.example.jburgos.life_notes.data.NoteEntry;
 
@@ -67,12 +69,17 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
         NoteEntry noteEntry = noteEntries.get(position);
         String description = noteEntry.getDescription();
         String updatedAtDateView = dateFormat.format(noteEntry.getDateView());
+        String imageUri = noteEntry.getImage();
 
         //Set values
         holder.noteContentsView.setText(description);
         holder.updateTheDateView.setText(updatedAtDateView);
 
-    }
+        if(imageUri != null){
+            Glide.with(mContext).load(imageUri).into(holder.imageCard);
+        }
+
+        }
 
     /**
      * Returns the number of items to display.
@@ -108,6 +115,7 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
         // Class variables for the note description and date TextViews
         TextView noteContentsView;
         TextView updateTheDateView;
+        ImageView imageCard;
 
 
         /**
@@ -120,6 +128,7 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
 
             noteContentsView = itemView.findViewById(R.id.contentInNotes);
             updateTheDateView = itemView.findViewById(R.id.updateTheDate);
+            imageCard = itemView.findViewById(R.id.image_card);
             itemView.setOnClickListener(this);
         }
 
