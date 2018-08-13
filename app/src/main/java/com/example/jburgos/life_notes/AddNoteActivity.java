@@ -4,9 +4,12 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,35 +17,47 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.jburgos.life_notes.viewModel.AddNoteViewModel;
 import com.example.jburgos.life_notes.viewModel.AddNoteViewModelFactory;
 import com.example.jburgos.life_notes.data.AppDatabase;
 import com.example.jburgos.life_notes.data.NoteEntry;
 import com.example.jburgos.life_notes.utils.AppExecutors;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.io.File;
 import java.util.Date;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.os.Build.VERSION.SDK_INT;
-
 public class AddNoteActivity extends AppCompatActivity {
 
-    // Extra for the task ID to be received in the intent
-    public static final String EXTRA_NOTE_ID = "extraNoteId";
-    // Extra for the task ID to be received after rotation
-    public static final String NOTE_INSTANCE_ID = "instanceOfNoteId";
+    private static final String TAG = AddNoteActivity.class.getSimpleName();
 
+    // id being recieved through intent
+    public static final String EXTRA_NOTE_ID = "extraNoteId";
+    // instance id for rotation
+    public static final String NOTE_INSTANCE_ID = "instanceOfNoteId";
     // Constant for default task id to be used when not in update mode
     private static final int DEFAULT_TASK_ID = -1;
-    // Constant for logging
-    private static final String TAG = AddNoteActivity.class.getSimpleName();
+    private int mTaskId = DEFAULT_TASK_ID;
+
+    //photoUri constants
+    static final int REQUEST_TAKE_PHOTO = 1034;
+    public String photoFileName = ".jpg";
+    File photoFile;
+    Uri photoUri;
 
     //Member Variable for database
     private AppDatabase database;
     private int isFavorite;
+
+    //firebase
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     // Fields for views
     @BindView(R.id.editTextNote)
@@ -51,33 +66,18 @@ public class AddNoteActivity extends AppCompatActivity {
     Button mButton;
     @BindView(R.id.favButton)
     Button favButton;
-    /*
     @BindView(R.id.take_pic_Button)
     Button picButton;
     @BindView(R.id.image)
     ImageView image;
-    */
-
-    private int mTaskId = DEFAULT_TASK_ID;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
         ButterKnife.bind(this);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         setButtons();
-
-        /*
-        picButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent,0);
-            }
-        });
-        */
-
-
 
         //initialize database
         database = AppDatabase.getInstance(getApplicationContext());
@@ -109,15 +109,6 @@ public class AddNoteActivity extends AppCompatActivity {
         }
     }
 
-    /*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-        image.setImageBitmap(bitmap);
-    }
-
-*/
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(NOTE_INSTANCE_ID, mTaskId);
@@ -125,7 +116,7 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     /**
-     * setButtons is called from onCreate to init the onclick for the save button
+     * init all the buttons
      */
     private void setButtons() {
 
@@ -146,6 +137,14 @@ public class AddNoteActivity extends AppCompatActivity {
                 }
             }
         });
+
+        picButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dispatchTakePictureIntent();
+            }
+        });
+
     }
 
     private void populateUI(NoteEntry note) {
@@ -156,7 +155,9 @@ public class AddNoteActivity extends AppCompatActivity {
 
         mEditText.setText(note.getDescription());
         isFavorite = note.getIsFavorite();
+        photoUri = Uri.parse(note.getImage());
 
+        Glide.with(this).load(photoUri).into(image);
     }
 
     /**
@@ -167,24 +168,87 @@ public class AddNoteActivity extends AppCompatActivity {
         final String description = mEditText.getText().toString();
         final Date date = new Date();
         final int favorite = isFavorite;
+        final String photoU = String.valueOf(photoUri);
 
-        final NoteEntry note = new NoteEntry(description, date, favorite);
+        fireBaseEvents(description);
+
+        final NoteEntry note = new NoteEntry(description, date, favorite, photoU);
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 if (mTaskId == DEFAULT_TASK_ID) {
                     // insert new task
                     database.noteDao().insertNotes(note);
-                    Log.d(TAG, "inserted:" + description + "favorite:" + String.valueOf(favorite));
+                    Log.d(TAG, "inserted:" + description + "favorite:" + String.valueOf(favorite) + "uri:" + photoU);
                 } else {
                     //update task
                     note.setId(mTaskId);
                     database.noteDao().updateNotes(note);
-                    Log.d(TAG, "inserted:" + description + "favorite:" + String.valueOf(favorite));
+                    Log.d(TAG, "inserted:" + description + "favorite:" + String.valueOf(favorite) + "uri:" + photoU);
                 }
                 finish();
             }
         });
+    }
+
+    private void dispatchTakePictureIntent() {
+        // create Intent to take a picture
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //reference to access to future access
+        photoFile = getPhotoFileUri(photoFileName);
+        // required for API >= 24
+        photoUri = FileProvider.getUriForFile(AddNoteActivity.this, "com.example.android.imageProvider", photoFile);
+
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+
+        // check that a camera app can handle this intent
+        if (intent.resolveActivity(getPackageManager()) != null) {
+
+            startActivityForResult(intent, REQUEST_TAKE_PHOTO);
+        }
+    }
+
+    // Returns the File for a photoUri stored on disk given the fileName
+    public File getPhotoFileUri(String fileName) {
+
+        File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
+            Log.d(TAG, "failed to create directory");
+        }
+
+        // Return the file target for the photoUri based on filename
+        return new File(mediaStorageDir.getPath() + File.separator + fileName + randomNumber());
+    }
+
+    //method that returns a random number to add to the image file name
+    public static int randomNumber() {
+        Random random = new Random();
+        return random.nextInt(1000);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_TAKE_PHOTO) {
+            if (resultCode == RESULT_OK) {
+
+                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+
+                Glide.with(this).load(takenImage).into(image);
+
+            } else { // Result was a failure
+                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void fireBaseEvents(String description) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, mTaskId);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, description);
+        bundle.putInt(FirebaseAnalytics.Param.INDEX, isFavorite);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
 }

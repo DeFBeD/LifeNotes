@@ -17,20 +17,24 @@ public class NoteEntry {
     private Date dateView;
     @ColumnInfo(name = "is_favorite")
     private int isFavorite;
+    @ColumnInfo(name = "photo_path")
+    private String image;
 
     @Ignore
-    public NoteEntry(String description, Date dateView, int isFavorite){
+    public NoteEntry(String description, Date dateView, int isFavorite,String image){
         this.description = description;
         this.dateView = dateView;
         this.isFavorite = isFavorite;
+        this.image = image;
 
     }
 
-    public NoteEntry(int id, String description, Date dateView, int isFavorite){
+    public NoteEntry(int id, String description, Date dateView, int isFavorite,String image){
         this.id = id;
         this.description = description;
         this.dateView = dateView;
         this.isFavorite = isFavorite;
+        this.image = image;
 
     }
 
@@ -64,6 +68,14 @@ public class NoteEntry {
 
     public void setIsFavorite(int isFavorite) {
         this.isFavorite = isFavorite;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
 

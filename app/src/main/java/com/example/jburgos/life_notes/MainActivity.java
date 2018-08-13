@@ -30,6 +30,7 @@ import com.example.jburgos.life_notes.adapter.MainNoteListAdapter;
 import com.example.jburgos.life_notes.data.AppDatabase;
 import com.example.jburgos.life_notes.data.NoteEntry;
 import com.example.jburgos.life_notes.utils.AppExecutors;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
 
     private MainNoteListAdapter mAdapter;
     private AppDatabase dataBase;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         setSupportActionBar(toolbar);
 
         ReminderNotificationJob.schedule();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +105,12 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
 
         //initialize database and set up the ViewModel on the List of notes
         dataBase = AppDatabase.getInstance(getApplicationContext());
+
+
+
+        mFirebaseAnalytics.logEvent("addNewNoteIntent", null);
+        mFirebaseAnalytics.logEvent("chooseLayout", null);
+        mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
 
     }
 
@@ -178,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         viewModel.getNotes().observe(this, new Observer<List<NoteEntry>>() {
             @Override
             public void onChanged(@Nullable List<NoteEntry> noteEntries) {
-                Log.d(TAG, "updating ist of tasks from LiveData in ViewModel");
+                Log.d(TAG, "updating from LiveData in ViewModel");
                 mAdapter.setNotes(noteEntries);
             }
         });
@@ -189,6 +198,12 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
         intent.putExtra(EXTRA_NOTE_ID, noteId);
         startActivity(intent);
+
+        // [START custom_event]
+        Bundle params = new Bundle();
+        params.putInt("note_id", noteId);
+        mFirebaseAnalytics.logEvent("note_id_intent", params);
+        // [END custom_event]
 
     }
 }

@@ -19,7 +19,7 @@ import java.util.Locale;
 public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapter.NoteViewHolder> {
 
     // Constant for date format & Date formatter
-    private static final String DATE_FORMAT = "dd/MM/yyy";
+    private static final String DATE_FORMAT = "MM/dd/yyy";
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
 
     // variables for the List of notes and Context

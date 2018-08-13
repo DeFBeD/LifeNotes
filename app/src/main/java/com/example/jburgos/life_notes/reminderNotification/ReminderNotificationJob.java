@@ -63,7 +63,7 @@ public class ReminderNotificationJob extends DailyJob {
                 .setUpdateCurrent(true);
 
         // run job between 7pm and 8am
-        DailyJob.schedule(builder, TimeUnit.HOURS.toMillis(7), TimeUnit.HOURS.toMillis(8));
+        DailyJob.schedule(builder, TimeUnit.HOURS.toMillis(7), TimeUnit.HOURS.toMillis(11));
     }
 
 }
