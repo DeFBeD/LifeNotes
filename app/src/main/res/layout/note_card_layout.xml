@@ -36,6 +36,7 @@
             android:layout_height="150dp"
             android:layout_gravity="top|end"/>
 
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

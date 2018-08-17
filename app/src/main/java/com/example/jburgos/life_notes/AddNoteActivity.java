@@ -64,12 +64,12 @@ public class AddNoteActivity extends AppCompatActivity {
     EditText mEditText;
     @BindView(R.id.saveButton)
     Button mButton;
-    @BindView(R.id.favButton)
-    Button favButton;
     @BindView(R.id.take_pic_Button)
     Button picButton;
     @BindView(R.id.image)
     ImageView image;
+    @BindView(R.id.bookmark)
+    ImageView bookmark;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,13 +127,15 @@ public class AddNoteActivity extends AppCompatActivity {
             }
         });
 
-        favButton.setOnClickListener(new View.OnClickListener() {
+        bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isFavorite == 0) {
                     isFavorite = 1;
+                    bookmark.setImageResource(R.drawable.ic_bookmark_black_24dp);
                 } else if (isFavorite == 1) {
                     isFavorite = 0;
+                    bookmark.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
                 }
             }
         });
@@ -155,8 +157,14 @@ public class AddNoteActivity extends AppCompatActivity {
 
         mEditText.setText(note.getDescription());
         isFavorite = note.getIsFavorite();
-        photoUri = Uri.parse(note.getImage());
 
+        if (isFavorite == 1) {
+            bookmark.setImageResource(R.drawable.ic_bookmark_black_24dp);
+        } else {
+            bookmark.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
+        }
+
+        photoUri = Uri.parse(note.getImage());
         Glide.with(this).load(photoUri).into(image);
     }
 

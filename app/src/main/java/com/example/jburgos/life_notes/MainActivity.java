@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 
 import com.evernote.android.job.JobManager;
 import com.example.jburgos.life_notes.reminderNotification.LifeNotesJobCreator;
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
     RecyclerView mRecyclerView;
     @BindView(R.id.fab)
     FloatingActionButton fab;
+    //ImageButton delete;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,10 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
+        //delete = findViewById(R.id.deleteButton);
+
+
 
         ReminderNotificationJob.schedule();
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -191,6 +198,12 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
                 mAdapter.setNotes(noteEntries);
             }
         });
+
+    }
+
+    private void populateUI(NoteEntry noteEntry){
+
+
     }
 
     @Override
@@ -206,4 +219,19 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         // [END custom_event]
 
     }
+
+    /*
+    @Override
+    public void deleteOnClick(final int position) {
+        // Here is where you'll implement swipe to delete
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                List<NoteEntry> note = mAdapter.getNotes();
+                dataBase.noteDao().deleteNote(note.get(position));
+            }
+        });
+
+    }
+    */
 }

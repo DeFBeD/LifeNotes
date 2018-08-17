@@ -78,4 +78,12 @@ public class FavoriteActivity extends AppCompatActivity implements MainNoteListA
         intent.putExtra(EXTRA_NOTE_ID, noteId);
         startActivity(intent);
     }
+
+    /*
+    @Override
+    public void deleteOnClick(int position) {
+
+    }
+
+    */
 }

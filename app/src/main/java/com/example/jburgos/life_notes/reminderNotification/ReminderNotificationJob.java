@@ -41,7 +41,7 @@ public class ReminderNotificationJob extends DailyJob {
                 .setChannelId(TAG)
                 .setSound(null)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_stat_name)
                 .setShowWhen(true)
                 .setLocalOnly(true)
                 .build();
