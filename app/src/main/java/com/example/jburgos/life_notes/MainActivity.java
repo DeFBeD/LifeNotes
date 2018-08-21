@@ -1,7 +1,9 @@
 package com.example.jburgos.life_notes;
 
+import android.appwidget.AppWidgetManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -31,8 +33,11 @@ import com.example.jburgos.life_notes.adapter.MainNoteListAdapter;
 import com.example.jburgos.life_notes.data.AppDatabase;
 import com.example.jburgos.life_notes.data.NoteEntry;
 import com.example.jburgos.life_notes.utils.AppExecutors;
+import com.example.jburgos.life_notes.widget.WidgetProvider;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -57,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
     RecyclerView mRecyclerView;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-    //ImageButton delete;
 
 
     @Override
@@ -66,10 +70,6 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-
-        //delete = findViewById(R.id.deleteButton);
-
-
 
         ReminderNotificationJob.schedule();
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -112,8 +112,6 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
 
         //initialize database and set up the ViewModel on the List of notes
         dataBase = AppDatabase.getInstance(getApplicationContext());
-
-
 
         mFirebaseAnalytics.logEvent("addNewNoteIntent", null);
         mFirebaseAnalytics.logEvent("chooseLayout", null);
@@ -201,10 +199,6 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
 
     }
 
-    private void populateUI(NoteEntry noteEntry){
-
-
-    }
 
     @Override
     public void onItemClickListener(int noteId) {
@@ -220,18 +214,4 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
 
     }
 
-    /*
-    @Override
-    public void deleteOnClick(final int position) {
-        // Here is where you'll implement swipe to delete
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                List<NoteEntry> note = mAdapter.getNotes();
-                dataBase.noteDao().deleteNote(note.get(position));
-            }
-        });
-
-    }
-    */
 }

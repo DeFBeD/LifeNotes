@@ -108,7 +108,6 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
 
     public interface ItemClickListener {
         void onItemClickListener(int itemId);
-        //void deleteOnClick(int position);
     }
 
     // Inner class for creating ViewHolders
@@ -118,7 +117,6 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
         TextView noteContentsView;
         TextView updateTheDateView;
         ImageView imageCard;
-        //ImageButton delete;
 
 
         /**
@@ -132,15 +130,6 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
             noteContentsView = itemView.findViewById(R.id.contentInNotes);
             updateTheDateView = itemView.findViewById(R.id.updateTheDate);
             imageCard = itemView.findViewById(R.id.image_card);
-            /*
-            delete = itemView.findViewById(R.id.deleteButton);
-            delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mItemClickListener.deleteOnClick(getAdapterPosition());
-                }
-            });
-            */
             itemView.setOnClickListener(this);
         }
 

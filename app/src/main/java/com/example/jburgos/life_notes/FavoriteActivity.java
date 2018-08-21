@@ -1,21 +1,29 @@
 package com.example.jburgos.life_notes;
 
+import android.appwidget.AppWidgetManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.jburgos.life_notes.adapter.MainNoteListAdapter;
 import com.example.jburgos.life_notes.data.AppDatabase;
 import com.example.jburgos.life_notes.data.NoteEntry;
 import com.example.jburgos.life_notes.viewModel.FavoriteViewModel;
+import com.example.jburgos.life_notes.widget.WidgetProvider;
+import com.google.gson.Gson;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,6 +35,7 @@ public class FavoriteActivity extends AppCompatActivity implements MainNoteListA
 
     private MainNoteListAdapter mAdapter;
     private AppDatabase dataBase;
+    private List<NoteEntry> notes;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -48,7 +57,10 @@ public class FavoriteActivity extends AppCompatActivity implements MainNoteListA
 
         dataBase = AppDatabase.getInstance(getApplicationContext());
         setUpViewModel();
+        setUpWidget();
+
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -63,14 +75,44 @@ public class FavoriteActivity extends AppCompatActivity implements MainNoteListA
 
     //sets all the notes from the database as a viewModel
     public void setUpViewModel() {
-        FavoriteViewModel viewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
+        final FavoriteViewModel viewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
         viewModel.getFavorites().observe(this, new Observer<List<NoteEntry>>() {
             @Override
             public void onChanged(@Nullable List<NoteEntry> noteEntries) {
                 mAdapter.setNotes(noteEntries);
+
+                notes = noteEntries;
+
             }
         });
     }
+
+    private void setUpWidget() {
+        //Bundle bundle = new Bundle();
+        // bundle.putParcelableArrayList("fav", (ArrayList<? extends Parcelable>) notes);
+
+        List<List<NoteEntry>> noteFav = new ArrayList<>();
+        noteFav.add(notes);
+
+        SharedPreferences appSharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(noteFav);
+
+        prefsEditor.putString("MyObject", json);
+        prefsEditor.apply();
+        Log.d("TAG", "notes = " + json);
+
+        Intent intent = new Intent(getApplicationContext(), WidgetProvider.class);
+        intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
+        int ids[] = AppWidgetManager.getInstance(getBaseContext()).getAppWidgetIds(new ComponentName(getBaseContext(), WidgetProvider.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        getBaseContext().sendBroadcast(intent);
+    }
+
+
 
     @Override
     public void onItemClickListener(int noteId) {
@@ -79,11 +121,4 @@ public class FavoriteActivity extends AppCompatActivity implements MainNoteListA
         startActivity(intent);
     }
 
-    /*
-    @Override
-    public void deleteOnClick(int position) {
-
-    }
-
-    */
 }

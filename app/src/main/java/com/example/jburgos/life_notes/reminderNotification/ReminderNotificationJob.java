@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ReminderNotificationJob extends DailyJob {
     static final String TAG = "show_notification_job_tag";
+    ReminderProvider dailyString;
 
     @NonNull
     @Override
@@ -35,8 +36,8 @@ public class ReminderNotificationJob extends DailyJob {
         }
 
         Notification notification = new NotificationCompat.Builder(getContext(), TAG)
-                .setContentTitle("Life-Notes")
-                .setContentText("Friendly Reminder to get your thoughts down!")
+                .setContentTitle("Friendly Reminder")
+                .setContentText(dailyString.changeDailyReminder())
                 .setAutoCancel(true)
                 .setChannelId(TAG)
                 .setSound(null)
