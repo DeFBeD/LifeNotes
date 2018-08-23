@@ -1,16 +1,12 @@
 package com.example.jburgos.life_notes;
 
-import android.appwidget.AppWidgetManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
@@ -29,15 +25,10 @@ import com.example.jburgos.life_notes.viewModel.AddNoteViewModelFactory;
 import com.example.jburgos.life_notes.data.AppDatabase;
 import com.example.jburgos.life_notes.data.NoteEntry;
 import com.example.jburgos.life_notes.utils.AppExecutors;
-import com.example.jburgos.life_notes.widget.WidgetProvider;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.gson.Gson;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 import butterknife.BindView;
@@ -190,7 +181,6 @@ public class AddNoteActivity extends AppCompatActivity {
         fireBaseEvents(description);
 
         final NoteEntry note = new NoteEntry(description, date, favorite, photoU);
-        //widgetExtra(note);
 
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -211,30 +201,6 @@ public class AddNoteActivity extends AppCompatActivity {
         });
     }
 
-    /*
-    private void widgetExtra(NoteEntry noteEntry) {
-        List<NoteEntry> notes = new ArrayList<>();
-        notes.add(noteEntry);
-
-        SharedPreferences appSharedPrefs = PreferenceManager
-                .getDefaultSharedPreferences(getBaseContext());
-        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
-
-        Gson gson = new Gson();
-        String json = gson.toJson(notes);
-
-        prefsEditor.putString("MyObject", json);
-        prefsEditor.apply();
-        Log.d("TAG", "notes = " + json);
-
-        Intent intent = new Intent(getApplicationContext(), WidgetProvider.class);
-        intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
-        int ids[] = AppWidgetManager.getInstance(getBaseContext()).getAppWidgetIds(new ComponentName(getBaseContext(), WidgetProvider.class));
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-        getBaseContext().sendBroadcast(intent);
-    }
-
-    */
 
     private void dispatchTakePictureIntent() {
         // create Intent to take a picture

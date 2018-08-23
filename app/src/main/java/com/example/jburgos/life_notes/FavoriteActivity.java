@@ -1,29 +1,20 @@
 package com.example.jburgos.life_notes;
 
-import android.appwidget.AppWidgetManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.jburgos.life_notes.adapter.MainNoteListAdapter;
 import com.example.jburgos.life_notes.data.AppDatabase;
 import com.example.jburgos.life_notes.data.NoteEntry;
 import com.example.jburgos.life_notes.viewModel.FavoriteViewModel;
-import com.example.jburgos.life_notes.widget.WidgetProvider;
-import com.google.gson.Gson;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
