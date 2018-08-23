@@ -7,7 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#fff">
 
         <LinearLayout
             android:id="@+id/widget_layout_main"
@@ -19,8 +20,8 @@
 
             <ImageView
                 android:id="@+id/widget_img_launcher"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_stat_name"/>
 
@@ -30,14 +31,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:paddingEnd="16dp"
-                android:fontFamily="serif"
+                android:fontFamily="cursive"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:paddingStart="16dp"
                 android:text="@string/notes_log"
-                android:textSize="24sp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/background_light"
+                android:textSize="32sp"
+                android:textAppearance="?android:attr/textAppearanceLargePopupMenu"
+                android:textColor="@android:color/background_dark"
                 android:textStyle="bold"/>
         </LinearLayout>
 
@@ -49,8 +50,8 @@
 
         <TextView
             android:id="@+id/empty_widget"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"

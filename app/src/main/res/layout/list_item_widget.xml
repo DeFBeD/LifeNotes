@@ -16,8 +16,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:textSize="24sp"
+        android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Title"/>
@@ -30,8 +31,9 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_gravity="right"
-        android:layout_marginEnd="21dp"
-        android:layout_marginTop="41dp"/>
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        tools:src="@drawable/ic_bookmark_border_black_24dp"/>
 
 
     </RelativeLayout>
