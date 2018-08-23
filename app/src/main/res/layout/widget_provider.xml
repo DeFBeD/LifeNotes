@@ -7,7 +7,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorAccent"
         android:orientation="vertical">
 
         <LinearLayout
@@ -35,7 +34,7 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:paddingStart="16dp"
-                android:text="Notes Log"
+                android:text="@string/notes_log"
                 android:textSize="24sp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@android:color/background_light"
@@ -55,8 +54,9 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginTop="8dp"
-            android:text="You have not logged any moments yet."
+            android:text="@string/empty_widget_message"
             />
     </LinearLayout>
 

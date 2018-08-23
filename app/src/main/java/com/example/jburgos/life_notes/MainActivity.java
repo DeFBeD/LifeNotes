@@ -22,10 +22,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageButton;
 
-import com.evernote.android.job.JobManager;
-import com.example.jburgos.life_notes.reminderNotification.LifeNotesJobCreator;
+
 import com.example.jburgos.life_notes.reminderNotification.ReminderNotificationJob;
 import com.example.jburgos.life_notes.settings.SettingsActivity;
 import com.example.jburgos.life_notes.viewModel.MainViewModel;
@@ -35,9 +33,7 @@ import com.example.jburgos.life_notes.data.NoteEntry;
 import com.example.jburgos.life_notes.utils.AppExecutors;
 import com.example.jburgos.life_notes.widget.WidgetProvider;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
 
     private MainNoteListAdapter mAdapter;
     private AppDatabase dataBase;
-    private FirebaseAnalytics mFirebaseAnalytics;
+    private FirebaseAnalytics mFireBaseAnalytics;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -62,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
     RecyclerView mRecyclerView;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         setSupportActionBar(toolbar);
 
         ReminderNotificationJob.schedule();
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFireBaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,9 +108,9 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         //initialize database and set up the ViewModel on the List of notes
         dataBase = AppDatabase.getInstance(getApplicationContext());
 
-        mFirebaseAnalytics.logEvent("addNewNoteIntent", null);
-        mFirebaseAnalytics.logEvent("chooseLayout", null);
-        mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
+        mFireBaseAnalytics.logEvent("addNewNoteIntent", null);
+        mFireBaseAnalytics.logEvent("chooseLayout", null);
+        mFireBaseAnalytics.setAnalyticsCollectionEnabled(true);
 
     }
 
@@ -152,6 +147,18 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         if (settingsRequestCode == SETTINGS_INTENT_REPLY) {
             chooseLayout();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setUpWidget();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        setUpWidget();
     }
 
     //gets shared preference and sets appropriate layout and sets up views
@@ -199,6 +206,14 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
 
     }
 
+    private void setUpWidget() {
+        Intent intent = new Intent(getApplicationContext(), WidgetProvider.class);
+        intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
+        int ids[] = AppWidgetManager.getInstance(getBaseContext()).getAppWidgetIds(new ComponentName(getBaseContext(), WidgetProvider.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        getBaseContext().sendBroadcast(intent);
+    }
+
 
     @Override
     public void onItemClickListener(int noteId) {
@@ -209,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         // [START custom_event]
         Bundle params = new Bundle();
         params.putInt("note_id", noteId);
-        mFirebaseAnalytics.logEvent("note_id_intent", params);
+        mFireBaseAnalytics.logEvent("note_id_intent", params);
         // [END custom_event]
 
     }

@@ -36,5 +36,7 @@
 
     <string name="action_share">Share</string>
     <string name="action_reply">Reply</string>
+    <string name="empty_widget_message">You have not logged any moments yet.</string>
+    <string name="notes_log">Notes Log</string>
 
 </resources>

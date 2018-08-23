@@ -35,4 +35,8 @@ public interface NoteDao {
     //to query all task by favorite
     @Query("SELECT * FROM notes WHERE is_favorite = 1")
     LiveData<List<NoteEntry>> loadAllFavorites();
+
+    //to query all task by favorite and supply the widget
+    @Query("SELECT * FROM notes WHERE is_favorite = 1")
+    List<NoteEntry> loadAllFavoritesForWidget();
 }

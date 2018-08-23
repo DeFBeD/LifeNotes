@@ -1,20 +1,16 @@
 package com.example.jburgos.life_notes.widget;
 
-import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.example.jburgos.life_notes.data.AppDatabase;
 import com.example.jburgos.life_notes.data.NoteEntry;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import com.example.jburgos.life_notes.R;
 
@@ -29,32 +25,24 @@ public class WidgetService extends RemoteViewsService {
 class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
 
     private Context mContext;
-    private ArrayList<NoteEntry> notes;
+    private List<NoteEntry> notes;
+    private AppDatabase database;
+    private static final String DATE_FORMAT = "MM/dd/yyy";
+    private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
 
     public WidgetRemoteViewFactory(Context applicationContext) {
         mContext = applicationContext;
-        notes = new ArrayList<>();
-
     }
 
     @Override
     public void onCreate() {
-
+        //initialize database
+        database = AppDatabase.getInstance(mContext);
     }
 
     @Override
     public void onDataSetChanged() {
-
-        SharedPreferences appSharedPrefs = PreferenceManager
-                .getDefaultSharedPreferences(mContext);
-        Gson gson = new Gson();
-        String json = appSharedPrefs.getString("MyObject", "");
-
-
-        Type type = new TypeToken<List<NoteEntry>>() {
-        }.getType();
-        notes = gson.fromJson(json, type);
-
+        notes = database.noteDao().loadAllFavoritesForWidget();
     }
 
     @Override
@@ -75,7 +63,7 @@ class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
 
         NoteEntry savedNotes = notes.get(position);
 
-        String date = String.valueOf(savedNotes.getDateView());
+        String date = dateFormat.format(savedNotes.getDateView());
         String isFavorite = String.valueOf(savedNotes.getIsFavorite());
         int favorite = Integer.parseInt(isFavorite);
 
@@ -86,8 +74,6 @@ class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
 
         if (favorite == 1) {
             views.setImageViewResource(R.id.widget_bookmark, R.drawable.ic_bookmark_black_24dp);
-        } else {
-            views.setImageViewResource(R.id.widget_bookmark, R.drawable.ic_bookmark_border_black_24dp);
         }
 
         return views;
@@ -101,9 +87,8 @@ class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public int getViewTypeCount() {
-    return 2;
+        return 1;
     }
-
 
 
     @Override
@@ -115,6 +100,7 @@ class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
     public boolean hasStableIds() {
         return false;
     }
+
 
 }
 

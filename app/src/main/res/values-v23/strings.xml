@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="empty_widget_message">You have not logged any moments yet.</string>
+    <string name="notes_log">Notes Log</string>
+</resources>

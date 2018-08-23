@@ -21,4 +21,6 @@
     <string name="pref_staggered_view" translatable="false"> staggered view</string>
     <string name="archive_title">Archive</string>
     <string name="settings_tittle">Settings</string>
+    <string name="empty_widget_message">You have not logged any moments yet.</string>
+    <string name="notes_log">Notes Log</string>
 </resources>

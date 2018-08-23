@@ -35,7 +35,7 @@ public class FavoriteActivity extends AppCompatActivity implements MainNoteListA
 
     private MainNoteListAdapter mAdapter;
     private AppDatabase dataBase;
-    private List<NoteEntry> notes;
+    private FavoriteViewModel notes;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -57,7 +57,6 @@ public class FavoriteActivity extends AppCompatActivity implements MainNoteListA
 
         dataBase = AppDatabase.getInstance(getApplicationContext());
         setUpViewModel();
-        setUpWidget();
 
     }
 
@@ -80,39 +79,9 @@ public class FavoriteActivity extends AppCompatActivity implements MainNoteListA
             @Override
             public void onChanged(@Nullable List<NoteEntry> noteEntries) {
                 mAdapter.setNotes(noteEntries);
-
-                notes = noteEntries;
-
-            }
+                }
         });
     }
-
-    private void setUpWidget() {
-        //Bundle bundle = new Bundle();
-        // bundle.putParcelableArrayList("fav", (ArrayList<? extends Parcelable>) notes);
-
-        List<List<NoteEntry>> noteFav = new ArrayList<>();
-        noteFav.add(notes);
-
-        SharedPreferences appSharedPrefs = PreferenceManager
-                .getDefaultSharedPreferences(getBaseContext());
-        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
-
-        Gson gson = new Gson();
-        String json = gson.toJson(noteFav);
-
-        prefsEditor.putString("MyObject", json);
-        prefsEditor.apply();
-        Log.d("TAG", "notes = " + json);
-
-        Intent intent = new Intent(getApplicationContext(), WidgetProvider.class);
-        intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
-        int ids[] = AppWidgetManager.getInstance(getBaseContext()).getAppWidgetIds(new ComponentName(getBaseContext(), WidgetProvider.class));
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-        getBaseContext().sendBroadcast(intent);
-    }
-
-
 
     @Override
     public void onItemClickListener(int noteId) {
