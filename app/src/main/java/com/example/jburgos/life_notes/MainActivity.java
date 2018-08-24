@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
     RecyclerView mRecyclerView;
     @BindView(R.id.fab)
     FloatingActionButton fab;
+    @BindView(R.id.empty_view_main)
+    View emptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +82,22 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
             }
         });
 
+        //chooses layout preference of the user to display the list
         chooseLayout();
-        /*
-         Add a touch helper to the RecyclerView to recognize when a user swipes to delete an item.
-         */
+
+         //Add a touch helper to the RecyclerView to recognize when a user swipes to delete an item.
+        swypeHandler();
+
+        //initialize database and set up the ViewModel on the List of notes
+        dataBase = AppDatabase.getInstance(getApplicationContext());
+
+        mFireBaseAnalytics.logEvent("addNewNoteIntent", null);
+        mFireBaseAnalytics.logEvent("chooseLayout", null);
+        mFireBaseAnalytics.setAnalyticsCollectionEnabled(true);
+
+    }
+
+    private void swypeHandler() {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -104,14 +118,6 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
                 });
             }
         }).attachToRecyclerView(mRecyclerView);
-
-        //initialize database and set up the ViewModel on the List of notes
-        dataBase = AppDatabase.getInstance(getApplicationContext());
-
-        mFireBaseAnalytics.logEvent("addNewNoteIntent", null);
-        mFireBaseAnalytics.logEvent("chooseLayout", null);
-        mFireBaseAnalytics.setAnalyticsCollectionEnabled(true);
-
     }
 
     @Override
@@ -152,13 +158,13 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
     @Override
     protected void onStart() {
         super.onStart();
-        setUpWidget();
+        updateWidget();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        setUpWidget();
+        updateWidget();
     }
 
     //gets shared preference and sets appropriate layout and sets up views
@@ -201,12 +207,15 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
             public void onChanged(@Nullable List<NoteEntry> noteEntries) {
                 Log.d(TAG, "updating from LiveData in ViewModel");
                 mAdapter.setNotes(noteEntries);
+                //set empty view on RecyclerView, so it shows when the list has 0 items
+                toggleEmptyView(noteEntries);
+
             }
         });
 
     }
 
-    private void setUpWidget() {
+    private void updateWidget() {
         Intent intent = new Intent(getApplicationContext(), WidgetProvider.class);
         intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
         int ids[] = AppWidgetManager.getInstance(getBaseContext()).getAppWidgetIds(new ComponentName(getBaseContext(), WidgetProvider.class));
@@ -220,12 +229,23 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
         intent.putExtra(EXTRA_NOTE_ID, noteId);
         startActivity(intent);
-
         // [START custom_event]
         Bundle params = new Bundle();
         params.putInt("note_id", noteId);
         mFireBaseAnalytics.logEvent("note_id_intent", params);
         // [END custom_event]
+
+    }
+
+    public void toggleEmptyView(List<NoteEntry> noteEntries) {
+        //set empty view on RecyclerView, so it shows when the list has 0 items
+        if (noteEntries.isEmpty()) {
+            mRecyclerView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
 
     }
 

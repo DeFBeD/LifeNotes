@@ -2,4 +2,6 @@
 <resources>
     <string name="empty_widget_message">You have not logged any moments yet.</string>
     <string name="notes_log">Notes Log</string>
+    <string name="empty_view_subtext">Bookmark your favorite notes and come back!</string>
+    <string name="empty_view_main_text">Nothing going on here..</string>
 </resources>

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.jburgos.life_notes.adapter.MainNoteListAdapter;
 import com.example.jburgos.life_notes.data.AppDatabase;
@@ -26,10 +27,11 @@ public class FavoriteActivity extends AppCompatActivity implements MainNoteListA
 
     private MainNoteListAdapter mAdapter;
     private AppDatabase dataBase;
-    private FavoriteViewModel notes;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.empty_view)
+    View emptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,6 @@ public class FavoriteActivity extends AppCompatActivity implements MainNoteListA
 
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
@@ -70,7 +71,8 @@ public class FavoriteActivity extends AppCompatActivity implements MainNoteListA
             @Override
             public void onChanged(@Nullable List<NoteEntry> noteEntries) {
                 mAdapter.setNotes(noteEntries);
-                }
+                toggleEmptyView(noteEntries);
+            }
         });
     }
 
@@ -79,6 +81,18 @@ public class FavoriteActivity extends AppCompatActivity implements MainNoteListA
         Intent intent = new Intent(FavoriteActivity.this, AddNoteActivity.class);
         intent.putExtra(EXTRA_NOTE_ID, noteId);
         startActivity(intent);
+    }
+
+    public void toggleEmptyView(List<NoteEntry> noteEntries) {
+        //set empty view on RecyclerView, so it shows when the list has 0 items
+        if (noteEntries.isEmpty()) {
+            mRecyclerView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
+
     }
 
 }
