@@ -42,19 +42,16 @@ class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public void onDataSetChanged() {
-        notes = database.noteDao().loadAllFavoritesForWidget();
+        notes = database.noteDao().loadAllNotesForWidget();
     }
 
     @Override
     public void onDestroy() {
-
     }
 
     @Override
     public int getCount() {
-
         return (notes == null) ? 0 : notes.size();
-
     }
 
     @Override
@@ -77,7 +74,6 @@ class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
         }
 
         return views;
-
     }
 
     @Override
@@ -100,7 +96,6 @@ class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
     public boolean hasStableIds() {
         return false;
     }
-
 
 }
 

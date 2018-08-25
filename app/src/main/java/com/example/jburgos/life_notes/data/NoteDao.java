@@ -19,6 +19,10 @@ public interface NoteDao {
     //so we wrap with LiveData
     LiveData<List<NoteEntry>> loadAllNotes();
 
+    //to query all task by favorite and supply the widget
+    @Query("SELECT * FROM notes ORDER BY date_updated_at")
+    List<NoteEntry> loadAllNotesForWidget();
+
     @Insert
     void insertNotes(NoteEntry noteEntry);
 
@@ -36,7 +40,4 @@ public interface NoteDao {
     @Query("SELECT * FROM notes WHERE is_favorite = 1")
     LiveData<List<NoteEntry>> loadAllFavorites();
 
-    //to query all task by favorite and supply the widget
-    @Query("SELECT * FROM notes WHERE is_favorite = 1")
-    List<NoteEntry> loadAllFavoritesForWidget();
 }
