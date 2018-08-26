@@ -19,14 +19,17 @@
         android:background="?android:attr/selectableItemBackground"
         android:src="@drawable/ic_bookmark_border_black_24dp"/>
 
+
+
+
     <EditText
         android:id="@+id/editTextNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
         android:hint="@string/edit_text"
+        android:background="@android:color/transparent"
         android:paddingBottom="@dimen/activity_horizontal_margin" />
-
 
     <!-- Add button -->
     <Button

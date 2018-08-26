@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
         chooseLayout();
 
          //Add a touch helper to the RecyclerView to recognize when a user swipes to delete an item.
-        swypeHandler();
+        swipeHandler();
 
         //initialize database and set up the ViewModel on the List of notes
         dataBase = AppDatabase.getInstance(getApplicationContext());
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
 
     }
 
-    private void swypeHandler() {
+    private void swipeHandler() {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {

@@ -61,9 +61,9 @@ public class AddNoteActivity extends AppCompatActivity {
 
     // Fields for views
     @BindView(R.id.editTextNote)
-    EditText mEditText;
+    EditText editText;
     @BindView(R.id.saveButton)
-    Button mButton;
+    Button saveButton;
     @BindView(R.id.take_pic_Button)
     Button picButton;
     @BindView(R.id.image)
@@ -88,7 +88,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(EXTRA_NOTE_ID)) {
-            mButton.setText(R.string.update_button);
+            saveButton.setText(R.string.update_button);
             if (mTaskId == DEFAULT_TASK_ID) {
                 // populate the UI
                 mTaskId = intent.getIntExtra(EXTRA_NOTE_ID, DEFAULT_TASK_ID);
@@ -120,7 +120,7 @@ public class AddNoteActivity extends AppCompatActivity {
      */
     private void setButtons() {
 
-        mButton.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onSaveButtonClicked();
@@ -155,7 +155,7 @@ public class AddNoteActivity extends AppCompatActivity {
             return;
         }
 
-        mEditText.setText(note.getDescription());
+        editText.setText(note.getDescription());
         isFavorite = note.getIsFavorite();
 
         if (isFavorite == 1) {
@@ -173,7 +173,7 @@ public class AddNoteActivity extends AppCompatActivity {
      * It retrieves user input and inserts that new task data into the underlying database.
      */
     public void onSaveButtonClicked() {
-        final String description = mEditText.getText().toString();
+        final String description = editText.getText().toString();
         final Date date = new Date();
         final int favorite = isFavorite;
         final String photoU = String.valueOf(photoUri);
