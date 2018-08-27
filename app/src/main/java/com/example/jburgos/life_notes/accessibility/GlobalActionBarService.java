@@ -40,8 +40,9 @@ public class GlobalActionBarService extends AccessibilityService {
         wm.addView(layout, lp);
 
         configurePowerButton();
-        configureVolumeButton();
+        configureVolumeButtonUp();
         configureScrollButtonForward();
+        configureVolumeButtonDown();
     }
 
 
@@ -100,7 +101,7 @@ public class GlobalActionBarService extends AccessibilityService {
         });
     }
 
-    private void configureVolumeButton() {
+    private void configureVolumeButtonUp() {
         Button volumeUpButton = layout.findViewById(R.id.volume_up);
         volumeUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +110,19 @@ public class GlobalActionBarService extends AccessibilityService {
                 assert audioManager != null;
                 audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,
                         AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
+            }
+        });
+    }
+
+    private void configureVolumeButtonDown() {
+        Button volumeUpButton = layout.findViewById(R.id.volume_up);
+        volumeUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+                assert audioManager != null;
+                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,
+                        AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
             }
         });
     }
