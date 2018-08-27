@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -65,7 +66,7 @@ public class AddNoteActivity extends AppCompatActivity {
     @BindView(R.id.saveButton)
     Button saveButton;
     @BindView(R.id.take_pic_Button)
-    Button picButton;
+    ImageButton picButton;
     @BindView(R.id.image)
     ImageView image;
     @BindView(R.id.bookmark)
