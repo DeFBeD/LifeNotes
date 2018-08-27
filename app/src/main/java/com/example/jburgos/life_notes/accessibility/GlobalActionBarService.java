@@ -115,7 +115,7 @@ public class GlobalActionBarService extends AccessibilityService {
     }
 
     private void configureVolumeButtonDown() {
-        Button volumeUpButton = layout.findViewById(R.id.volume_up);
+        Button volumeUpButton = layout.findViewById(R.id.volume_down);
         volumeUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
