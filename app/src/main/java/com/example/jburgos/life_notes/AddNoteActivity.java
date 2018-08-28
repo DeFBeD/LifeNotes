@@ -55,6 +55,7 @@ public class AddNoteActivity extends AppCompatActivity {
     public String photoFileName = ".jpg";
     File photoFile;
     Uri photoUri;
+    Boolean isImageremoved = false;
 
     //Member Variable for database
     private AppDatabase database;
@@ -79,6 +80,8 @@ public class AddNoteActivity extends AppCompatActivity {
     ImageButton bookmark;
     @BindView(R.id.dateTextView)
     TextView dateTextView;
+    @BindView(R.id.remove_pic_button)
+    Button removePicture;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +127,13 @@ public class AddNoteActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        image.setVisibility(View.VISIBLE);
+        isImageremoved = false;
+    }
+
     /**
      * init all the buttons
      */
@@ -135,6 +145,15 @@ public class AddNoteActivity extends AppCompatActivity {
                 onSaveButtonClicked();
             }
         });
+
+        removePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                image.setVisibility(View.INVISIBLE);
+                isImageremoved = true;
+            }
+        });
+
 
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,6 +195,7 @@ public class AddNoteActivity extends AppCompatActivity {
         String date = dateFormat.format(note.getDateView());
         dateTextView.setText(date);
 
+
         photoUri = Uri.parse(note.getImage());
         Glide.with(this).load(photoUri).into(image);
     }
@@ -189,9 +209,9 @@ public class AddNoteActivity extends AppCompatActivity {
         final Date date = new Date();
         final int favorite = isFavorite;
         final String photoU;
-        if(photoUri == null){
+        if (photoUri == null && isImageremoved) {
             photoU = "";
-        }else {
+        } else {
             photoU = String.valueOf(photoUri);
         }
         //final String photoU = String.valueOf(photoUri);
