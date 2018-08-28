@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -29,7 +30,9 @@ import com.example.jburgos.life_notes.utils.AppExecutors;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 import butterknife.BindView;
@@ -57,6 +60,9 @@ public class AddNoteActivity extends AppCompatActivity {
     private AppDatabase database;
     private int isFavorite;
 
+    private static final String DATE_FORMAT = "MM/dd/yyy";
+    private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+
     //firebase
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -70,7 +76,9 @@ public class AddNoteActivity extends AppCompatActivity {
     @BindView(R.id.image)
     ImageView image;
     @BindView(R.id.bookmark)
-    ImageView bookmark;
+    ImageButton bookmark;
+    @BindView(R.id.dateTextView)
+    TextView dateTextView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,6 +173,9 @@ public class AddNoteActivity extends AppCompatActivity {
             bookmark.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
         }
 
+        String date = dateFormat.format(note.getDateView());
+        dateTextView.setText(date);
+
         photoUri = Uri.parse(note.getImage());
         Glide.with(this).load(photoUri).into(image);
     }
@@ -177,7 +188,14 @@ public class AddNoteActivity extends AppCompatActivity {
         final String description = editText.getText().toString();
         final Date date = new Date();
         final int favorite = isFavorite;
-        final String photoU = String.valueOf(photoUri);
+        final String photoU;
+        if(photoUri == null){
+            photoU = "";
+        }else {
+            photoU = String.valueOf(photoUri);
+        }
+        //final String photoU = String.valueOf(photoUri);
+        Log.d(TAG, "onSaveButtonClicked: " + photoUri);
 
         fireBaseEvents(description);
 
@@ -189,7 +207,7 @@ public class AddNoteActivity extends AppCompatActivity {
                 if (mTaskId == DEFAULT_TASK_ID) {
                     // insert new task
                     database.noteDao().insertNotes(note);
-                    Log.d(TAG, "inserted:" + description + "favorite:" + String.valueOf(favorite) + "uri:" + photoU);
+                    Log.d(TAG, "inserted: " + description + "favorite: " + String.valueOf(favorite) + "uri: " + photoU);
                 } else {
                     //update task
                     note.setId(mTaskId);

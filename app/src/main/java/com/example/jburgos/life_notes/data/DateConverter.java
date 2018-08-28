@@ -2,7 +2,9 @@ package com.example.jburgos.life_notes.data;
 
 import android.arch.persistence.room.TypeConverter;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class DateConverter {
 
@@ -17,6 +19,5 @@ public class DateConverter {
     public static Long toTimeStamp(Date date){
         return date == null ? null : date.getTime();
     }
-
 
 }

@@ -3,10 +3,11 @@ package com.example.jburgos.life_notes.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +20,11 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+import static android.support.constraint.Constraints.TAG;
+
 public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapter.NoteViewHolder> {
+
+    private static final String TAG = MainNoteListAdapter.class.getSimpleName();
 
     // Constant for date format & Date formatter
     private static final String DATE_FORMAT = "MM/dd/yyy";
@@ -58,15 +63,9 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
         return new NoteViewHolder(view);
     }
 
-    /**
-     * Called by the RecyclerView to display data at a specified position in the Cursor.
-     *
-     * @param holder   The ViewHolder to bind Cursor data to
-     * @param position The position of the data in the Cursor
-     */
     @Override
     public void onBindViewHolder(NoteViewHolder holder, int position) {
-        // Determine the values of the wanted data
+
         NoteEntry noteEntry = noteEntries.get(position);
         String description = noteEntry.getDescription();
         String updatedAtDateView = dateFormat.format(noteEntry.getDateView());
@@ -76,11 +75,14 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
         holder.noteContentsView.setText(description);
         holder.updateTheDateView.setText(updatedAtDateView);
 
-        if(imageUri != null){
+        if (!TextUtils.isEmpty(imageUri)) {
+            holder.imageCard.setVisibility(View.VISIBLE);
             Glide.with(mContext).load(imageUri).into(holder.imageCard);
+        } else {
+            holder.imageCard.setVisibility(View.GONE);
         }
 
-        }
+    }
 
     /**
      * Returns the number of items to display.
@@ -102,7 +104,7 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
         notifyDataSetChanged();
     }
 
-    public List<NoteEntry> getNotes(){
+    public List<NoteEntry> getNotes() {
         return noteEntries;
     }
 
@@ -117,7 +119,6 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
         TextView noteContentsView;
         TextView updateTheDateView;
         ImageView imageCard;
-
 
         /**
          * Constructor for the NoteViewHolders.
