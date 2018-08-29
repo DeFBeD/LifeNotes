@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_add_note"
-    tools:context=".AddNoteActivity">
+    tools:context=".AddNoteActivity"
+    tools:showIn="@layout/activity_add_note">
 
     <android.support.constraint.ConstraintLayout
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
@@ -38,7 +38,6 @@
 
         <!-- Add button -->
 
-
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,12 +60,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignEnd="@+id/image"
-                android:background="@drawable/ripple"
                 android:layout_alignParentBottom="true"
+                android:background="@drawable/ripple"
                 android:src="@drawable/ic_cancel_black_24dp"
                 />
         </RelativeLayout>
-
 
         <TextView
             android:id="@+id/dateTextView"
@@ -74,9 +72,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            tools:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="TextView"/>
 
     </android.support.constraint.ConstraintLayout>
 

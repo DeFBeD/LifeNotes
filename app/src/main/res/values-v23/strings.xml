@@ -5,4 +5,5 @@
     <string name="empty_view_subtext">Bookmark your favorite notes and come back!</string>
     <string name="empty_view_main_text">Nothing going on here..</string>
     <string name="image_view_content_description">Picture Taken</string>
+    <string name="pictureWasNotTaken">Picture wasn\'t taken!</string>
 </resources>

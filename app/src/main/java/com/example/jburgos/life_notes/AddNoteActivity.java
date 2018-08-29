@@ -24,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.jburgos.life_notes.settings.SettingsActivity;
 import com.example.jburgos.life_notes.viewModel.AddNoteViewModel;
 import com.example.jburgos.life_notes.viewModel.AddNoteViewModelFactory;
 import com.example.jburgos.life_notes.data.AppDatabase;
@@ -45,7 +44,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
     private static final String TAG = AddNoteActivity.class.getSimpleName();
 
-    // id being recieved through intent
+    // id being received through intent
     public static final String EXTRA_NOTE_ID = "extraNoteId";
     // instance id for rotation
     public static final String NOTE_INSTANCE_ID = "instanceOfNoteId";
@@ -53,13 +52,13 @@ public class AddNoteActivity extends AppCompatActivity {
     private static final int DEFAULT_TASK_ID = -1;
     private int mTaskId = DEFAULT_TASK_ID;
 
-    //photoUri constants
+    //variables for handling photo logic
     static final int REQUEST_TAKE_PHOTO = 1034;
     public String photoFileName = ".jpg";
     File photoFile;
     Uri photoUri;
     Boolean isImageRemoved = false;
-    Boolean isImageTaken = true;
+    Boolean isImageTaken = false;
 
     //Member Variable for database
     private AppDatabase database;
@@ -102,8 +101,8 @@ public class AddNoteActivity extends AppCompatActivity {
                     NavUtils.navigateUpFromSameTask(AddNoteActivity.this);
                 }
             });
-
         }
+
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         setButtons();
@@ -145,12 +144,11 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         image.setVisibility(View.VISIBLE);
         if (photoUri == null || !isImageTaken) {
             removePicture.setVisibility(View.INVISIBLE);
-            isImageTaken = true;
         } else {
             removePicture.setVisibility(View.VISIBLE);
         }
@@ -177,7 +175,6 @@ public class AddNoteActivity extends AppCompatActivity {
             }
         });
 
-
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -195,11 +192,13 @@ public class AddNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dispatchTakePictureIntent();
+                isImageRemoved = false;
             }
         });
 
     }
 
+    //populate views in activity
     private void populateUI(NoteEntry note) {
 
         if (note == null) {
@@ -231,15 +230,14 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     /**
-     * onSaveButtonClicked is called when the "save" button is clicked.
-     * It retrieves user input and inserts that new task data into the underlying database.
+     * onSaveButtonClicked inserts or updates user input into the database
      */
     public void onSaveButtonClicked() {
         final String description = editText.getText().toString();
         final Date date = new Date();
         final int favorite = isFavorite;
         final String photoU;
-        if (photoUri == null || isImageRemoved) {
+        if (photoUri == null || isImageRemoved || !isImageTaken) {
             photoU = "";
         } else {
             photoU = String.valueOf(photoUri);
@@ -267,7 +265,6 @@ public class AddNoteActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void dispatchTakePictureIntent() {
         // create Intent to take a picture
@@ -315,9 +312,10 @@ public class AddNoteActivity extends AppCompatActivity {
 
                 Glide.with(this).load(takenImage).into(image);
 
+                isImageTaken = true;
+
             } else { // Result was a failure
-                isImageTaken = false;
-                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.pictureWasNotTaken, Toast.LENGTH_SHORT).show();
             }
         }
     }

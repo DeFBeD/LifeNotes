@@ -1,56 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout android:layout_width="match_parent"
-              android:orientation="vertical"
-                                            android:layout_height="match_parent"
-                                            xmlns:android="http://schemas.android.com/apk/res/android"
-                                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                                            xmlns:tools="http://schemas.android.com/tools">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:orientation="vertical"
+    >
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:fitsSystemWindows="true"
         android:elevation="@dimen/default_4_padding"
+        android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:background="#fff"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:elevation="6dp">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar2"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#fff"
+            android:elevation="6dp">
 
-        <!-- Archive tab-->
-        <ImageButton
-            android:id="@+id/bookmark"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_gravity="end"
-            android:background="?android:attr/selectableItemBackground"
-            android:src="@drawable/ic_bookmark_border_black_24dp"
-            />
+            <!-- Archive tab-->
+            <ImageButton
+                android:id="@+id/bookmark"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="16dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_bookmark_border_black_24dp"
+                />
 
-        <!-- take pic button -->
-        <ImageButton
-            android:id="@+id/take_pic_Button"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="16dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:src="@drawable/ic_photo_camera_black_24dp"
-            />
-    </android.support.v7.widget.Toolbar>
+            <!-- take pic button -->
+            <ImageButton
+                android:id="@+id/take_pic_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="16dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_photo_camera_black_24dp"
+                />
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_add_notes"/>
-
 
     <!-- Add button -->
     <Button
@@ -63,14 +62,13 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/rounded_button"
         android:elevation="6dp"
-        app:layout_behavior="@string/fab_transformation_sheet_behavior"
         android:foreground="?android:attr/selectableItemBackground"
         android:text="@string/add_button"
         android:textColor="@android:color/primary_text_light"
+        app:layout_behavior="@string/fab_transformation_sheet_behavior"
         />
 
-
-    </android.support.design.widget.CoordinatorLayout>
+</android.support.design.widget.CoordinatorLayout>
 
 
 
