@@ -9,9 +9,11 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.jburgos.life_notes.settings.SettingsActivity;
 import com.example.jburgos.life_notes.viewModel.AddNoteViewModel;
 import com.example.jburgos.life_notes.viewModel.AddNoteViewModelFactory;
 import com.example.jburgos.life_notes.data.AppDatabase;
@@ -55,7 +58,8 @@ public class AddNoteActivity extends AppCompatActivity {
     public String photoFileName = ".jpg";
     File photoFile;
     Uri photoUri;
-    Boolean isImageremoved = false;
+    Boolean isImageRemoved = false;
+    Boolean isImageTaken = true;
 
     //Member Variable for database
     private AppDatabase database;
@@ -81,12 +85,25 @@ public class AddNoteActivity extends AppCompatActivity {
     @BindView(R.id.dateTextView)
     TextView dateTextView;
     @BindView(R.id.remove_pic_button)
-    Button removePicture;
+    ImageButton removePicture;
+    @BindView(R.id.toolbar2)
+    Toolbar addNoteToolbar;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
         ButterKnife.bind(this);
+        if (null != addNoteToolbar) {
+            addNoteToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+
+            addNoteToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NavUtils.navigateUpFromSameTask(AddNoteActivity.this);
+                }
+            });
+
+        }
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         setButtons();
@@ -128,10 +145,15 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         image.setVisibility(View.VISIBLE);
-        isImageremoved = false;
+        if (photoUri == null || !isImageTaken) {
+            removePicture.setVisibility(View.INVISIBLE);
+            isImageTaken = true;
+        } else {
+            removePicture.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -150,7 +172,8 @@ public class AddNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 image.setVisibility(View.INVISIBLE);
-                isImageremoved = true;
+                removePicture.setVisibility(View.INVISIBLE);
+                isImageRemoved = true;
             }
         });
 
@@ -195,9 +218,16 @@ public class AddNoteActivity extends AppCompatActivity {
         String date = dateFormat.format(note.getDateView());
         dateTextView.setText(date);
 
-
         photoUri = Uri.parse(note.getImage());
-        Glide.with(this).load(photoUri).into(image);
+
+        if (photoUri.toString().isEmpty()) {
+            removePicture.setVisibility(View.INVISIBLE);
+        } else {
+            removePicture.setVisibility(View.VISIBLE);
+
+            Glide.with(this).load(photoUri).into(image);
+
+        }
     }
 
     /**
@@ -209,13 +239,11 @@ public class AddNoteActivity extends AppCompatActivity {
         final Date date = new Date();
         final int favorite = isFavorite;
         final String photoU;
-        if (photoUri == null && isImageremoved) {
+        if (photoUri == null || isImageRemoved) {
             photoU = "";
         } else {
             photoU = String.valueOf(photoUri);
         }
-        //final String photoU = String.valueOf(photoUri);
-        Log.d(TAG, "onSaveButtonClicked: " + photoUri);
 
         fireBaseEvents(description);
 
@@ -288,6 +316,7 @@ public class AddNoteActivity extends AppCompatActivity {
                 Glide.with(this).load(takenImage).into(image);
 
             } else { // Result was a failure
+                isImageTaken = false;
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }

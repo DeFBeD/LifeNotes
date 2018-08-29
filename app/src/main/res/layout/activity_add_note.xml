@@ -16,7 +16,7 @@
 
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar2"
         android:background="#fff"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -45,8 +45,6 @@
             android:background="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_photo_camera_black_24dp"
             />
-
-
     </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
@@ -65,6 +63,7 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/rounded_button"
         android:elevation="6dp"
+        app:layout_behavior="@string/fab_transformation_sheet_behavior"
         android:foreground="?android:attr/selectableItemBackground"
         android:text="@string/add_button"
         android:textColor="@android:color/primary_text_light"

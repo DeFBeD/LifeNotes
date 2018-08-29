@@ -56,17 +56,15 @@
                 android:contentDescription="@string/image_view_content_description"
                 tools:src="@mipmap/ic_launcher"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/remove_pic_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/image"
-                android:text="REMOVE"
-                android:background="@drawable/rounded_button"
-
+                android:layout_alignEnd="@+id/image"
+                android:background="@drawable/ripple"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/ic_cancel_black_24dp"
                 />
-
-
         </RelativeLayout>
 
 
@@ -76,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="TextView"
+            tools:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
