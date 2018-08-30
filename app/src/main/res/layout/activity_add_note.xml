@@ -28,7 +28,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="end"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="12dp"
                 android:layout_marginTop="16dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_bookmark_border_black_24dp"
@@ -40,10 +40,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_gravity="end"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="12dp"
                 android:layout_marginTop="16dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_photo_camera_black_24dp"
+                />
+
+            <!-- take pic button -->
+            <ImageButton
+                android:id="@+id/share_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="16dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_share_black_24dp"
                 />
         </android.support.v7.widget.Toolbar>
 

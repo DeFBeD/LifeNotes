@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -52,21 +53,20 @@ public class MainActivity extends AppCompatActivity implements MainNoteListAdapt
     private AppDatabase dataBase;
     private FirebaseAnalytics mFireBaseAnalytics;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.fab)
     FloatingActionButton fab;
     @BindView(R.id.empty_view_main)
     View emptyView;
+    @BindView(R.id.bar)
+    BottomNavigationView bottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
 
         ReminderNotificationJob.schedule();
         mFireBaseAnalytics = FirebaseAnalytics.getInstance(this);

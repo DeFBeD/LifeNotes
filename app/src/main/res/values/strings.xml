@@ -18,18 +18,17 @@
     <string name="pref_list_view" translatable="false">list view</string>
     <string name="pref_grid_view" translatable="false"> grid view</string>
     <string name="pref_staggered_view" translatable="false"> staggered view</string>
-    <string name="go_to_archived">Go to Archived</string>
+    <string name="go_to_archived">Archive</string>
     <string name="archive_title">Archive</string>
     <string name="settings_tittle">Settings</string>
 
-   <!-- accessability  bar -->
+    <!-- accessability  bar -->
     <string name="power">Power</string>
     <string name="volumeUp">Vol +</string>
     <string name="scroll">Scroll</string>
     <string name="volumeDown">Vol -</string>
 
     <string name="remindder_notification_title_template">Reminder: %1$s</string>
-
 
 
     <string name="action_share">Share</string>
@@ -40,5 +39,9 @@
     <string name="empty_view_main_text">Nothing going on here..</string>
     <string name="image_view_content_description">Picture Taken</string>
     <string name="pictureWasNotTaken">Picture wasn\'t taken!</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 </resources>
