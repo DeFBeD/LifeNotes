@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".MainActivity">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/app_bar_height"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:toolbarId="@+id/toolbar">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <include layout="@layout/content_main"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+    <!-- Empty view for favorite
+    <RelativeLayout
+        android:id="@+id/empty_view_main"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/empty_bookmark_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/empty_title_text"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/ic_import_contacts_black_48dp"/>
+
+        <TextView
+            android:id="@+id/empty_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/empty_subtitle_text"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="sans-serif-medium"
+            android:paddingTop="16dp"
+            android:text="You currently have no notes."
+            android:textAppearance="?android:textAppearanceMedium"/>
+
+        <TextView
+            android:id="@+id/empty_subtitle_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="239dp"
+            android:fontFamily="sans-serif"
+            android:paddingTop="8dp"
+            android:text="Starting adding entries to log your best \n     (or maybe your worst) moments!"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="#A2AAB0"/>
+    </RelativeLayout>
+    -->
+
+
+</FrameLayout>

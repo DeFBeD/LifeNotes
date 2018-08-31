@@ -36,7 +36,7 @@ public class FavoriteActivity extends AppCompatActivity implements MainNoteListA
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorite);
+        setContentView(R.layout.fragment_favorite);
         ButterKnife.bind(this);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(R.string.archive_title);

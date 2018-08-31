@@ -84,6 +84,8 @@
                 android:resource="@xml/global_action_bar_service"/>
         </service>
 
+        <activity android:name=".SearchActivity">
+        </activity>
     </application>
 
 </manifest>
