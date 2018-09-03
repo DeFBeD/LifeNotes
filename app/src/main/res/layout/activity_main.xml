@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout android:layout_width="match_parent"
+<android.support.design.widget.CoordinatorLayout android:layout_width="match_parent"
              android:layout_height="match_parent"
              xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -31,4 +31,4 @@
         app:elevation="8dp"
         app:srcCompat="@android:drawable/ic_input_add" />
 
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

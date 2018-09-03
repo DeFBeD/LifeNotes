@@ -237,10 +237,12 @@ public class AddNoteActivity extends AppCompatActivity {
         final Date date = new Date();
         final int favorite = isFavorite;
         final String photoU;
-        if (photoUri == null || isImageRemoved || !isImageTaken) {
+        if (photoUri == null || isImageRemoved || !isImageTaken || isFavorite == 0) {
             photoU = "";
+            Log.d(TAG, " picture not string");
         } else {
             photoU = String.valueOf(photoUri);
+            Log.d(TAG, " picture with string");
         }
 
         fireBaseEvents(description);
