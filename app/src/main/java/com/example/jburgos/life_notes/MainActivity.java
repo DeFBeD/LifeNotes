@@ -22,8 +22,6 @@ public class MainActivity extends AppCompatActivity {
 
     static final int SETTINGS_INTENT_REPLY = 1;
 
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
     //@BindView(R.id.empty_view_main)
     //View emptyView;
     @BindView(R.id.bar)
@@ -37,16 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (savedInstanceState == null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-
-            Bundle bundle = getIntent().getExtras();
-
-            MainFragment mainFragment = new MainFragment();
-            mainFragment.setArguments(bundle);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.frameLayout, mainFragment)
-                    .addToBackStack("tag")
-                    .commit();
+            newMainFragment();
 
         }
 
@@ -61,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
                         //mainFragment.setArguments(bundle);
                         fragmentManager.beginTransaction()
                                 .replace(R.id.frameLayout, mainFragment)
-                                .addToBackStack("main")
                                 .commit();
 
                         return true;
@@ -71,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                         FavoriteFragment favoriteFragment = new FavoriteFragment();
                         fragmentManager.beginTransaction()
                                 .replace(R.id.frameLayout, favoriteFragment)
-                                .addToBackStack("favorite")
                                 .commit();
 
                         return true;
@@ -81,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
                         SearchFragment searchFragment = new SearchFragment();
                         fragmentManager.beginTransaction()
                                 .replace(R.id.frameLayout, searchFragment)
-                                .addToBackStack("search")
                                 .commit();
                         return true;
                 }
@@ -92,19 +78,45 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Create a new intent to start an AddTaskActivity
-                Intent addNewNoteIntent = new Intent(MainActivity.this, AddNoteActivity.class);
-                startActivity(addNewNoteIntent);
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(getApplication(), SettingsActivity.class);
+            startActivityForResult(settingsIntent, SETTINGS_INTENT_REPLY);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    //Getting intent from settings and launching a desired layoutManager
+    @Override
+    public void onActivityResult(int settingsRequestCode, int settingsResultcode, Intent resultData) {
+        super.onActivityResult(settingsRequestCode, settingsResultcode, resultData);
+
+        if (settingsRequestCode == SETTINGS_INTENT_REPLY) {
+            newMainFragment();
+        }
+    }
+
+    private void newMainFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        MainFragment mainFragment = new MainFragment();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frameLayout, mainFragment)
+                .commit();
     }
 
 }

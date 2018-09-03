@@ -8,8 +8,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 
-import com.example.jburgos.life_notes.AddNoteActivity;
-import com.example.jburgos.life_notes.FavoriteActivity;
+import com.example.jburgos.life_notes.FavoriteFragment;
 import com.example.jburgos.life_notes.R;
 
 /**
@@ -24,7 +23,7 @@ public class WidgetProvider extends AppWidgetProvider {
 
         views.setEmptyView(R.id.widget_list, R.id.empty_widget);
 
-        Intent intent = new Intent(context, FavoriteActivity.class);
+        Intent intent = new Intent(context, FavoriteFragment.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         views.setOnClickPendingIntent(R.id.parentView, pendingIntent);
 

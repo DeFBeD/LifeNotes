@@ -59,8 +59,10 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    @BindView(R.id.empty_view_main)
+    View emptyView;
 
 
     public MainFragment() {
@@ -79,10 +81,21 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, rootView);
-        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
+
 
         ReminderNotificationJob.schedule();
         mFireBaseAnalytics = FirebaseAnalytics.getInstance(Objects.requireNonNull(getContext()));
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create a new intent to start an AddTaskActivity
+                Intent addNewNoteIntent = new Intent(getContext(), AddNoteActivity.class);
+                startActivity(addNewNoteIntent);
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
 
         //chooses layout preference of the user to display the list
@@ -100,24 +113,6 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
 
         return rootView;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_main, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            Intent settingsIntent = new Intent(getContext(), SettingsActivity.class);
-            startActivityForResult(settingsIntent, SETTINGS_INTENT_REPLY);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 
@@ -155,8 +150,6 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
             chooseLayout();
         }
     }
-
-
 
     @Override
    public void onStart() {
@@ -211,7 +204,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
                 Log.d(TAG, "updating from LiveData in ViewModel");
                 mAdapter.setNotes(noteEntries);
                 //set empty view on RecyclerView, so it shows when the list has 0 items
-                //toggleEmptyView(noteEntries);
+                toggleEmptyView(noteEntries);
 
             }
         });
@@ -221,7 +214,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
     private void updateWidget() {
         Intent intent = new Intent(getContext(), WidgetProvider.class);
         intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
-        int ids[] = AppWidgetManager.getInstance(getContext()).getAppWidgetIds(new ComponentName(getActivity(), WidgetProvider.class));
+        int ids[] = AppWidgetManager.getInstance(getContext()).getAppWidgetIds(new ComponentName(Objects.requireNonNull(getActivity()), WidgetProvider.class));
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
         getActivity().sendBroadcast(intent);
     }
@@ -240,7 +233,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
     }
 
-    /*
+
     public void toggleEmptyView(List<NoteEntry> noteEntries) {
         //set empty view on RecyclerView, so it shows when the list has 0 items
         if (noteEntries.isEmpty()) {
@@ -252,5 +245,5 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
         }
 
     }
-    */
+
 }

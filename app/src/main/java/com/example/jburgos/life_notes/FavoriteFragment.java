@@ -71,7 +71,7 @@ public class FavoriteFragment extends Fragment implements MainNoteListAdapter.It
             @Override
             public void onChanged(@Nullable List<NoteEntry> noteEntries) {
                 mAdapter.setNotes(noteEntries);
-                //toggleEmptyView(noteEntries);
+                toggleEmptyView(noteEntries);
             }
         });
     }
@@ -81,5 +81,17 @@ public class FavoriteFragment extends Fragment implements MainNoteListAdapter.It
         Intent intent = new Intent(getContext(), AddNoteActivity.class);
         intent.putExtra(EXTRA_NOTE_ID, noteId);
         startActivity(intent);
+    }
+
+    public void toggleEmptyView(List<NoteEntry> noteEntries) {
+        //set empty view on RecyclerView, so it shows when the list has 0 items
+        if (noteEntries.isEmpty()) {
+            mRecyclerView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
+
     }
 }

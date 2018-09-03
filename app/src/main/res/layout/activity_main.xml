@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout android:layout_width="match_parent"
+<LinearLayout android:orientation="vertical"
+    android:layout_width="match_parent"
+              android:weightSum="4"
              android:layout_height="match_parent"
              xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,7 +11,8 @@
    <FrameLayout
        android:id="@+id/frameLayout"
        android:layout_width="match_parent"
-       android:layout_height="match_parent">
+       android:layout_height="match_parent"
+       android:layout_weight="3">
 
    </FrameLayout>
 
@@ -18,17 +21,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:padding="8dp"
+        android:layout_weight="1"
         android:background="?android:attr/windowBackground"
         app:menu="@menu/navigation" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="40dp"
-        android:clickable="true"
-        app:elevation="8dp"
-        app:srcCompat="@android:drawable/ic_input_add" />
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
