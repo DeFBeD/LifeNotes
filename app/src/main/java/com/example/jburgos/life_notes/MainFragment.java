@@ -73,6 +73,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -139,18 +140,6 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
         }).attachToRecyclerView(mRecyclerView);
     }
 
-
-
-    //Getting intent from settings and launching a desired layoutManager
-    @Override
-    public void onActivityResult(int settingsRequestCode, int settingsResultcode, Intent resultData) {
-        super.onActivityResult(settingsRequestCode, settingsResultcode, resultData);
-
-        if (settingsRequestCode == SETTINGS_INTENT_REPLY) {
-            chooseLayout();
-        }
-    }
-
     @Override
    public void onStart() {
         super.onStart();
@@ -209,6 +198,34 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
             }
         });
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(getContext(), SettingsActivity.class);
+            startActivityForResult(settingsIntent, SETTINGS_INTENT_REPLY);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    //Getting intent from settings and launching a desired layoutManager
+    @Override
+    public void onActivityResult(int settingsRequestCode, int settingsResultcode, Intent resultData) {
+        super.onActivityResult(settingsRequestCode, settingsResultcode, resultData);
+
+        if (settingsRequestCode == SETTINGS_INTENT_REPLY) {
+            chooseLayout();
+        }
     }
 
     private void updateWidget() {
