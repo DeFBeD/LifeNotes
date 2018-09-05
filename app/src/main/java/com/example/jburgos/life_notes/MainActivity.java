@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.example.jburgos.life_notes.settings.SettingsActivity;
 
@@ -18,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     static final int SETTINGS_INTENT_REPLY = 1;
 
@@ -33,51 +31,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        bottomBar.setOnNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
-            newMainFragment();
+            loadFragment(new MainFragment());
 
         }
 
-        bottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.action_home:
-                        FragmentManager fragmentManager = getSupportFragmentManager();
+    }
 
-                        MainFragment mainFragment = new MainFragment();
-                        //mainFragment.setArguments(bundle);
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.frameLayout, mainFragment)
-                                .commit();
+    private boolean loadFragment(Fragment fragment) {
 
-                        return true;
-                    case R.id.action_favorite:
+        if (fragment != null) {
 
-                        fragmentManager = getSupportFragmentManager();
-                        FavoriteFragment favoriteFragment = new FavoriteFragment();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.frameLayout, favoriteFragment)
-                                .commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frameLayout, fragment)
+                    .commit();
 
-                        return true;
-                    case R.id.navigation_search:
+            return true;
 
-                        fragmentManager = getSupportFragmentManager();
-                        SearchFragment searchFragment = new SearchFragment();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.frameLayout, searchFragment)
-                                .commit();
-                        return true;
-                }
-                return false;
-            }
+        }
 
-
-        });
-
-
+        return false;
     }
 
     @Override
@@ -106,17 +82,33 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(settingsRequestCode, settingsResultcode, resultData);
 
         if (settingsRequestCode == SETTINGS_INTENT_REPLY) {
-            newMainFragment();
+            loadFragment(new MainFragment());
         }
     }
 
-    private void newMainFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-        MainFragment mainFragment = new MainFragment();
-        fragmentManager.beginTransaction()
-                .replace(R.id.frameLayout, mainFragment)
-                .commit();
+        Fragment fragment = null;
+
+        switch (menuItem.getItemId()) {
+            case R.id.action_home:
+
+                fragment = new MainFragment();
+                break;
+
+            case R.id.action_favorite:
+
+                fragment = new FavoriteFragment();
+                break;
+
+            case R.id.navigation_search:
+
+                fragment = new SearchFragment();
+                break;
+        }
+
+        return loadFragment(fragment);
+
     }
-
 }
