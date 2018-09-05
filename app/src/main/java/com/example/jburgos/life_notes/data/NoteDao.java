@@ -36,6 +36,10 @@ public interface NoteDao {
     @Query("SELECT * FROM notes WHERE id = :id")
     LiveData<NoteEntry> loadNoteById(int id);
 
+    //to query with the searchView
+    @Query("SELECT * FROM notes WHERE description LIKE :search")
+    List<NoteEntry> loadNoteBySearch(String search);
+
     //to query all task by favorite
     @Query("SELECT * FROM notes WHERE is_favorite = 1")
     LiveData<List<NoteEntry>> loadAllFavorites();
