@@ -63,6 +63,7 @@ public class AddNoteActivity extends AppCompatActivity {
     //Member Variable for database
     private AppDatabase database;
     private int isFavorite;
+    private String description;
 
     private static final String DATE_FORMAT = "MM/dd/yyy";
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
@@ -75,6 +76,8 @@ public class AddNoteActivity extends AppCompatActivity {
     EditText editText;
     @BindView(R.id.saveButton)
     Button saveButton;
+    @BindView(R.id.share_Button)
+    ImageButton shareButton;
     @BindView(R.id.take_pic_Button)
     ImageButton picButton;
     @BindView(R.id.image)
@@ -196,6 +199,13 @@ public class AddNoteActivity extends AppCompatActivity {
             }
         });
 
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareTextUrl(description);
+            }
+        });
+
     }
 
     //populate views in activity
@@ -206,6 +216,7 @@ public class AddNoteActivity extends AppCompatActivity {
         }
 
         editText.setText(note.getDescription());
+        description = note.getDescription();
         isFavorite = note.getIsFavorite();
 
         if (isFavorite == 1) {
@@ -266,6 +277,18 @@ public class AddNoteActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void shareTextUrl(String description) {
+        Intent share = new Intent(android.content.Intent.ACTION_SEND);
+        share.setType("text/plain");
+        share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+
+        // Add data to the intent, the receiving app will decide
+        // what to do with it.
+        share.putExtra(Intent.EXTRA_TEXT, description);
+
+        startActivity(Intent.createChooser(share, "Share link!"));
     }
 
     private void dispatchTakePictureIntent() {
