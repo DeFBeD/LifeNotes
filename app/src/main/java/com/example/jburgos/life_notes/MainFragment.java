@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -213,6 +214,17 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
             Intent settingsIntent = new Intent(getContext(), SettingsActivity.class);
             startActivityForResult(settingsIntent, SETTINGS_INTENT_REPLY);
             return true;
+        }
+
+        if (id == R.id.deleteAll) {
+
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    dataBase.noteDao().deleteAllNote();
+                }
+            });
+
         }
 
         return super.onOptionsItemSelected(item);

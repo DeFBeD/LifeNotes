@@ -32,6 +32,9 @@ public interface NoteDao {
     @Delete
     void deleteNote(NoteEntry noteEntry);
 
+    @Query("DELETE FROM notes")
+    void deleteAllNote();
+
     //to query individual task by id
     @Query("SELECT * FROM notes WHERE id = :id")
     LiveData<NoteEntry> loadNoteById(int id);

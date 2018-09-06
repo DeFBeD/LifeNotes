@@ -7,4 +7,5 @@
     <string name="image_view_content_description">Picture Taken</string>
     <string name="pictureWasNotTaken">Picture wasn\'t taken!</string>
     <string name="search_navigation">Search</string>
+    <string name="action_deleteAll">Delete All</string>
 </resources>
