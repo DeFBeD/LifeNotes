@@ -10,17 +10,17 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
+
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityOptionsCompat;
+
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
+
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -248,7 +248,6 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
         getActivity().sendBroadcast(intent);
     }
 
-
     @Override
     public void onItemClickListener(int noteId) {
         Intent intent = new Intent(getContext(), AddNoteActivity.class);
@@ -261,7 +260,6 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
         // [END custom_event]
 
     }
-
 
     public void toggleEmptyView(List<NoteEntry> noteEntries) {
         //set empty view on RecyclerView, so it shows when the list has 0 items
