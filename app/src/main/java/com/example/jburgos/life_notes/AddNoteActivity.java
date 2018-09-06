@@ -288,7 +288,7 @@ public class AddNoteActivity extends AppCompatActivity {
         // what to do with it.
         share.putExtra(Intent.EXTRA_TEXT, description);
 
-        startActivity(Intent.createChooser(share, "Share link!"));
+        startActivity(Intent.createChooser(share, "Share note!"));
     }
 
     private void dispatchTakePictureIntent() {

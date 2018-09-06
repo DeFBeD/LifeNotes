@@ -59,7 +59,7 @@ public class SearchFragment extends Fragment implements MainNoteListAdapter.Item
         mRecyclerView.setAdapter(mAdapter);
 
         search.setSubmitButtonEnabled(true);
-        search.setQueryHint("Search your notes");
+        search.setQueryHint("Search notes by date");
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String s) {
