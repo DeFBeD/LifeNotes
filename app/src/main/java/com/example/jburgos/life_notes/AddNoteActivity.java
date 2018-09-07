@@ -54,11 +54,11 @@ public class AddNoteActivity extends AppCompatActivity {
 
     //variables for handling photo logic
     static final int REQUEST_TAKE_PHOTO = 1034;
-    public String photoFileName = ".jpg";
-    File photoFile;
-    Uri photoUri;
-    Boolean isImageRemoved = false;
-    Boolean isImageTaken = false;
+    private String photoFileName = ".jpg";
+    private File photoFile;
+    private Uri photoUri;
+    private Boolean isImageRemoved = false;
+    private Boolean isImageTaken = false;
 
     //Member Variable for database
     private AppDatabase database;

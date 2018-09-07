@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 
+import com.example.jburgos.life_notes.reminderNotification.ReminderNotificationJob;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        ReminderNotificationJob.schedule();
 
         bottomBar.setOnNavigationItemSelectedListener(this);
 
