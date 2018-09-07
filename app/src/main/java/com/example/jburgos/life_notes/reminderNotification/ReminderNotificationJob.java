@@ -13,7 +13,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import com.evernote.android.job.DailyJob;
 import com.evernote.android.job.JobManager;
 import com.evernote.android.job.JobRequest;
-import com.example.jburgos.life_notes.MainActivity;
+import com.example.jburgos.life_notes.activities.MainActivity;
 import com.example.jburgos.life_notes.R;
 
 import java.util.Random;

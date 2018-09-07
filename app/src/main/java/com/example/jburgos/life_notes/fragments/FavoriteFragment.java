@@ -1,4 +1,4 @@
-package com.example.jburgos.life_notes;
+package com.example.jburgos.life_notes.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.jburgos.life_notes.R;
+import com.example.jburgos.life_notes.activities.AddNoteActivity;
 import com.example.jburgos.life_notes.adapter.MainNoteListAdapter;
 import com.example.jburgos.life_notes.data.AppDatabase;
 import com.example.jburgos.life_notes.data.NoteEntry;

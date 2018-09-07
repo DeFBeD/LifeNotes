@@ -1,4 +1,4 @@
-package com.example.jburgos.life_notes;
+package com.example.jburgos.life_notes.reminderNotification;
 
 import android.app.Application;
 

@@ -1,4 +1,4 @@
-package com.example.jburgos.life_notes;
+package com.example.jburgos.life_notes.activities;
 
 
 import android.os.Bundle;
@@ -11,6 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 
+import com.example.jburgos.life_notes.fragments.FavoriteFragment;
+import com.example.jburgos.life_notes.fragments.MainFragment;
+import com.example.jburgos.life_notes.R;
+import com.example.jburgos.life_notes.fragments.SearchFragment;
 import com.example.jburgos.life_notes.reminderNotification.ReminderNotificationJob;
 
 import butterknife.BindView;
