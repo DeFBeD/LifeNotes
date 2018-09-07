@@ -230,14 +230,11 @@ public class AddNoteActivity extends AppCompatActivity {
         dateTextView.setText(date);
 
         photoUri = Uri.parse(note.getImage());
-
         if (photoUri.toString().isEmpty()) {
             removePicture.setVisibility(View.INVISIBLE);
         } else {
             removePicture.setVisibility(View.VISIBLE);
-
             Glide.with(this).load(photoUri).into(image);
-
         }
     }
 

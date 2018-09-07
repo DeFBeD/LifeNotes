@@ -14,6 +14,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -240,9 +242,18 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
     @Override
     public void onItemClickListener(int noteId) {
-        Intent intent = new Intent(getContext(), AddNoteActivity.class);
-        intent.putExtra(EXTRA_NOTE_ID, noteId);
-        startActivity(intent);
+        //Intent intent = new Intent(getContext(), AddNoteActivity.class);
+        //intent.putExtra(EXTRA_NOTE_ID, noteId);
+        //startActivity(intent);
+        FragmentTransaction transaction = ((FragmentActivity) Objects.requireNonNull(getContext()))
+                .getSupportFragmentManager()
+                .beginTransaction();
+        BottomSheetFragment.newInstance(EXTRA_NOTE_ID,noteId).show(transaction, "bottom_sheet");
+
+        //BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+        //if (getFragmentManager() != null) {
+        //    bottomSheetFragment.show(getFragmentManager(), bottomSheetFragment.getTag());
+        //}
         // [START custom_event]
         Bundle params = new Bundle();
         params.putInt("note_id", noteId);
