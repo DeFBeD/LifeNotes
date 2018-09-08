@@ -30,6 +30,8 @@ import butterknife.ButterKnife;
 
 public class SearchFragment extends Fragment implements MainNoteListAdapter.ItemClickListener {
 
+    static final int SETTINGS_INTENT_REPLY = 1;
+
     private MainNoteListAdapter mAdapter;
     private AppDatabase dataBase;
     private List<NoteEntry> notes;
@@ -42,6 +44,12 @@ public class SearchFragment extends Fragment implements MainNoteListAdapter.Item
 
     public SearchFragment() {
         //empty constructor
+    }
+
+    public static SearchFragment newInstance() {
+        SearchFragment searchFragment = new SearchFragment();
+
+        return searchFragment;
     }
 
     @Override
@@ -83,26 +91,6 @@ public class SearchFragment extends Fragment implements MainNoteListAdapter.Item
         return rootView;
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-       Fragment fragment;
-
-       fragment = new MainFragment();
-       loadFragment(fragment);
-
-    }
-
-    private boolean loadFragment(Fragment fragment) {
-
-        Objects.requireNonNull(getActivity()).getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.frameLayout, fragment)
-                    .commit();
-
-            return true;
-
-    }
 
     private void searchDb(String searchText) {
         searchText = "%" + searchText + "%";

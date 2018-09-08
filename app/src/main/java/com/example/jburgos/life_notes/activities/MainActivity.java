@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.action_home:
 
                 fragment = new MainFragment();
-                break;
+            break;
 
             case R.id.action_favorite:
 
@@ -82,5 +82,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         return loadFragment(fragment);
 
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        Fragment fragment = new MainFragment();
+        loadFragment(fragment);
     }
 }

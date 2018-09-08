@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -76,7 +77,7 @@ public class AddNoteActivity extends AppCompatActivity {
     @BindView(R.id.editTextNote)
     EditText editText;
     @BindView(R.id.saveButton)
-    Button saveButton;
+    FloatingActionButton saveButton;
     @BindView(R.id.share_Button)
     ImageButton shareButton;
     @BindView(R.id.take_pic_Button)
@@ -91,6 +92,8 @@ public class AddNoteActivity extends AppCompatActivity {
     ImageButton removePicture;
     @BindView(R.id.toolbar2)
     Toolbar addNoteToolbar;
+    @BindView(R.id.textStringEditNote)
+    TextView headerText;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,7 +123,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(EXTRA_NOTE_ID)) {
-            saveButton.setText(R.string.update_button);
+            headerText.setText("Edit Note");
             if (mTaskId == DEFAULT_TASK_ID) {
                 // populate the UI
                 mTaskId = intent.getIntExtra(EXTRA_NOTE_ID, DEFAULT_TASK_ID);
