@@ -229,7 +229,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
         if (settingsRequestCode == SETTINGS_INTENT_REPLY) {
             chooseLayout();
-        }
+            }
     }
 
     private void updateWidget() {
@@ -275,10 +275,10 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
     }
 
     private AlertDialog AlertDialog() {
-        AlertDialog myQuittingDialogBox = new AlertDialog.Builder(getContext())
+        return new AlertDialog.Builder(getContext())
                 //set message, title, and icon
                 .setTitle("Delete")
-                .setMessage("Do you want to Delete")
+                .setMessage("Are you sure you want to delete ALL notes?")
                 //.setIcon(R.drawable.delete)
 
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
@@ -302,7 +302,6 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
                     }
                 })
                 .create();
-        return myQuittingDialogBox;
 
     }
 

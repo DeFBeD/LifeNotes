@@ -1,6 +1,6 @@
 package com.example.jburgos.life_notes.fragments;
 
-import android.app.Dialog;
+
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -8,18 +8,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.jburgos.life_notes.R;
+import com.example.jburgos.life_notes.activities.AddNoteActivity;
 import com.example.jburgos.life_notes.data.AppDatabase;
 import com.example.jburgos.life_notes.data.NoteEntry;
 import com.example.jburgos.life_notes.viewModel.AddNoteViewModel;
@@ -33,7 +31,7 @@ import butterknife.ButterKnife;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
 
-    //public static String EXTRA_NOTE_ID;
+
     public static String EXTRA_NOTE_ID = "extraNoteId";
     public static final String NOTE_ID = "noteId";
     public static final String STRING_NOTE_ID = "stringNoteId";
@@ -42,11 +40,12 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     // Constant for default task id to be used when not in update mode
     private static final int DEFAULT_TASK_ID = -1;
     private int mTaskId = DEFAULT_TASK_ID;
-    private AppDatabase dataBase;
 
     // Fields for views
     @BindView(R.id.bottom_Sheet_TextNote)
     TextView textForNotes;
+    @BindView(R.id.editNoteButton)
+    ImageButton editNoteSheetButton;
     @BindView(R.id.image)
     ImageView image;
     @BindView(R.id.bookmark)
@@ -55,8 +54,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     TextView dateTextView;
     @BindView(R.id.remove_pic_button)
     ImageButton removePicture;
-    private Uri photoUri;
-    private int isFavorite;
 
     private static final String DATE_FORMAT = "MM/dd/yyy";
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
@@ -86,7 +83,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         View root = inflater.inflate(R.layout.bottom_sheet, container, false);
         ButterKnife.bind(this, root);
         //initialize database
-        dataBase = AppDatabase.getInstance(getContext());
+        AppDatabase dataBase = AppDatabase.getInstance(getContext());
 
         Bundle bundle = getArguments();
 
@@ -128,9 +125,19 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             return;
         }
 
-        textForNotes.setText(note.getDescription());
-        isFavorite = note.getIsFavorite();
+        editNoteSheetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), AddNoteActivity.class);
+                intent.putExtra(EXTRA_NOTE_ID, mTaskId);
+                startActivity(intent);
 
+                dismiss();
+            }
+        });
+
+        textForNotes.setText(note.getDescription());
+        int isFavorite = note.getIsFavorite();
 
         if (isFavorite == 1) {
             bookmark.setImageResource(R.drawable.ic_bookmark_black_24dp);
@@ -141,7 +148,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         String date = dateFormat.format(note.getDateView());
         dateTextView.setText(date);
 
-        photoUri = Uri.parse(note.getImage());
+        Uri photoUri = Uri.parse(note.getImage());
 
         if (photoUri.toString().isEmpty()) {
             removePicture.setVisibility(View.INVISIBLE);

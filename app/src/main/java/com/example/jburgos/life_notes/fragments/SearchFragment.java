@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -21,6 +23,7 @@ import com.example.jburgos.life_notes.utils.AppExecutors;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +34,6 @@ public class SearchFragment extends Fragment implements MainNoteListAdapter.Item
     private AppDatabase dataBase;
     private List<NoteEntry> notes;
     public static final String EXTRA_NOTE_ID = "extraNoteId";
-    private FirebaseAnalytics mFireBaseAnalytics;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -76,33 +78,48 @@ public class SearchFragment extends Fragment implements MainNoteListAdapter.Item
                 mAdapter.setNotes(notes);
                 return true;
             }
-
-            private void searchDb(String searchText) {
-                searchText = "%" + searchText + "%";
-                final String finalSearchText = searchText;
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        notes = dataBase.noteDao().loadNoteBySearch(finalSearchText);
-
-                    }
-                });
-            }
         });
 
         return rootView;
     }
 
     @Override
-    public void onItemClickListener(int noteId) {
-        Intent intent = new Intent(getContext(), AddNoteActivity.class);
-        intent.putExtra(EXTRA_NOTE_ID, noteId);
-        startActivity(intent);
-        // [START custom_event]
-        Bundle params = new Bundle();
-        params.putInt("note_id", noteId);
-        mFireBaseAnalytics.logEvent("note_id_intent", params);
-        // [END custom_event]
+    public void onStop() {
+        super.onStop();
+       Fragment fragment;
 
+       fragment = new MainFragment();
+       loadFragment(fragment);
+
+    }
+
+    private boolean loadFragment(Fragment fragment) {
+
+        Objects.requireNonNull(getActivity()).getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frameLayout, fragment)
+                    .commit();
+
+            return true;
+
+    }
+
+    private void searchDb(String searchText) {
+        searchText = "%" + searchText + "%";
+        final String finalSearchText = searchText;
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                notes = dataBase.noteDao().loadNoteBySearch(finalSearchText);
+            }
+        });
+    }
+
+    @Override
+    public void onItemClickListener(int noteId) {
+        FragmentTransaction transaction = ((FragmentActivity) Objects.requireNonNull(getContext()))
+                .getSupportFragmentManager()
+                .beginTransaction();
+        BottomSheetFragment.newInstance(EXTRA_NOTE_ID, noteId).show(transaction, "bottom_sheet");
     }
 }
