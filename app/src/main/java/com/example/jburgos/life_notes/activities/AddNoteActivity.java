@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -48,11 +47,14 @@ public class AddNoteActivity extends AppCompatActivity {
 
     // id being received through intent
     public static final String EXTRA_NOTE_ID = "extraNoteId";
+
+    public static String PHOTO_URI = "photo";
     // instance id for rotation
     public static final String NOTE_INSTANCE_ID = "instanceOfNoteId";
     // Constant for default task id to be used when not in update mode
-    private static final int DEFAULT_TASK_ID = -1;
-    private int mTaskId = DEFAULT_TASK_ID;
+    private static final int DEFAULT_ID_FOR_NOTE = -1;
+    private int noteId = DEFAULT_ID_FOR_NOTE;
+
 
     //variables for handling photo logic
     static final int REQUEST_TAKE_PHOTO = 1034;
@@ -78,21 +80,21 @@ public class AddNoteActivity extends AppCompatActivity {
     EditText editText;
     @BindView(R.id.saveButton)
     FloatingActionButton saveButton;
-    @BindView(R.id.share_Button)
+    @BindView(R.id.shareNoteContentsButton)
     ImageButton shareButton;
-    @BindView(R.id.take_pic_Button)
+    @BindView(R.id.launchCameraButton)
     ImageButton picButton;
-    @BindView(R.id.image)
+    @BindView(R.id.userTakenImage)
     ImageView image;
-    @BindView(R.id.bookmark)
+    @BindView(R.id.archiveTab)
     ImageButton bookmark;
     @BindView(R.id.dateTextView)
     TextView dateTextView;
     @BindView(R.id.remove_pic_button)
     ImageButton removePicture;
-    @BindView(R.id.toolbar2)
+    @BindView(R.id.editNotesToolbar)
     Toolbar addNoteToolbar;
-    @BindView(R.id.textStringEditNote)
+    @BindView(R.id.header_text_editNote)
     TextView headerText;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,21 +120,20 @@ public class AddNoteActivity extends AppCompatActivity {
         database = AppDatabase.getInstance(getApplicationContext());
 
         if (savedInstanceState != null && savedInstanceState.containsKey(NOTE_INSTANCE_ID)) {
-            mTaskId = savedInstanceState.getInt(NOTE_INSTANCE_ID, DEFAULT_TASK_ID);
+            noteId = savedInstanceState.getInt(NOTE_INSTANCE_ID, DEFAULT_ID_FOR_NOTE);
         }
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(EXTRA_NOTE_ID)) {
             headerText.setText("Edit Note");
-            if (mTaskId == DEFAULT_TASK_ID) {
+            if (noteId == DEFAULT_ID_FOR_NOTE) {
                 // populate the UI
-                mTaskId = intent.getIntExtra(EXTRA_NOTE_ID, DEFAULT_TASK_ID);
+                noteId = intent.getIntExtra(EXTRA_NOTE_ID, DEFAULT_ID_FOR_NOTE);
 
-                AddNoteViewModelFactory factory = new AddNoteViewModelFactory(database, mTaskId);
+                AddNoteViewModelFactory factory = new AddNoteViewModelFactory(database, noteId);
                 final AddNoteViewModel viewModel
                         = ViewModelProviders.of(this, factory).get(AddNoteViewModel.class);
 
-                //Observe the LiveData object in the ViewModel. Use it also when removing the observer
                 viewModel.getNote().observe(this, new Observer<NoteEntry>() {
                     @Override
                     public void onChanged(@Nullable NoteEntry noteEntry) {
@@ -146,7 +147,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(NOTE_INSTANCE_ID, mTaskId);
+        outState.putInt(NOTE_INSTANCE_ID, noteId);
         super.onSaveInstanceState(outState);
     }
 
@@ -206,15 +207,14 @@ public class AddNoteActivity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                shareTextUrl(description);
+                shareNoteTextIntent(description);
             }
         });
 
     }
 
-    //populate views in activity
+    //populate
     private void populateUI(NoteEntry note) {
-
         if (note == null) {
             return;
         }
@@ -242,7 +242,7 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     /**
-     * onSaveButtonClicked inserts or updates user input into the database
+     * onSaveButtonClicked inserts or updates database
      */
     public void onSaveButtonClicked() {
         final String description = editText.getText().toString();
@@ -251,10 +251,8 @@ public class AddNoteActivity extends AppCompatActivity {
         final String photoU;
         if (photoUri == null || isImageRemoved || !isImageTaken && isFavorite == 0) {
             photoU = "";
-            Log.d(TAG, " picture not string");
         } else {
             photoU = String.valueOf(photoUri);
-            Log.d(TAG, " picture with string");
         }
 
         fireBaseEvents(description);
@@ -264,13 +262,11 @@ public class AddNoteActivity extends AppCompatActivity {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                if (mTaskId == DEFAULT_TASK_ID) {
-                    // insert new task
+                if (noteId == DEFAULT_ID_FOR_NOTE) {
                     database.noteDao().insertNotes(note);
                     Log.d(TAG, "inserted: " + description + "favorite: " + String.valueOf(favorite) + "uri: " + photoU);
                 } else {
-                    //update task
-                    note.setId(mTaskId);
+                    note.setId(noteId);
                     database.noteDao().updateNotes(note);
                     Log.d(TAG, "inserted:" + description + "favorite:" + String.valueOf(favorite) + "uri:" + photoU);
                 }
@@ -280,7 +276,7 @@ public class AddNoteActivity extends AppCompatActivity {
         });
     }
 
-    private void shareTextUrl(String description) {
+    private void shareNoteTextIntent(String description) {
         Intent share = new Intent(android.content.Intent.ACTION_SEND);
         share.setType("text/plain");
         share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -333,11 +329,8 @@ public class AddNoteActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_TAKE_PHOTO) {
             if (resultCode == RESULT_OK) {
-
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-
                 Glide.with(this).load(takenImage).into(image);
-
                 isImageTaken = true;
 
             } else { // Result was a failure
@@ -348,7 +341,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
     private void fireBaseEvents(String description) {
         Bundle bundle = new Bundle();
-        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, mTaskId);
+        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, noteId);
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, description);
         bundle.putInt(FirebaseAnalytics.Param.INDEX, isFavorite);
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);

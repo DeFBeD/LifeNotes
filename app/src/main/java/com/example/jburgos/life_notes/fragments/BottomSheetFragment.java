@@ -33,6 +33,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
 
     public static String EXTRA_NOTE_ID = "extraNoteId";
+    public static String PHOTO_URI = "photo";
     public static final String NOTE_ID = "noteId";
     public static final String STRING_NOTE_ID = "stringNoteId";
     // instance id for rotation
@@ -41,14 +42,16 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     private static final int DEFAULT_TASK_ID = -1;
     private int mTaskId = DEFAULT_TASK_ID;
 
+    String photoUri;
+
     // Fields for views
     @BindView(R.id.bottom_Sheet_TextNote)
     TextView textForNotes;
     @BindView(R.id.editNoteButton)
     ImageButton editNoteSheetButton;
-    @BindView(R.id.image)
+    @BindView(R.id.userTakenImage)
     ImageView image;
-    @BindView(R.id.bookmark)
+    @BindView(R.id.archiveTab)
     ImageButton bookmark;
     @BindView(R.id.dateTextView)
     TextView dateTextView;
@@ -68,7 +71,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         bundle.putString(STRING_NOTE_ID, noteExtra);
         bundle.putInt(NOTE_ID, noteId);
         bottomSheetFragment.setArguments(bundle);
-
         return bottomSheetFragment;
     }
 
@@ -125,17 +127,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             return;
         }
 
-        editNoteSheetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), AddNoteActivity.class);
-                intent.putExtra(EXTRA_NOTE_ID, mTaskId);
-                startActivity(intent);
-
-                dismiss();
-            }
-        });
-
         textForNotes.setText(note.getDescription());
         int isFavorite = note.getIsFavorite();
 
@@ -148,7 +139,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         String date = dateFormat.format(note.getDateView());
         dateTextView.setText(date);
 
-        Uri photoUri = Uri.parse(note.getImage());
+        photoUri = String.valueOf(Uri.parse(note.getImage()));
 
         if (photoUri.toString().isEmpty()) {
             removePicture.setVisibility(View.INVISIBLE);
@@ -158,6 +149,18 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             Glide.with(this).load(photoUri).into(image);
 
         }
+
+        editNoteSheetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), AddNoteActivity.class);
+                intent.putExtra(EXTRA_NOTE_ID, mTaskId);
+                intent.putExtra(PHOTO_URI, photoUri);
+                startActivity(intent);
+
+                dismiss();
+            }
+        });
 
     }
 

@@ -92,8 +92,6 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
                 // Create a new intent to start an AddTaskActivity
                 Intent addNewNoteIntent = new Intent(getContext(), AddNoteActivity.class);
                 startActivity(addNewNoteIntent);
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
 
