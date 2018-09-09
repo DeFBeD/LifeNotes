@@ -20,10 +20,23 @@
             android:layout_marginTop="@dimen/default_16_padding"
             android:paddingTop="8dp"
             android:textSize="@dimen/default_16_padding"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header_text_editNote"
             tools:layout_marginEnd="@dimen/default_16_padding"
             tools:text="11/12/12"/>
+
+        <TextView
+            android:id="@+id/editedDateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_16_padding"
+            android:textSize="12dp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateTextView"
+            tools:layout_marginEnd="@dimen/default_16_padding"
+            tools:text="last updated: 11/12/12"/>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/editNotesToolbar"
@@ -98,8 +111,9 @@
             android:layout_marginTop="8dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dateTextView"
+            app:layout_constraintTop_toBottomOf="@+id/editedDateTextView"
             tools:context=".activities.ActivityEditNote"
             tools:showIn="@layout/activity_edit_note">
 
@@ -119,6 +133,7 @@
                     android:gravity="start"
                     android:hint="@string/edit_text"
                     android:paddingBottom="@dimen/activity_horizontal_margin"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
@@ -154,8 +169,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:elevation="6dp"
-        app:layout_behavior="@string/fab_transformation_sheet_behavior"
-        app:srcCompat="@android:drawable/ic_input_add"/>
+        app:srcCompat="@drawable/ic_add_black_24dp"/>
 
 </android.support.design.widget.CoordinatorLayout>
 

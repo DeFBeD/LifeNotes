@@ -71,7 +71,9 @@ public class ActivityEditNote extends AppCompatActivity {
     private static final String DATE_FORMAT = "MM/dd/yyy";
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
     String dateString;
+    String updatedDateString;
     Date date;
+    Date updatedDate;
 
     //firebase
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -91,6 +93,8 @@ public class ActivityEditNote extends AppCompatActivity {
     ImageButton bookmark;
     @BindView(R.id.dateTextView)
     TextView dateTextView;
+    @BindView(R.id.editedDateTextView)
+    TextView lastUpdatedDateTextView;
     @BindView(R.id.remove_pic_button)
     ImageButton removePicture;
     @BindView(R.id.editNotesToolbar)
@@ -128,7 +132,9 @@ public class ActivityEditNote extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(EXTRA_NOTE_ID)) {
+            saveButton.setImageResource(R.drawable.ic_edit_black_24dp);
             headerText.setText("Edit Note");
+
             if (noteId == DEFAULT_ID_FOR_NOTE) {
                 // populate the UI
                 noteId = intent.getIntExtra(EXTRA_NOTE_ID, DEFAULT_ID_FOR_NOTE);
@@ -216,16 +222,18 @@ public class ActivityEditNote extends AppCompatActivity {
 
     }
 
-    //populate everything in the ui if theres a task id
+    //logic for populating the UI
     private void populateUI(NoteEntry note) {
         if (note == null) {
             return;
         }
 
+        //contents
         editText.setText(note.getDescription());
         description = note.getDescription();
-        isFavorite = note.getIsFavorite();
 
+        //favorite logic
+        isFavorite = note.getIsFavorite();
         if (isFavorite == 1) {
             bookmark.setImageResource(R.drawable.ic_bookmark_black_24dp);
         } else {
@@ -233,14 +241,17 @@ public class ActivityEditNote extends AppCompatActivity {
         }
 
 
-        //constant to original date
+        //constant to original date; logic
         date = note.getDateView();
-
+        updatedDate = note.getDateView();
         dateString = dateFormat.format(note.getDateView());
+        updatedDateString = dateFormat.format(note.getEditedDateView());
         dateTextView.setText(dateString);
+        lastUpdatedDateTextView.setText("last updated: " + updatedDateString);
 
+        //photo logic
         photoUri = Uri.parse(note.getImage());
-         isImageTaken = true;
+        isImageTaken = true;
         if (photoUri.toString().isEmpty()) {
             removePicture.setVisibility(View.INVISIBLE);
         } else {
@@ -254,9 +265,11 @@ public class ActivityEditNote extends AppCompatActivity {
      */
     public void onSaveButtonClicked() {
         final String description = editText.getText().toString();
-        if(date == null){
-             date = new Date();
+        if (date == null) {
+            date = new Date();
+            updatedDate = new Date();
         }
+
         final int favorite = isFavorite;
         final String photoU;
         if (photoUri == null || isImageRemoved || !isImageTaken && isFavorite == 0) {
@@ -267,7 +280,7 @@ public class ActivityEditNote extends AppCompatActivity {
 
         fireBaseEvents(description);
 
-        final NoteEntry note = new NoteEntry(description, date, favorite, photoU);
+        final NoteEntry note = new NoteEntry(description, date, favorite, photoU, updatedDate);
 
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override

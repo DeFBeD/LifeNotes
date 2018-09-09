@@ -65,18 +65,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         switch (menuItem.getItemId()) {
             case R.id.action_home:
-
                 fragment = new MainFragment();
-            break;
+                setTitle(R.string.app_name);
+                break;
 
             case R.id.action_favorite:
-
                 fragment = new FavoriteFragment();
+                setTitle("Bookmarks");
                 break;
 
             case R.id.navigation_search:
-
                 fragment = new SearchFragment();
+                setTitle("Search Notes");
                 break;
         }
 
