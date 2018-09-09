@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.jburgos.life_notes.R;
-import com.example.jburgos.life_notes.activities.AddNoteActivity;
+import com.example.jburgos.life_notes.activities.ActivityEditNote;
 import com.example.jburgos.life_notes.adapter.MainNoteListAdapter;
 import com.example.jburgos.life_notes.data.AppDatabase;
 import com.example.jburgos.life_notes.data.NoteEntry;
@@ -80,7 +80,7 @@ public class FavoriteFragment extends Fragment implements MainNoteListAdapter.It
 
     @Override
     public void onItemClickListener(int noteId) {
-        Intent intent = new Intent(getContext(), AddNoteActivity.class);
+        Intent intent = new Intent(getContext(), ActivityEditNote.class);
         intent.putExtra(EXTRA_NOTE_ID, noteId);
         startActivity(intent);
     }

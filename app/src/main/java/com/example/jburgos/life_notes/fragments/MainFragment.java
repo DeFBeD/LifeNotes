@@ -12,7 +12,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -32,7 +31,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.jburgos.life_notes.R;
-import com.example.jburgos.life_notes.activities.AddNoteActivity;
+import com.example.jburgos.life_notes.activities.ActivityEditNote;
 import com.example.jburgos.life_notes.activities.MainActivity;
 import com.example.jburgos.life_notes.adapter.MainNoteListAdapter;
 import com.example.jburgos.life_notes.data.AppDatabase;
@@ -90,7 +89,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
             @Override
             public void onClick(View view) {
                 // Create a new intent to start an AddTaskActivity
-                Intent addNewNoteIntent = new Intent(getContext(), AddNoteActivity.class);
+                Intent addNewNoteIntent = new Intent(getContext(), ActivityEditNote.class);
                 startActivity(addNewNoteIntent);
             }
         });
@@ -240,7 +239,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
     @Override
     public void onItemClickListener(int noteId) {
-        //Intent intent = new Intent(getContext(), AddNoteActivity.class);
+        //Intent intent = new Intent(getContext(), ActivityEditNote.class);
         //intent.putExtra(EXTRA_NOTE_ID, noteId);
         //startActivity(intent);
         FragmentTransaction transaction = ((FragmentActivity) Objects.requireNonNull(getContext()))

@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.jburgos.life_notes.R;
-import com.example.jburgos.life_notes.activities.AddNoteActivity;
+import com.example.jburgos.life_notes.activities.ActivityEditNote;
 import com.example.jburgos.life_notes.data.AppDatabase;
 import com.example.jburgos.life_notes.data.NoteEntry;
 import com.example.jburgos.life_notes.viewModel.AddNoteViewModel;
@@ -153,7 +153,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         editNoteSheetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), AddNoteActivity.class);
+                Intent intent = new Intent(getContext(), ActivityEditNote.class);
                 intent.putExtra(EXTRA_NOTE_ID, mTaskId);
                 intent.putExtra(PHOTO_URI, photoUri);
                 startActivity(intent);

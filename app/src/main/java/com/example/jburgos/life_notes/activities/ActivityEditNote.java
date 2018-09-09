@@ -41,9 +41,9 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddNoteActivity extends AppCompatActivity {
+public class ActivityEditNote extends AppCompatActivity {
 
-    private static final String TAG = AddNoteActivity.class.getSimpleName();
+    private static final String TAG = ActivityEditNote.class.getSimpleName();
 
     // id being received through intent
     public static final String EXTRA_NOTE_ID = "extraNoteId";
@@ -70,6 +70,8 @@ public class AddNoteActivity extends AppCompatActivity {
 
     private static final String DATE_FORMAT = "MM/dd/yyy";
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+    String dateString;
+    Date date;
 
     //firebase
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -98,7 +100,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_note);
+        setContentView(R.layout.activity_edit_note);
         ButterKnife.bind(this);
         if (null != addNoteToolbar) {
             addNoteToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
@@ -106,7 +108,7 @@ public class AddNoteActivity extends AppCompatActivity {
             addNoteToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    NavUtils.navigateUpFromSameTask(AddNoteActivity.this);
+                    NavUtils.navigateUpFromSameTask(ActivityEditNote.this);
                 }
             });
         }
@@ -214,7 +216,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
     }
 
-    //populate
+    //populate everything in the ui if theres a task id
     private void populateUI(NoteEntry note) {
         if (note == null) {
             return;
@@ -230,11 +232,15 @@ public class AddNoteActivity extends AppCompatActivity {
             bookmark.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
         }
 
-        String date = dateFormat.format(note.getDateView());
-        dateTextView.setText(date);
+
+        //constant to original date
+        date = note.getDateView();
+
+        dateString = dateFormat.format(note.getDateView());
+        dateTextView.setText(dateString);
 
         photoUri = Uri.parse(note.getImage());
-        isImageTaken = true;
+         isImageTaken = true;
         if (photoUri.toString().isEmpty()) {
             removePicture.setVisibility(View.INVISIBLE);
         } else {
@@ -248,7 +254,9 @@ public class AddNoteActivity extends AppCompatActivity {
      */
     public void onSaveButtonClicked() {
         final String description = editText.getText().toString();
-        final Date date = new Date();
+        if(date == null){
+             date = new Date();
+        }
         final int favorite = isFavorite;
         final String photoU;
         if (photoUri == null || isImageRemoved || !isImageTaken && isFavorite == 0) {
@@ -296,7 +304,7 @@ public class AddNoteActivity extends AppCompatActivity {
         //reference to access to future access
         photoFile = getPhotoFileUri(photoFileName);
         // required for API >= 24
-        photoUri = FileProvider.getUriForFile(AddNoteActivity.this, "com.example.android.imageProvider", photoFile);
+        photoUri = FileProvider.getUriForFile(ActivityEditNote.this, "com.example.android.imageProvider", photoFile);
 
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
 
