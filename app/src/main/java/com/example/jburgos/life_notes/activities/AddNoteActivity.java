@@ -48,7 +48,6 @@ public class AddNoteActivity extends AppCompatActivity {
     // id being received through intent
     public static final String EXTRA_NOTE_ID = "extraNoteId";
 
-    public static String PHOTO_URI = "photo";
     // instance id for rotation
     public static final String NOTE_INSTANCE_ID = "instanceOfNoteId";
     // Constant for default task id to be used when not in update mode
@@ -122,6 +121,8 @@ public class AddNoteActivity extends AppCompatActivity {
         if (savedInstanceState != null && savedInstanceState.containsKey(NOTE_INSTANCE_ID)) {
             noteId = savedInstanceState.getInt(NOTE_INSTANCE_ID, DEFAULT_ID_FOR_NOTE);
         }
+
+        headerText.setText("Add a Note");
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(EXTRA_NOTE_ID)) {
@@ -233,6 +234,7 @@ public class AddNoteActivity extends AppCompatActivity {
         dateTextView.setText(date);
 
         photoUri = Uri.parse(note.getImage());
+        isImageTaken = true;
         if (photoUri.toString().isEmpty()) {
             removePicture.setVisibility(View.INVISIBLE);
         } else {
