@@ -184,7 +184,6 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
         viewModel.getNotes().observe(this, new Observer<List<NoteEntry>>() {
             @Override
             public void onChanged(@Nullable List<NoteEntry> noteEntries) {
-                Log.d(TAG, "updating from LiveData in ViewModel");
                 mAdapter.setNotes(noteEntries);
                 //set empty view on RecyclerView, so it shows when the list has 0 items
                 toggleEmptyView(noteEntries);
@@ -226,7 +225,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
         if (settingsRequestCode == SETTINGS_INTENT_REPLY) {
             chooseLayout();
-            }
+        }
     }
 
     private void updateWidget() {
@@ -239,23 +238,10 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
     @Override
     public void onItemClickListener(int noteId) {
-        //Intent intent = new Intent(getContext(), ActivityEditNote.class);
-        //intent.putExtra(EXTRA_NOTE_ID, noteId);
-        //startActivity(intent);
         FragmentTransaction transaction = ((FragmentActivity) Objects.requireNonNull(getContext()))
                 .getSupportFragmentManager()
                 .beginTransaction();
-        BottomSheetFragment.newInstance(EXTRA_NOTE_ID,noteId).show(transaction, "bottom_sheet");
-
-        //BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-        //if (getFragmentManager() != null) {
-        //    bottomSheetFragment.show(getFragmentManager(), bottomSheetFragment.getTag());
-        //}
-        // [START custom_event]
-        Bundle params = new Bundle();
-        params.putInt("note_id", noteId);
-        mFireBaseAnalytics.logEvent("note_id_intent", params);
-        // [END custom_event]
+        BottomSheetFragment.newInstance(EXTRA_NOTE_ID, noteId).show(transaction, "bottom_sheet");
 
     }
 
@@ -273,10 +259,8 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
     private AlertDialog AlertDialog() {
         return new AlertDialog.Builder(getContext())
-                //set message, title, and icon
                 .setTitle("Delete")
-                .setMessage("Are you sure you want to delete ALL notes?")
-                //.setIcon(R.drawable.delete)
+                .setMessage("Are you sure you want to delete All notes?")
 
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 

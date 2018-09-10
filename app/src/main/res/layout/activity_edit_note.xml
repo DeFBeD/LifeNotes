@@ -55,10 +55,10 @@
                 <!-- Archive tab-->
                 <ImageButton
                     android:id="@+id/archiveTab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="16dp"
-                    android:background="?android:attr/selectableItemBackground"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ripple"
                     app:layout_constraintEnd_toStartOf="@+id/launchCameraButton"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_bookmark_border_black_24dp"/>
@@ -66,10 +66,10 @@
                 <!-- take pic button -->
                 <ImageButton
                     android:id="@+id/launchCameraButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="16dp"
-                    android:background="?android:attr/selectableItemBackground"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ripple"
                     app:layout_constraintEnd_toStartOf="@+id/shareNoteContentsButton"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_photo_camera_black_24dp"/>
@@ -77,10 +77,10 @@
                 <!-- take pic button -->
                 <ImageButton
                     android:id="@+id/shareNoteContentsButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="16dp"
-                    android:background="?android:attr/selectableItemBackground"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ripple"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_share_black_24dp"/>

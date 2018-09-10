@@ -97,18 +97,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             // populate the UI
             mTaskId = bundle.getInt(NOTE_ID);
 
-            AddNoteViewModelFactory factory = new AddNoteViewModelFactory(dataBase, mTaskId);
-            final AddNoteViewModel viewModel
-                    = ViewModelProviders.of(this, factory).get(AddNoteViewModel.class);
-
-            //Observe the LiveData object in the ViewModel. Use it also when removing the observer
-            viewModel.getNote().observe(this, new Observer<NoteEntry>() {
-                @Override
-                public void onChanged(@Nullable NoteEntry noteEntry) {
-                    viewModel.getNote().removeObserver(this);
-                    populateUI(noteEntry);
-                }
-            });
+            setUpViewModel(dataBase);
         }
 
         return root;
@@ -162,6 +151,21 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             }
         });
 
+    }
+
+    private void setUpViewModel(AppDatabase dataBase) {
+        AddNoteViewModelFactory factory = new AddNoteViewModelFactory(dataBase, mTaskId);
+        final AddNoteViewModel viewModel
+                = ViewModelProviders.of(this, factory).get(AddNoteViewModel.class);
+
+        //Observe the LiveData object in the ViewModel. Use it also when removing the observer
+        viewModel.getNote().observe(this, new Observer<NoteEntry>() {
+            @Override
+            public void onChanged(@Nullable NoteEntry noteEntry) {
+                viewModel.getNote().removeObserver(this);
+                populateUI(noteEntry);
+            }
+        });
     }
 
 }

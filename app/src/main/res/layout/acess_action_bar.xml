@@ -3,6 +3,7 @@
               android:orientation="horizontal"
               android:layout_gravity="bottom"
               android:layout_width="match_parent"
+              android:background="@drawable/rounded_corners"
               android:layout_height="wrap_content"
     android:weightSum="4">
 

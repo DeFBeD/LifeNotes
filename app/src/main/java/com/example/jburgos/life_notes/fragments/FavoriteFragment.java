@@ -2,25 +2,25 @@ package com.example.jburgos.life_notes.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.jburgos.life_notes.R;
-import com.example.jburgos.life_notes.activities.ActivityEditNote;
 import com.example.jburgos.life_notes.adapter.MainNoteListAdapter;
 import com.example.jburgos.life_notes.data.AppDatabase;
 import com.example.jburgos.life_notes.data.NoteEntry;
 import com.example.jburgos.life_notes.viewModel.FavoriteViewModel;
 
 import java.util.List;
+import java.util.Objects;
 
 
 import butterknife.BindView;
@@ -80,9 +80,10 @@ public class FavoriteFragment extends Fragment implements MainNoteListAdapter.It
 
     @Override
     public void onItemClickListener(int noteId) {
-        Intent intent = new Intent(getContext(), ActivityEditNote.class);
-        intent.putExtra(EXTRA_NOTE_ID, noteId);
-        startActivity(intent);
+        FragmentTransaction transaction = ((FragmentActivity) Objects.requireNonNull(getContext()))
+                .getSupportFragmentManager()
+                .beginTransaction();
+        BottomSheetFragment.newInstance(EXTRA_NOTE_ID, noteId).show(transaction, "bottom_sheet");
     }
 
     public void toggleEmptyView(List<NoteEntry> noteEntries) {
