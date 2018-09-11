@@ -54,7 +54,6 @@ public class ActivityEditNote extends AppCompatActivity {
     private static final int DEFAULT_ID_FOR_NOTE = -1;
     private int noteId = DEFAULT_ID_FOR_NOTE;
 
-
     //variables for handling photo logic
     static final int REQUEST_TAKE_PHOTO = 1034;
     private String photoFileName = ".jpg";
@@ -247,7 +246,14 @@ public class ActivityEditNote extends AppCompatActivity {
         dateString = dateFormat.format(note.getDateView());
         updatedDateString = dateFormat.format(note.getEditedDateView());
         dateTextView.setText(dateString);
-        lastUpdatedDateTextView.setText("last updated: " + updatedDateString);
+        if (updatedDateString.equals(dateString)) {
+            lastUpdatedDateTextView.setVisibility(View.GONE);
+            updatedDate = new Date();
+
+        } else {
+            lastUpdatedDateTextView.setVisibility(View.VISIBLE);
+            lastUpdatedDateTextView.setText("last edit: " + updatedDateString);
+        }
 
         //photo logic
         photoUri = Uri.parse(note.getImage());
@@ -267,6 +273,9 @@ public class ActivityEditNote extends AppCompatActivity {
         final String description = editText.getText().toString();
         if (date == null) {
             date = new Date();
+        }
+
+        if (updatedDate == null) {
             updatedDate = new Date();
         }
 
@@ -323,7 +332,6 @@ public class ActivityEditNote extends AppCompatActivity {
 
         // check that a camera app can handle this intent
         if (intent.resolveActivity(getPackageManager()) != null) {
-
             startActivityForResult(intent, REQUEST_TAKE_PHOTO);
         }
     }

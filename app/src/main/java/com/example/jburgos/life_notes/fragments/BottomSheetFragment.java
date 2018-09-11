@@ -24,6 +24,7 @@ import com.example.jburgos.life_notes.viewModel.AddNoteViewModel;
 import com.example.jburgos.life_notes.viewModel.AddNoteViewModelFactory;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -57,6 +58,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     TextView dateTextView;
     @BindView(R.id.remove_pic_button)
     ImageButton removePicture;
+    @BindView(R.id.editedDateTextView)
+    TextView lastUpdatedDateTextView;
 
     private static final String DATE_FORMAT = "MM/dd/yyy";
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
@@ -126,7 +129,15 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         }
 
         String date = dateFormat.format(note.getDateView());
-        dateTextView.setText(date);
+        dateTextView.setText(date);//constant to original date; logic
+
+        String updatedDateString = dateFormat.format(note.getEditedDateView());
+        if (updatedDateString.equals(date)) {
+            lastUpdatedDateTextView.setVisibility(View.GONE);
+
+        } else {
+            lastUpdatedDateTextView.setText("last edit: " + updatedDateString);
+        }
 
         photoUri = String.valueOf(Uri.parse(note.getImage()));
 

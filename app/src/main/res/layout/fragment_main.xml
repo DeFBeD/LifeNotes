@@ -26,7 +26,7 @@
             android:layout_marginEnd="@dimen/default_16_padding"
             android:clickable="true"
             app:elevation="6dp"
-            app:srcCompat="@drawable/ic_note_add_black_24dp"
+            app:srcCompat="@drawable/ic_add_black_24dp"
             android:focusable="true"/>
 
         <RelativeLayout
