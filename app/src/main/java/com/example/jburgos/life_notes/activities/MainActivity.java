@@ -12,8 +12,8 @@ import android.view.MenuItem;
 
 
 import com.example.jburgos.life_notes.fragments.FavoriteFragment;
-import com.example.jburgos.life_notes.fragments.MainFragment;
 import com.example.jburgos.life_notes.R;
+import com.example.jburgos.life_notes.fragments.MainFragment;
 import com.example.jburgos.life_notes.fragments.SearchFragment;
 import com.example.jburgos.life_notes.reminderNotification.ReminderNotificationJob;
 
@@ -23,8 +23,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    //@BindView(R.id.empty_view_main)
-    //View emptyView;
     @BindView(R.id.bar)
     BottomNavigationView bottomBar;
 

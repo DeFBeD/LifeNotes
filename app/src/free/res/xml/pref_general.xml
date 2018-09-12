@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+
+        android:defaultValue="@string/pref_list_view"
+        android:entries="@array/pref_note_view_options"
+        android:entryValues="@array/pref_note_view_values"
+        android:key="@string/pref_order_key"
+        android:title="@string/pref_change_view_title" />
+
+
+        />
+</PreferenceScreen>

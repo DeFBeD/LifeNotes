@@ -76,10 +76,7 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
         holder.updateTheDateView.setText(updatedAtDateView);
 
         if (!TextUtils.isEmpty(imageUri)) {
-            holder.imageCard.setVisibility(View.VISIBLE);
             Glide.with(mContext).load(imageUri).into(holder.imageCard);
-        } else {
-            holder.imageCard.setVisibility(View.GONE);
         }
 
     }

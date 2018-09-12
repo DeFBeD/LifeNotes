@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "732681440957",
+    "firebase_url": "https://life-notes-21a15s17f.firebaseio.com",
+    "project_id": "life-notes-21a15s17f",
+    "storage_bucket": "life-notes-21a15s17f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732681440957:android:21f4b1ebfc05526c",
+        "android_client_info": {
+          "package_name": "com.example.jburgos.life_notes.free"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "732681440957-vmnd06r41acgccgbhd4bddhgahn8oaei.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jburgos.life_notes",
+            "certificate_hash": "afa89dc3c54d4faa4367a6f1d2cd166d18c1cee7"
+          }
+        },
+        {
+          "client_id": "732681440957-u8a7uicg28ii5nbfkvni6vl6gsu9ora4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6BuEu3rqA7RCCDbHUpYsXomxwNCGWlyg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "732681440957-u8a7uicg28ii5nbfkvni6vl6gsu9ora4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
