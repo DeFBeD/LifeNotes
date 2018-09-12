@@ -1,4 +1,4 @@
-package com.example.jburgos.life_notes.free;
+package com.example.jburgos.life_notes;
 
 import android.appwidget.AppWidgetManager;
 import android.arch.lifecycle.Observer;
