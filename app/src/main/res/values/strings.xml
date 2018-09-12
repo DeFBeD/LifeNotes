@@ -7,8 +7,10 @@
     <string name="add_button">Add</string>
     <string name="update_button">Update</string>
     <string name="edit_text">How was your Day Today?</string>
-    <string name="pref_change_view_title">Change note view</string>
+    <string name="pref_change_view_title">Switch the layout</string>
+    <string name="pref_change_view_order_title">Order of notes</string>
 
+    <!--Preference menu strings -->
     <!--Preference menu strings -->
     <string name="pref_order_key" translatable="false">order</string>
 
@@ -16,11 +18,15 @@
     <string name="pref_order_grid_view">Grid View</string>
     <string name="pref_order_staggered_view">Staggered Grid</string>
 
+    <string name="pref_order_old_to_new">From oldest to newest</string>
+    <string name="pref_order_new_to_old">Newest to oldest</string>
+
     <string name="pref_list_view" translatable="false">list view</string>
+    <string name="pref_old_to_new" translatable="false"> old to new</string>
+    <string name="pref_new_to_old" translatable="false">new to old</string>
     <string name="pref_grid_view" translatable="false"> grid view</string>
     <string name="pref_staggered_view" translatable="false"> staggered view</string>
     <string name="go_to_archived">Bookmarks</string>
-    <string name="archive_title">Archive</string>
     <string name="settings_tittle">Settings</string>
 
     <!-- accessability  bar -->

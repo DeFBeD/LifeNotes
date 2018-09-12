@@ -13,4 +13,14 @@
         <item>@string/pref_staggered_view</item>
     </string-array>
 
+    <string-array name="pref_view_order_options">
+        <item>@string/pref_old_to_new</item>
+        <item>@string/pref_new_to_old</item>
+    </string-array>
+
+    <string-array name="pref_view_order_values">
+        <item>@string/pref_old_to_new</item>
+        <item>@string/pref_new_to_old</item>
+    </string-array>
+
 </resources>
