@@ -13,8 +13,8 @@ import android.view.MenuItem;
 
 import com.example.jburgos.life_notes.fragments.FavoriteFragment;
 import com.example.jburgos.life_notes.R;
-import com.example.jburgos.life_notes.fragments.MainFragment;
 import com.example.jburgos.life_notes.fragments.SearchFragment;
+import com.example.jburgos.life_notes.free.MainFragment;
 import com.example.jburgos.life_notes.reminderNotification.ReminderNotificationJob;
 
 import butterknife.BindView;

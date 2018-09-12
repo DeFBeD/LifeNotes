@@ -75,6 +75,9 @@ dependencies {
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.7.1'
+
+    //ads
+    implementation 'com.google.android.gms:play-services-ads:15.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
