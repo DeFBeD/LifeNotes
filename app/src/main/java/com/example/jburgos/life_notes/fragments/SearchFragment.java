@@ -38,6 +38,8 @@ public class SearchFragment extends Fragment implements MainNoteListAdapter.Item
     RecyclerView mRecyclerView;
     @BindView(R.id.search)
     SearchView search;
+    @BindView(R.id.empty_view_search)
+    View emptyView;
 
     public SearchFragment() {
         //empty constructor
@@ -60,6 +62,9 @@ public class SearchFragment extends Fragment implements MainNoteListAdapter.Item
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
         ButterKnife.bind(this, rootView);
 
+        mRecyclerView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
+
         //initialize database and set up the ViewModel on the List of notes
         dataBase = AppDatabase.getInstance(getContext());
 
@@ -79,6 +84,8 @@ public class SearchFragment extends Fragment implements MainNoteListAdapter.Item
 
             @Override
             public boolean onQueryTextChange(String n) {
+                mRecyclerView.setVisibility(View.VISIBLE);
+                emptyView.setVisibility(View.GONE);
                 searchDb(n);
                 mAdapter.setNotes(notes);
                 return true;
