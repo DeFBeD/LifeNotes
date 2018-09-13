@@ -13,6 +13,7 @@
     <!--Preference menu strings -->
     <!--Preference menu strings -->
     <string name="pref_order_key" translatable="false">order</string>
+    <string name="pref_date_order_key" translatable="false">date order</string>
 
     <string name="pref_order_list_view">List</string>
     <string name="pref_order_grid_view">Grid View</string>

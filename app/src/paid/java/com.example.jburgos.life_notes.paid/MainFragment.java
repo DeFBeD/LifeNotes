@@ -157,19 +157,33 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
         if (orderType.equals(getString(R.string.pref_list_view))) {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             setUpAdapter();
-            setUpViewModel();
+            chooseDateOrder();
         } else if (orderType.equals(getString(R.string.pref_grid_view))) {
             GridLayoutManager grid =
                     new GridLayoutManager(getContext(), 2);
             mRecyclerView.setLayoutManager(grid);
             setUpAdapter();
-            setUpViewModel();
+            chooseDateOrder();
         } else if (orderType.equals(getString(R.string.pref_staggered_view))) {
             StaggeredGridLayoutManager grid =
                     new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(grid);
             setUpAdapter();
+            chooseDateOrder();
+        }
+    }
+
+    private void chooseDateOrder() {
+        SharedPreferences sharedPrefs =
+                PreferenceManager.getDefaultSharedPreferences(getContext());
+        String Type = sharedPrefs.getString(
+                getString(R.string.pref_date_order_key),
+                getString(R.string.pref_old_to_new));
+
+        if (Type.equals(getString(R.string.pref_old_to_new))) {
             setUpViewModel();
+        } else if (Type.equals(getString(R.string.pref_new_to_old))) {
+            setUpDescendingViewModel();
         }
     }
 
@@ -182,6 +196,19 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
     public void setUpViewModel() {
         MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         viewModel.getNotes().observe(this, new Observer<List<NoteEntry>>() {
+            @Override
+            public void onChanged(@Nullable List<NoteEntry> noteEntries) {
+                mAdapter.setNotes(noteEntries);
+                //set empty view on RecyclerView, so it shows when the list has 0 items
+                toggleEmptyView(noteEntries);
+            }
+        });
+    }
+
+    //sets all the notes from the database as a viewModel
+    public void setUpDescendingViewModel() {
+        DescendingViewModel viewModel = ViewModelProviders.of(this).get(DescendingViewModel.class);
+        viewModel.getDescendingNotes().observe(this, new Observer<List<NoteEntry>>() {
             @Override
             public void onChanged(@Nullable List<NoteEntry> noteEntries) {
                 mAdapter.setNotes(noteEntries);
@@ -225,6 +252,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
         if (settingsRequestCode == SETTINGS_INTENT_REPLY) {
             chooseLayout();
+            chooseDateOrder();
         }
     }
 

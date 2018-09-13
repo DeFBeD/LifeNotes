@@ -5,7 +5,7 @@
         android:defaultValue="@string/pref_old_to_new"
         android:entries="@array/pref_view_order_options"
         android:entryValues="@array/pref_view_order_values"
-        android:key="@string/pref_order_key"
+        android:key="@string/pref_date_order_key"
         android:title="@string/pref_change_view_order_title" />
     />
 

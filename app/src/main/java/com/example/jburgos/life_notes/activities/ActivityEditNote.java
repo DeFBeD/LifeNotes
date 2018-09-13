@@ -105,6 +105,9 @@ public class ActivityEditNote extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
         ButterKnife.bind(this);
+        if (savedInstanceState != null){
+            photoUri = savedInstanceState.getParcelable("uri");
+        }
         if (null != addNoteToolbar) {
             addNoteToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
 
@@ -155,6 +158,9 @@ public class ActivityEditNote extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        if (photoUri !=null) {
+            outState.putParcelable("uri", photoUri);
+        }
         outState.putInt(NOTE_INSTANCE_ID, noteId);
         super.onSaveInstanceState(outState);
     }
