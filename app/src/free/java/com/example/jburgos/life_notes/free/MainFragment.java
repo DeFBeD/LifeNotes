@@ -164,7 +164,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
         if (orderType.equals(getString(R.string.pref_list_view))) {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             setUpAdapter();
-           chooseDateOrder();
+            chooseDateOrder();
         } else if (orderType.equals(getString(R.string.pref_grid_view))) {
             GridLayoutManager grid =
                     new GridLayoutManager(getContext(), 2);
@@ -260,8 +260,6 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
         if (settingsRequestCode == SETTINGS_INTENT_REPLY) {
             chooseLayout();
-            //chooseDateOrder();
-
         }
     }
 

@@ -79,7 +79,6 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, rootView);
 
@@ -252,9 +251,9 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
         if (settingsRequestCode == SETTINGS_INTENT_REPLY) {
             chooseLayout();
-            chooseDateOrder();
         }
     }
+
 
     private void updateWidget() {
         Intent intent = new Intent(getContext(), WidgetProvider.class);
@@ -273,8 +272,8 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
     }
 
+    //set empty view on RecyclerView, so it shows when the list has 0 items
     public void toggleEmptyView(List<NoteEntry> noteEntries) {
-        //set empty view on RecyclerView, so it shows when the list has 0 items
         if (noteEntries.isEmpty()) {
             mRecyclerView.setVisibility(View.GONE);
             emptyView.setVisibility(View.VISIBLE);
@@ -287,22 +286,22 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
     private AlertDialog AlertDialog() {
         return new AlertDialog.Builder(getContext())
-                .setTitle("Delete")
-                .setMessage("Are you sure you want to delete All notes?")
+                .setTitle(.getString(com.example.jburgos.life_notes.R.string.delete_all_title))
+                .setMessage(.getString(com.example.jburgos.life_notes.R.string.delete_all_warning))
 
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                dataBase.noteDao().deleteAllNote();
-                            }
-                        });
-                        dialog.dismiss();
+            public void onClick(DialogInterface dialog, int whichButton) {
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        dataBase.noteDao().deleteAllNote();
                     }
+                });
+                dialog.dismiss();
+            }
 
-                })
+        })
 
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

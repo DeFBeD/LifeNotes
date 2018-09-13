@@ -20,7 +20,7 @@ public class DescendingViewModel extends AndroidViewModel {
         super(application);
         AppDatabase database = AppDatabase.getInstance(this.getApplication());
         Log.d(TAG,"Actively Retrieving all Notes from database");
-        notes = database.noteDao().loadAllNotesDecsendingOrder();
+        notes = database.noteDao().loadAllNotesDescendingOrder();
     }
 
     public LiveData<List<NoteEntry>> getDescendingNotes() {

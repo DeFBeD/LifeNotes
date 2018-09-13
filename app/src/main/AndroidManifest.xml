@@ -30,6 +30,7 @@
         <activity
             android:name=".activities.ActivityEditNote"
             android:parentActivityName=".activities.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity

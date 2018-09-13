@@ -31,4 +31,6 @@
     <string name="pictureWasNotTaken">Picture wasn\'t taken!</string>
     <string name="search_navigation">Search</string>
     <string name="search_all_notes_up_above">Search all notes up above!</string>
+    <string name="delete_all_warning">Are you sure you want to delete All notes?</string>
+    <string name="delete_all_title">Delete all notes</string>
 </resources>

@@ -155,9 +155,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), ActivityEditNote.class);
                 intent.putExtra(EXTRA_NOTE_ID, mTaskId);
-                intent.putExtra(PHOTO_URI, photoUri);
                 startActivity(intent);
-
                 dismiss();
             }
         });
