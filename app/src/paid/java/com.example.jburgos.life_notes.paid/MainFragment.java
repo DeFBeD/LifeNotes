@@ -38,6 +38,7 @@ import com.example.jburgos.life_notes.data.NoteEntry;
 import com.example.jburgos.life_notes.fragments.BottomSheetFragment;
 import com.example.jburgos.life_notes.settings.SettingsActivity;
 import com.example.jburgos.life_notes.utils.AppExecutors;
+import com.example.jburgos.life_notes.viewModel.DescendingViewModel;
 import com.example.jburgos.life_notes.viewModel.MainViewModel;
 import com.example.jburgos.life_notes.widget.WidgetProvider;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -286,22 +287,22 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
     private AlertDialog AlertDialog() {
         return new AlertDialog.Builder(getContext())
-                .setTitle(.getString(com.example.jburgos.life_notes.R.string.delete_all_title))
-                .setMessage(.getString(com.example.jburgos.life_notes.R.string.delete_all_warning))
+                .setTitle("Delete")
+                .setMessage("Are you sure you want to delete All notes?")
 
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
-            public void onClick(DialogInterface dialog, int whichButton) {
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        dataBase.noteDao().deleteAllNote();
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                dataBase.noteDao().deleteAllNote();
+                            }
+                        });
+                        dialog.dismiss();
                     }
-                });
-                dialog.dismiss();
-            }
 
-        })
+                })
 
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
