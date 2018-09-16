@@ -29,7 +29,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.jburgos.life_notes.R;
 import com.example.jburgos.life_notes.activities.ActivityEditNote;
 import com.example.jburgos.life_notes.activities.MainActivity;
 import com.example.jburgos.life_notes.adapter.MainNoteListAdapter;
@@ -121,7 +120,6 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
             // Called when a user swipes left or right on a ViewHolder
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                // Here is where you'll implement swipe to delete
                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
