@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
             android:orientation="horizontal"
-            android:padding="@dimen/default_16_padding">
+            android:padding="@dimen/default_16_dp">
 
             <ImageView
                 android:id="@+id/widget_img_launcher"

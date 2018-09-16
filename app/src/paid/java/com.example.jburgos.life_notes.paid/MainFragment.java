@@ -166,7 +166,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
             chooseDateOrder();
         } else if (orderType.equals(getString(R.string.pref_staggered_view))) {
             StaggeredGridLayoutManager grid =
-                    new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+                    new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(grid);
             setUpAdapter();
             chooseDateOrder();

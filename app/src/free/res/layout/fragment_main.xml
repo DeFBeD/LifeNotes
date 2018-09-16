@@ -13,7 +13,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/default_4_padding"
+        android:layout_margin="@dimen/default_4_dp"
         android:clipToPadding="false"
         android:paddingBottom="16dp"/>
 
@@ -22,8 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="@dimen/default_16_padding"
-        android:layout_marginEnd="@dimen/default_16_padding"
+        android:layout_marginBottom="@dimen/default_16_dp"
+        android:layout_marginEnd="@dimen/default_16_dp"
         android:clickable="true"
         android:focusable="true"
         app:elevation="6dp"

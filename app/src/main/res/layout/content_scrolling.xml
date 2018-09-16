@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFDE7"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_edit_note">
 
@@ -19,24 +20,26 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Edit Note"/>
 
         <TextView
             android:id="@+id/dateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_16_padding"
-            android:layout_marginTop="@dimen/default_16_padding"
+            android:layout_marginEnd="@dimen/default_16_dp"
+            android:layout_marginTop="@dimen/default_16_dp"
             android:paddingTop="8dp"
-            android:textSize="@dimen/default_16_padding"
+            android:textSize="@dimen/default_16_dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header_text_editNote"
-            tools:layout_marginEnd="@dimen/default_16_padding"
+            tools:layout_marginEnd="@dimen/default_16_dp"
             tools:text="11/12/12"/>
 
         <TextView
@@ -49,7 +52,7 @@
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dateTextView"
-            tools:layout_marginEnd="@dimen/default_16_padding"
+            tools:layout_marginEnd="@dimen/default_16_dp"
             tools:text="last updated: 11/12/12"/>
 
         <EditText
@@ -70,6 +73,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/editTextNote"
             android:layout_height="wrap_content">
 
@@ -77,7 +81,6 @@
                 android:id="@+id/remove_pic_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
                 android:background="@drawable/ripple"
                 app:srcCompat="@drawable/ic_delete_black_24dp"/>
 
