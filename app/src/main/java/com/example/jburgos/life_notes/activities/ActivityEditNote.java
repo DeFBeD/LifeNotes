@@ -96,7 +96,7 @@ public class ActivityEditNote extends AppCompatActivity {
     TextView lastUpdatedDateTextView;
     @BindView(R.id.remove_pic_button)
     ImageButton removePicture;
-    @BindView(R.id.editNotesToolbar)
+    @BindView(R.id.toolbar)
     Toolbar addNoteToolbar;
     @BindView(R.id.header_text_editNote)
     TextView headerText;
@@ -105,9 +105,7 @@ public class ActivityEditNote extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
         ButterKnife.bind(this);
-        if (savedInstanceState != null){
-            photoUri = savedInstanceState.getParcelable("uri");
-        }
+
         if (null != addNoteToolbar) {
             addNoteToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
 
@@ -158,9 +156,6 @@ public class ActivityEditNote extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        if (photoUri !=null) {
-            outState.putParcelable("uri", photoUri);
-        }
         outState.putInt(NOTE_INSTANCE_ID, noteId);
         super.onSaveInstanceState(outState);
     }
@@ -234,7 +229,7 @@ public class ActivityEditNote extends AppCompatActivity {
         }
 
         //contents
-        editText.setText(note.getDescription());
+        editText.setText("\t"+note.getDescription());
         description = note.getDescription();
 
         //favorite logic

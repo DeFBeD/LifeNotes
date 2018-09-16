@@ -17,16 +17,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_16_padding"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:gravity="start"
-        android:textSize="@dimen/default_16_padding"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="@dimen/default_16_padding"
         android:hint="@string/edit_text"
-        android:paddingBottom="@dimen/default_16_padding"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editedDateTextView"/>
 
@@ -36,47 +33,39 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bottom_Sheet_TextNote">
 
         <ImageView
             android:id="@+id/userTakenImage"
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
             android:contentDescription="@string/image_view_content_description"
             tools:src="@mipmap/ic_launcher"/>
 
-        <ImageButton
-            android:id="@+id/remove_pic_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/userTakenImage"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/ripple"
-            app:srcCompat="@drawable/ic_cancel_black_24dp"
-            />
     </RelativeLayout>
 
     <TextView
         android:id="@+id/dateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/default_16_padding"
+        android:layout_marginTop="@dimen/default_16_padding"
+        android:textSize="24dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/editedDateTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/archiveTab"
-        tools:text="TextView"/>
+        app:layout_constraintTop_toBottomOf="@+id/divider1"
+        tools:text="9/01/18"/>
 
     <TextView
         android:id="@+id/editedDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="14dp"
+        android:layout_marginBottom="@dimen/default_16_padding"
         android:layout_marginEnd="@dimen/default_16_padding"
         android:textSize="12dp"
         android:textStyle="italic"
@@ -86,16 +75,14 @@
         tools:text="last updated: 11/12/12"/>
 
     <!-- Archive tab-->
-    <ImageButton
+    <ImageView
         android:id="@+id/archiveTab"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_gravity="end"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/default_16_padding"
         android:layout_marginTop="16dp"
         android:background="?android:attr/selectableItemBackground"
-        app:layout_constraintBottom_toTopOf="@+id/dateTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_bookmark_border_black_24dp"/>
@@ -106,10 +93,10 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_gravity="end"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="@dimen/default_16_padding"
+        android:layout_marginTop="@dimen/default_16_padding"
         android:background="@drawable/ripple"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/archiveTab"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_edit_black_24dp"/>
 
@@ -117,11 +104,25 @@
         android:id="@+id/header_text_editNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="Edit Note"
-        app:layout_constraintStart_toEndOf="@+id/editNoteButton"
+        android:layout_marginBottom="@dimen/default_16_padding"
+        android:layout_marginStart="@dimen/default_16_padding"
+        android:layout_marginTop="@dimen/default_16_padding"
+        android:text="Entry"
+        android:textSize="32sp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="300dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="1dp"
+        android:layout_margin="8dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@+id/header_text_editNote"/>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -4,7 +4,6 @@ package com.example.jburgos.life_notes.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-import static android.support.constraint.Constraints.TAG;
 
 public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapter.NoteViewHolder> {
 

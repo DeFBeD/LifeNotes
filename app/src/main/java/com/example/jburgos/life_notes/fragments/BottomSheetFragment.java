@@ -53,11 +53,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     @BindView(R.id.userTakenImage)
     ImageView image;
     @BindView(R.id.archiveTab)
-    ImageButton bookmark;
+    ImageView bookmark;
     @BindView(R.id.dateTextView)
     TextView dateTextView;
-    @BindView(R.id.remove_pic_button)
-    ImageButton removePicture;
     @BindView(R.id.editedDateTextView)
     TextView lastUpdatedDateTextView;
 
@@ -119,7 +117,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             return;
         }
 
-        textForNotes.setText(note.getDescription());
+        textForNotes.setText("\t\t" + note.getDescription());
         int isFavorite = note.getIsFavorite();
 
         if (isFavorite == 1) {
@@ -141,14 +139,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
         photoUri = String.valueOf(Uri.parse(note.getImage()));
 
-        if (photoUri.toString().isEmpty()) {
-            removePicture.setVisibility(View.INVISIBLE);
-        } else {
-            removePicture.setVisibility(View.VISIBLE);
-
-            Glide.with(this).load(photoUri).into(image);
-
-        }
+        Glide.with(this).load(photoUri).into(image);
 
         editNoteSheetButton.setOnClickListener(new View.OnClickListener() {
             @Override
