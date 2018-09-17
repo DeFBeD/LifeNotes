@@ -83,7 +83,6 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, rootView);
 
@@ -95,7 +94,6 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Create a new intent to start an AddTaskActivity
                 Intent addNewNoteIntent = new Intent(getContext(), ActivityEditNote.class);
                 startActivity(addNewNoteIntent);
             }
@@ -118,17 +116,15 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
         return rootView;
     }
 
+    //swipe to delete
     private void swipeHandler() {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 return false;
             }
-
-            // Called when a user swipes left or right on a ViewHolder
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                // Here is where you'll implement swipe to delete
                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
@@ -180,6 +176,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
         }
     }
 
+    //gets shared preference and sets appropriate order by date
     private void chooseDateOrder() {
         SharedPreferences sharedPrefs =
                 PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -194,7 +191,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
         }
     }
 
-
+    //set up adapter
     private void setUpAdapter() {
         mAdapter = new MainNoteListAdapter(getContext(), this);
         mRecyclerView.setAdapter(mAdapter);
@@ -213,7 +210,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
         });
     }
 
-    //sets all the notes from the database as a viewModel
+    //sets all the notes from the database as a viewModel in descending order
     public void setUpDescendingViewModel() {
         DescendingViewModel viewModel = ViewModelProviders.of(this).get(DescendingViewModel.class);
         viewModel.getDescendingNotes().observe(this, new Observer<List<NoteEntry>>() {
@@ -241,7 +238,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
                 return true;
             case R.id.deleteAll:
                 if (mAdapter.getItemCount() == 0) {
-                    Toast.makeText(getContext(), "Nothing to delete", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.nothing_to_delete_toast, Toast.LENGTH_LONG).show();
                 } else {
                     AlertDialog dialog = AlertDialog();
                     dialog.show();
@@ -263,6 +260,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
         }
     }
 
+    //broadcast to update widget
     private void updateWidget() {
         Intent intent = new Intent(getContext(), WidgetProvider.class);
         intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
@@ -294,10 +292,10 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
     private AlertDialog AlertDialog() {
         return new AlertDialog.Builder(getContext())
-                .setTitle("Delete")
-                .setMessage("Are you sure you want to delete All notes?")
+                .setTitle(R.string.alert_dialog_title)
+                .setMessage(R.string.alert_dialog_prompt)
 
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.alert_dialog_title, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
                         AppExecutors.getInstance().diskIO().execute(new Runnable() {
@@ -308,10 +306,8 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
                         });
                         dialog.dismiss();
                     }
-
-                })
-
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    })
+                .setNegativeButton(R.string.alert_dialog_cancel_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
                         dialog.dismiss();

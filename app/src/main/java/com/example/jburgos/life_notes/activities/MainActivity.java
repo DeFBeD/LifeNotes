@@ -4,15 +4,11 @@ package com.example.jburgos.life_notes.activities;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-
 
 import com.example.jburgos.life_notes.MainFragment;
 import com.example.jburgos.life_notes.adapter.ViewPagerAdapter;
@@ -27,11 +23,11 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
+    //fragments
     SearchFragment searchFragment;
     MainFragment mainFragment;
     FavoriteFragment favoriteFragment;
     MenuItem prevMenuItem;
-
 
     @BindView(R.id.bar)
     BottomNavigationView bottomBar;
@@ -43,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        //schedule reminder
         ReminderNotificationJob.schedule();
 
         bottomBar.setOnNavigationItemSelectedListener(this);
@@ -57,12 +54,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             public void onPageSelected(int position) {
                 if (prevMenuItem != null) {
                     prevMenuItem.setChecked(false);
-                }
-                else
-                {
+                } else {
                     bottomBar.getMenu().getItem(0).setChecked(false);
                 }
-                Log.d("page", "onPageSelected: "+position);
+
                 bottomBar.getMenu().getItem(position).setChecked(true);
                 prevMenuItem = bottomBar.getMenu().getItem(position);
 
@@ -74,12 +69,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
         });
 
-         //Disable ViewPager Swipe
-       viewPager.setOnTouchListener(new View.OnTouchListener()
-        {
+        //Disable ViewPager Swipe
+        viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
+            public boolean onTouch(View v, MotionEvent event) {
                 return true;
             }
         });
@@ -99,12 +92,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.action_favorite:
                 viewPager.setCurrentItem(2);
-                setTitle("Bookmarks");
+                setTitle(getString(R.string.fragment_title_bookmarks));
                 break;
 
             case R.id.navigation_search:
                 viewPager.setCurrentItem(1);
-                setTitle("Search Notes");
+                setTitle(getString(R.string.fragment_title_search));
                 break;
         }
 
@@ -112,13 +105,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
-
-    private void setupViewPager(ViewPager viewPager)
-    {
+    private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        mainFragment=new MainFragment();
-        searchFragment=new SearchFragment();
-        favoriteFragment=new FavoriteFragment();
+        mainFragment = new MainFragment();
+        searchFragment = new SearchFragment();
+        favoriteFragment = new FavoriteFragment();
         adapter.addFragment(mainFragment);
         adapter.addFragment(searchFragment);
         adapter.addFragment(favoriteFragment);

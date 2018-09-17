@@ -16,12 +16,13 @@ import com.evernote.android.job.JobRequest;
 import com.example.jburgos.life_notes.activities.MainActivity;
 import com.example.jburgos.life_notes.R;
 
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class ReminderNotificationJob extends DailyJob {
     static final String TAG = "show_notification_job_tag";
-    ReminderProvider dailyString;
+    private ReminderProvider dailyString;
 
     @NonNull
     @Override
@@ -32,7 +33,7 @@ public class ReminderNotificationJob extends DailyJob {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(TAG, "Life-Notes Reminder", NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription("Life-Notes Friendly Reminders");
-            getContext().getSystemService(NotificationManager.class).createNotificationChannel(channel);
+            Objects.requireNonNull(getContext().getSystemService(NotificationManager.class)).createNotificationChannel(channel);
         }
 
         Notification notification = new NotificationCompat.Builder(getContext(), TAG)

@@ -39,14 +39,17 @@ public class AppExecutors {
         return sInstance;
     }
 
+
     public Executor diskIO() {
         return diskIO;
     }
 
+    //not used in this app
     public Executor mainThread() {
         return mainThread;
     }
 
+    //not used in this app
     public Executor networkIO() {
         return networkIO;
     }

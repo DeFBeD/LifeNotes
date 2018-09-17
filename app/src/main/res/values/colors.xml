@@ -6,4 +6,5 @@
     <color name="colorAccent">#ff5722</color>
 
     <color name="backgroundLight">#91ff35</color>
+    <color name="note_color">#FFFDE7</color>
 </resources>

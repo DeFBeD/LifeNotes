@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_gravity="bottom"
               android:layout_width="match_parent"
-              android:background="@drawable/rounded_corners"
               android:layout_height="wrap_content"
-    android:weightSum="4">
+              android:layout_gravity="bottom"
+              android:background="@drawable/rounded_corners"
+              android:orientation="horizontal"
+              android:weightSum="4">
 
     <Button
         android:id="@+id/power"
-        android:layout_weight="1"
-        android:text="@string/power"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <Button
+        android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:text="@string/power"/>
+
+    <Button
         android:id="@+id/volume_up"
-        android:text="@string/volumeUp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/volumeUp"/>
 
     <Button
-        android:layout_weight="1"
         android:id="@+id/volume_down"
-        android:text="@string/volumeDown"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/volumeDown"/>
 
     <Button
-        android:layout_weight="1"
         android:id="@+id/scroll"
-        android:text="@string/scroll"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/scroll"/>
 
 </LinearLayout>

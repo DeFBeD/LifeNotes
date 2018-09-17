@@ -21,13 +21,9 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-
         onSharedPreferenceChanged(sharedPreferences, getString(R.string.pref_order_key));
 
         onSharedPreferenceChanged(sharedPreferences, getString(R.string.pref_date_order_key));
-
-
-
 
     }
 

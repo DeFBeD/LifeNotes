@@ -23,7 +23,7 @@ public class NoteEntry {
     private String image;
 
     @Ignore
-    public NoteEntry(String description, Date dateView, int isFavorite,String image, Date editedDateView){
+    public NoteEntry(String description, Date dateView, int isFavorite, String image, Date editedDateView) {
         this.description = description;
         this.dateView = dateView;
         this.isFavorite = isFavorite;
@@ -32,7 +32,7 @@ public class NoteEntry {
 
     }
 
-    public NoteEntry(int id, String description, Date dateView, int isFavorite,String image, Date editedDateView){
+    public NoteEntry(int id, String description, Date dateView, int isFavorite, String image, Date editedDateView) {
         this.id = id;
         this.description = description;
         this.dateView = dateView;

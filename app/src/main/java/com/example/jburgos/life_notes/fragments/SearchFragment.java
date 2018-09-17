@@ -27,8 +27,6 @@ import butterknife.ButterKnife;
 
 public class SearchFragment extends Fragment implements MainNoteListAdapter.ItemClickListener {
 
-    static final int SETTINGS_INTENT_REPLY = 1;
-
     private MainNoteListAdapter mAdapter;
     private AppDatabase dataBase;
     private List<NoteEntry> notes;
@@ -43,12 +41,6 @@ public class SearchFragment extends Fragment implements MainNoteListAdapter.Item
 
     public SearchFragment() {
         //empty constructor
-    }
-
-    public static SearchFragment newInstance() {
-        SearchFragment searchFragment = new SearchFragment();
-
-        return searchFragment;
     }
 
     @Override
@@ -73,7 +65,7 @@ public class SearchFragment extends Fragment implements MainNoteListAdapter.Item
         mRecyclerView.setAdapter(mAdapter);
 
         search.setSubmitButtonEnabled(true);
-        search.setQueryHint("Search notes by date");
+        search.setQueryHint(getString(R.string.search_note_hint));
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String s) {

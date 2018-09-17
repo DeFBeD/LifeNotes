@@ -40,9 +40,9 @@
                     <!-- Archive tab-->
                     <ImageButton
                         android:id="@+id/archiveTab"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_width="@dimen/default_35_dp"
+                        android:layout_height="@dimen/default_35_dp"
+                        android:layout_marginEnd="@dimen/default_8_dp"
                         android:background="@drawable/ripple"
                         app:layout_constraintEnd_toStartOf="@+id/launchCameraButton"
                         app:layout_constraintTop_toTopOf="parent"
@@ -51,9 +51,9 @@
                     <!-- take pic button -->
                     <ImageButton
                         android:id="@+id/launchCameraButton"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_width="@dimen/default_35_dp"
+                        android:layout_height="@dimen/default_35_dp"
+                        android:layout_marginEnd="@dimen/default_8_dp"
                         android:background="@drawable/ripple"
                         app:layout_constraintEnd_toStartOf="@+id/shareNoteContentsButton"
                         app:layout_constraintTop_toTopOf="parent"
@@ -62,9 +62,9 @@
                     <!-- take pic button -->
                     <ImageButton
                         android:id="@+id/shareNoteContentsButton"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_width="@dimen/default_35_dp"
+                        android:layout_height="@dimen/default_35_dp"
+                        android:layout_marginEnd="@dimen/default_8_dp"
                         android:background="@drawable/ripple"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -83,12 +83,12 @@
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_16_dp"
+        android:layout_marginEnd="@dimen/default_16_dp"
+        android:elevation="@dimen/fab_elevation"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:elevation="6dp"
         app:srcCompat="@drawable/ic_add_black_24dp"/>
 
 </android.support.design.widget.CoordinatorLayout>

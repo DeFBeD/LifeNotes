@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.example.jburgos.life_notes.R;
 import com.example.jburgos.life_notes.adapter.MainNoteListAdapter;
 import com.example.jburgos.life_notes.data.AppDatabase;

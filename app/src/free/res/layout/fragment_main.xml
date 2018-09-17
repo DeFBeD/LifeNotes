@@ -14,8 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/default_4_dp"
-        android:clipToPadding="false"
-        android:paddingBottom="16dp"/>
+        android:paddingBottom="@dimen/default_16_dp"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -26,7 +25,7 @@
         android:layout_marginEnd="@dimen/default_16_dp"
         android:clickable="true"
         android:focusable="true"
-        app:elevation="6dp"
+        app:elevation="@dimen/fab_elevation"
         app:srcCompat="@drawable/ic_add_black_24dp"/>
 
     <com.google.android.gms.ads.AdView
@@ -61,8 +60,8 @@
             android:layout_above="@+id/empty_subtitle_text"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif-medium"
-            android:paddingTop="16dp"
-            android:text="You currently have no notes."
+            android:paddingTop="@dimen/default_16_dp"
+            android:text="@string/you_currently_have_no_notes"
             android:textAppearance="?android:textAppearanceMedium"/>
 
         <TextView
@@ -73,8 +72,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="239dp"
             android:fontFamily="sans-serif"
-            android:paddingTop="8dp"
-            android:text="Starting adding entries to log your best \n     (or maybe your worst) moments!"
+            android:paddingTop="@dimen/default_8_dp"
+            android:text="@string/starting_adding_entries_to_log_your_best_n_or_maybe_your_worst_moments"
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="#A2AAB0"/>
     </RelativeLayout>

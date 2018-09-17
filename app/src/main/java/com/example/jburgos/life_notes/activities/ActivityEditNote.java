@@ -45,12 +45,9 @@ public class ActivityEditNote extends AppCompatActivity {
 
     private static final String TAG = ActivityEditNote.class.getSimpleName();
 
-    // id being received through intent
+    // constants for Id of notes and logic
     public static final String EXTRA_NOTE_ID = "extraNoteId";
-
-    // instance id for rotation
     public static final String NOTE_INSTANCE_ID = "instanceOfNoteId";
-    // Constant for default task id to be used when not in update mode
     private static final int DEFAULT_ID_FOR_NOTE = -1;
     private int noteId = DEFAULT_ID_FOR_NOTE;
 
@@ -67,6 +64,7 @@ public class ActivityEditNote extends AppCompatActivity {
     private int isFavorite;
     private String description;
 
+    //variables for date logic
     private static final String DATE_FORMAT = "MM/dd/yyy";
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
     String dateString;
@@ -74,8 +72,8 @@ public class ActivityEditNote extends AppCompatActivity {
     Date date;
     Date updatedDate;
 
-    //firebase
-    private FirebaseAnalytics mFirebaseAnalytics;
+    //fireBase
+    private FirebaseAnalytics firebaseAnalytics;
 
     // Fields for views
     @BindView(R.id.editTextNote)
@@ -105,7 +103,7 @@ public class ActivityEditNote extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
         ButterKnife.bind(this);
-
+        //up button
         if (null != addNoteToolbar) {
             addNoteToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
 
@@ -117,7 +115,7 @@ public class ActivityEditNote extends AppCompatActivity {
             });
         }
 
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         setButtons();
 
@@ -229,7 +227,7 @@ public class ActivityEditNote extends AppCompatActivity {
         }
 
         //contents
-        editText.setText("\t"+note.getDescription());
+        editText.setText("\t" + note.getDescription());
         description = note.getDescription();
 
         //favorite logic
@@ -239,7 +237,6 @@ public class ActivityEditNote extends AppCompatActivity {
         } else {
             bookmark.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
         }
-
 
         //constant to original date; logic
         date = note.getDateView();
@@ -297,11 +294,9 @@ public class ActivityEditNote extends AppCompatActivity {
             public void run() {
                 if (noteId == DEFAULT_ID_FOR_NOTE) {
                     database.noteDao().insertNotes(note);
-                    Log.d(TAG, "inserted: " + description + "favorite: " + String.valueOf(favorite) + "uri: " + photoU);
                 } else {
                     note.setId(noteId);
                     database.noteDao().updateNotes(note);
-                    Log.d(TAG, "inserted:" + description + "favorite:" + String.valueOf(favorite) + "uri:" + photoU);
                 }
 
                 finish();
@@ -314,8 +309,6 @@ public class ActivityEditNote extends AppCompatActivity {
         share.setType("text/plain");
         share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 
-        // Add data to the intent, the receiving app will decide
-        // what to do with it.
         share.putExtra(Intent.EXTRA_TEXT, description);
 
         startActivity(Intent.createChooser(share, "Share note!"));
@@ -376,7 +369,7 @@ public class ActivityEditNote extends AppCompatActivity {
         bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, noteId);
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, description);
         bundle.putInt(FirebaseAnalytics.Param.INDEX, isFavorite);
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
 }

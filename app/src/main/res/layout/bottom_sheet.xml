@@ -6,10 +6,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
+    android:layout_margin="@dimen/default_8_dp"
     android:orientation="vertical"
     app:behavior_hideable="true"
-    app:behavior_peekHeight="30dp"
+    app:behavior_peekHeight="@dimen/default_35_dp"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
     <TextView
@@ -17,25 +17,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_16_dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginEnd="@dimen/default_24_dp"
+        android:layout_marginStart="@dimen/default_24_dp"
         android:layout_marginTop="@dimen/default_16_dp"
         android:hint="@string/edit_text"
-        android:textSize="16sp"
         android:textColor="@android:color/primary_text_light"
+        android:textSize="@dimen/text_size_16_sp"
         app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editedDateTextView"/>
 
-    <!-- Add button -->
-
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="@dimen/default_35_dp"
+        android:layout_marginTop="@dimen/default_35_dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bottom_Sheet_TextNote">
@@ -54,9 +52,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/default_16_dp"
-        android:textSize="24sp"
-        android:textStyle="bold"
         android:textColor="@android:color/primary_text_light"
+        android:textSize="@dimen/text_size_24_sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/editedDateTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider1"
@@ -66,9 +64,9 @@
         android:id="@+id/editedDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/default_8_dp"
         android:layout_marginEnd="@dimen/default_16_dp"
-        android:textSize="12sp"
+        android:textSize="@dimen/text_size_12_sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@id/bottom_Sheet_TextNote"
         app:layout_constraintEnd_toEndOf="parent"
@@ -78,11 +76,11 @@
     <!-- Archive tab-->
     <ImageView
         android:id="@+id/archiveTab"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="@dimen/default_35_dp"
+        android:layout_height="@dimen/default_35_dp"
         android:layout_gravity="end"
         android:layout_marginEnd="@dimen/default_16_dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/default_16_dp"
         android:background="?android:attr/selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -91,8 +89,8 @@
     <!-- Archive tab-->
     <ImageButton
         android:id="@+id/editNoteButton"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="@dimen/default_35_dp"
+        android:layout_height="@dimen/default_35_dp"
         android:layout_gravity="end"
         android:layout_marginEnd="@dimen/default_16_dp"
         android:layout_marginTop="@dimen/default_16_dp"
@@ -109,8 +107,8 @@
         android:layout_marginStart="@dimen/default_16_dp"
         android:layout_marginTop="@dimen/default_16_dp"
         android:text="Entry"
-        android:textSize="32sp"
         android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_32_sp"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -118,12 +116,11 @@
     <View
         android:id="@+id/divider1"
         android:layout_width="275dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_height="1dp"
         android:layout_margin="@dimen/default_16_dp"
         android:background="@android:color/background_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header_text_editNote"/>
-
 
 </android.support.constraint.ConstraintLayout>

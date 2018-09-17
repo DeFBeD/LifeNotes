@@ -19,6 +19,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class GlobalActionBarService extends AccessibilityService {
+
     FrameLayout layout;
 
     @Override
@@ -28,7 +29,8 @@ public class GlobalActionBarService extends AccessibilityService {
         layout = new FrameLayout(this);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            lp.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY; }
+            lp.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
+        }
         lp.format = PixelFormat.TRANSLUCENT;
         lp.flags |= WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -48,13 +50,10 @@ public class GlobalActionBarService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent accessibilityEvent) {
-
-
     }
 
     @Override
     public void onInterrupt() {
-
     }
 
     private AccessibilityNodeInfo findScrollableNode(AccessibilityNodeInfo root) {

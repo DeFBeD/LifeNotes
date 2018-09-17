@@ -24,7 +24,6 @@ import com.example.jburgos.life_notes.viewModel.AddNoteViewModel;
 import com.example.jburgos.life_notes.viewModel.AddNoteViewModelFactory;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -33,13 +32,11 @@ import butterknife.ButterKnife;
 public class BottomSheetFragment extends BottomSheetDialogFragment {
 
 
+    //constants for note Id and logic
     public static String EXTRA_NOTE_ID = "extraNoteId";
-    public static String PHOTO_URI = "photo";
     public static final String NOTE_ID = "noteId";
     public static final String STRING_NOTE_ID = "stringNoteId";
-    // instance id for rotation
     public static final String NOTE_INSTANCE_ID = "instanceOfNoteId";
-    // Constant for default task id to be used when not in update mode
     private static final int DEFAULT_TASK_ID = -1;
     private int mTaskId = DEFAULT_TASK_ID;
 
@@ -59,6 +56,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     @BindView(R.id.editedDateTextView)
     TextView lastUpdatedDateTextView;
 
+    //date logic
     private static final String DATE_FORMAT = "MM/dd/yyy";
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
 
@@ -66,6 +64,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         // Required empty public constructor
     }
 
+    //new instance
     public static BottomSheetFragment newInstance(String noteExtra, int noteId) {
         BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
         Bundle bundle = new Bundle();

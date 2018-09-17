@@ -33,4 +33,8 @@
     <string name="search_all_notes_up_above">Search all notes up above!</string>
     <string name="delete_all_warning">Are you sure you want to delete All notes?</string>
     <string name="delete_all_title">Delete all notes</string>
+    <string name="you_currently_have_no_notes">You currently have no notes.</string>
+    <string name="fragment_title_bookmarks">Bookmarks</string>
+    <string name="fragment_title_search">Search Notes</string>
+    <string name="search_note_hint">Search notes by date</string>
 </resources>

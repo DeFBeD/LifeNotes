@@ -18,10 +18,10 @@
             android:id="@+id/header_text_editNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:textSize="24sp"
+            android:layout_marginEnd="@dimen/default_8_dp"
+            android:layout_marginStart="@dimen/default_8_dp"
+            android:layout_marginTop="@dimen/default_8_dp"
+            android:textSize="@dimen/text_size_24_sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/default_16_dp"
             android:layout_marginTop="@dimen/default_16_dp"
-            android:paddingTop="8dp"
+            android:paddingTop="@dimen/default_8_dp"
             android:textSize="@dimen/default_16_dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,9 +46,9 @@
             android:id="@+id/editedDateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:textSize="12dp"
+            android:layout_marginEnd="@dimen/default_8_dp"
+            android:layout_marginTop="@dimen/default_8_dp"
+            android:textSize="@dimen/text_size_12_sp"
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dateTextView"
@@ -59,9 +59,9 @@
             android:id="@+id/editTextNote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_margin="@dimen/default_8_dp"
+            android:layout_marginEnd="@dimen/default_8_dp"
+            android:layout_marginStart="@dimen/default_8_dp"
             android:background="@android:color/transparent"
             android:gravity="center"
             android:hint="@string/edit_text"
@@ -73,9 +73,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/editTextNote"
-            android:layout_height="wrap_content">
+            app:layout_constraintTop_toBottomOf="@id/editTextNote">
 
             <ImageButton
                 android:id="@+id/remove_pic_button"
@@ -88,13 +88,12 @@
                 android:id="@+id/userTakenImage"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/default_8_dp"
                 android:contentDescription="@string/image_view_content_description"
                 android:scaleType="centerCrop"
                 tools:src="@mipmap/ic_launcher"/>
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
-
 
 </android.support.v4.widget.NestedScrollView>

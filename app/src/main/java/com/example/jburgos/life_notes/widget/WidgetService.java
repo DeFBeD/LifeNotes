@@ -68,7 +68,6 @@ class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
 
         views.setTextViewText(R.id.widget_date_TextView, date);
 
-
         if (favorite == 1) {
             views.setImageViewResource(R.id.widget_bookmark, R.drawable.ic_bookmark_black_24dp);
         }

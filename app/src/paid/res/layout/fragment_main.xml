@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="false"
@@ -11,65 +11,64 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_margin="@dimen/default_4_dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="16dp"/>
+        android:layout_margin="@dimen/default_4_dp"
+        android:paddingBottom="@dimen/default_16_dp"/>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/default_16_dp"
+        android:layout_marginEnd="@dimen/default_16_dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:elevation="@dimen/fab_elevation"
+        app:srcCompat="@drawable/ic_add_black_24dp"/>
+
+    <RelativeLayout
+        android:id="@+id/empty_view_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/empty_bookmark_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginBottom="@dimen/default_16_dp"
-            android:layout_marginEnd="@dimen/default_16_dp"
-            android:clickable="true"
-            app:elevation="6dp"
-            app:srcCompat="@drawable/ic_add_black_24dp"
-            android:focusable="true"/>
+            android:layout_above="@+id/empty_title_text"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/ic_import_contacts_black_48dp"/>
 
-        <RelativeLayout
-            android:id="@+id/empty_view_main"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true">
+        <TextView
+            android:id="@+id/empty_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/empty_subtitle_text"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="sans-serif-medium"
+            android:paddingTop="@dimen/default_16_dp"
+            android:text="@string/you_currently_have_no_notes"
+            android:textAppearance="?android:textAppearanceMedium"/>
 
-            <ImageView
-                android:id="@+id/empty_bookmark_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/empty_title_text"
-                android:layout_centerHorizontal="true"
-                app:srcCompat="@drawable/ic_import_contacts_black_48dp"/>
+        <TextView
+            android:id="@+id/empty_subtitle_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="239dp"
+            android:fontFamily="sans-serif"
+            android:paddingTop="@dimen/default_8_dp"
+            android:text="@string/starting_adding_entries_to_log_your_best_n_or_maybe_your_worst_moments"
+            android:textAppearance="?android:textAppearanceSmall"
+            />
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/empty_title_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/empty_subtitle_text"
-                android:layout_centerHorizontal="true"
-                android:fontFamily="sans-serif-medium"
-                android:paddingTop="16dp"
-                android:text="You currently have no notes."
-                android:textAppearance="?android:textAppearanceMedium"/>
-
-            <TextView
-                android:id="@+id/empty_subtitle_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="239dp"
-                android:fontFamily="sans-serif"
-                android:paddingTop="8dp"
-                android:text="Starting adding entries to log your best \n     (or maybe your worst) moments!"
-                android:textAppearance="?android:textAppearanceSmall"
-                android:textColor="#A2AAB0"/>
-        </RelativeLayout>
-
-    </android.support.design.widget.CoordinatorLayout>
+</android.support.design.widget.CoordinatorLayout>
 
 
 

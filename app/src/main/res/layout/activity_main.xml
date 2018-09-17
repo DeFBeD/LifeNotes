@@ -5,8 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:weightSum="4"
-    >
+              android:weightSum="4">
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -18,7 +17,7 @@
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     </FrameLayout>
 
@@ -29,8 +28,7 @@
         android:layout_gravity="bottom"
         android:layout_weight="1"
         android:background="?android:attr/windowBackground"
-        android:padding="8dp"
+        android:padding="@dimen/default_8_dp"
         app:menu="@menu/navigation"/>
-
 
 </LinearLayout>

@@ -203,7 +203,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
         });
     }
 
-    //sets all the notes from the database as a viewModel
+    //sets all the notes from the database as a viewModel in descending order
     public void setUpDescendingViewModel() {
         DescendingViewModel viewModel = ViewModelProviders.of(this).get(DescendingViewModel.class);
         viewModel.getDescendingNotes().observe(this, new Observer<List<NoteEntry>>() {
@@ -231,7 +231,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
                 return true;
             case R.id.deleteAll:
                 if (mAdapter.getItemCount() == 0) {
-                    Toast.makeText(getContext(), "Nothing to delete", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.nothing_to_delete_toast, Toast.LENGTH_LONG).show();
                 } else {
                     AlertDialog dialog = AlertDialog();
                     dialog.show();
@@ -285,10 +285,10 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
     private AlertDialog AlertDialog() {
         return new AlertDialog.Builder(getContext())
-                .setTitle("Delete")
-                .setMessage("Are you sure you want to delete All notes?")
+                .setTitle(R.string.alert_dialog_title)
+                .setMessage(R.string.alert_dialog_prompt)
 
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.alert_dialog_title, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
                         AppExecutors.getInstance().diskIO().execute(new Runnable() {
@@ -302,7 +302,7 @@ public class MainFragment extends Fragment implements MainNoteListAdapter.ItemCl
 
                 })
 
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.alert_dialog_cancel_button, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
                         dialog.dismiss();

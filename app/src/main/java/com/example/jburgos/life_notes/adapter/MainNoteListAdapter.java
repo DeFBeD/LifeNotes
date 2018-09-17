@@ -35,23 +35,12 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
     //handle item clicks
     final private ItemClickListener mItemClickListener;
 
-
-    /**
-     * Constructor for the MainNoteListAdapter that initializes the Context.
-     *
-     * @param context  the current Context
-     * @param listener the ItemClickListener
-     */
+    //constructor
     public MainNoteListAdapter(Context context, ItemClickListener listener) {
         mContext = context;
         mItemClickListener = listener;
     }
 
-    /**
-     * Called when ViewHolders are created to fill a RecyclerView.
-     *
-     * @return A new NoteViewHolder that holds the view for each note entry
-     */
     @Override
     public NoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Inflate the note_card_layout to a view
@@ -76,12 +65,9 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
         if (!TextUtils.isEmpty(imageUri)) {
             Glide.with(mContext).load(imageUri).into(holder.imageCard);
         }
-
     }
 
-    /**
-     * Returns the number of items to display.
-     */
+    // Returns the number of items to display.
     @Override
     public int getItemCount() {
         if (noteEntries == null) {
@@ -110,16 +96,11 @@ public class MainNoteListAdapter extends RecyclerView.Adapter<MainNoteListAdapte
     // Inner class for creating ViewHolders
     class NoteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        // Class variables for the note description and date TextViews
         TextView noteContentsView;
         TextView updateTheDateView;
         ImageView imageCard;
 
-        /**
-         * Constructor for the NoteViewHolders.
-         *
-         * @param itemView The view inflated in onCreateViewHolder
-         */
+        //Constructor for the NoteViewHolders.
         public NoteViewHolder(View itemView) {
             super(itemView);
 

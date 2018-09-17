@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fab_elevation">6dp</dimen>
+    <dimen name="default_8_dp">8dp</dimen>
+    <dimen name="default_35_dp">35dp</dimen>
+    <dimen name="default_24_dp">24dp</dimen>
+    <dimen name="text_size_16_sp">16sp</dimen>
+    <dimen name="text_size_24_sp">24sp</dimen>
+    <dimen name="text_size_12_sp">12sp</dimen>
+    <dimen name="text_size_32_sp">32sp</dimen>
+    <dimen name="image_100_dp">100dp</dimen>
+</resources>

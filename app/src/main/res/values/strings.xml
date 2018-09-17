@@ -145,5 +145,14 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="alert_dialog_title">Delete</string>
+    <string name="alert_dialog_cancel_button">cancel</string>
+    <string name="alert_dialog_prompt">Are you sure you want to delete All notes?</string>
+    <string name="nothing_to_delete_toast">Nothing to delete</string>
+    <string name="you_currently_have_no_notes">You currently have no notes.</string>
+    <string name="starting_adding_entries_to_log_your_best_n_or_maybe_your_worst_moments">Starting adding entries to log your best   (or maybe your worst) moments!</string>
+    <string name="fragment_title_bookmarks">Bookmarks</string>
+    <string name="fragment_title_search">Search Notes</string>
+    <string name="search_note_hint">Search notes by date</string>
 
 </resources>
