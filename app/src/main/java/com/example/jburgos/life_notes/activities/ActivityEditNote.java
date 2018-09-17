@@ -126,12 +126,12 @@ public class ActivityEditNote extends AppCompatActivity {
             noteId = savedInstanceState.getInt(NOTE_INSTANCE_ID, DEFAULT_ID_FOR_NOTE);
         }
 
-        headerText.setText("Add a Note");
+        headerText.setText(R.string.add_a_note_activity_header);
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(EXTRA_NOTE_ID)) {
             saveButton.setImageResource(R.drawable.ic_edit_black_24dp);
-            headerText.setText("Edit Note");
+            headerText.setText(R.string.add_a_note_activity_edit_note_header);
 
             if (noteId == DEFAULT_ID_FOR_NOTE) {
                 // populate the UI

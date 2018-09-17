@@ -24,6 +24,7 @@
         android:visibility="gone">
 
         <ImageView
+            android:contentDescription="@string/your_favorite_s_is_empty_add_some"
             android:id="@+id/empty_bookmark_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

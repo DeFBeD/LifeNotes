@@ -14,7 +14,7 @@
         android:id="@+id/widget_date_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:layout_marginStart="@dimen/default_8_dp"
         android:layout_marginTop="@dimen/default_16_dp"
         android:textColor="@android:color/black"
@@ -32,6 +32,7 @@
         android:layout_gravity="end"
         android:layout_marginEnd="@dimen/default_8_dp"
         android:layout_marginTop="@dimen/default_16_dp"
+        android:contentDescription="@string/Note_is_bookmarked_widget"
         tools:src="@drawable/ic_bookmark_border_black_24dp"/>
 
 </RelativeLayout>

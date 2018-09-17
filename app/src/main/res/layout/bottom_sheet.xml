@@ -82,6 +82,7 @@
         android:layout_marginEnd="@dimen/default_16_dp"
         android:layout_marginTop="@dimen/default_16_dp"
         android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/bookmark_indicator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_bookmark_border_black_24dp"/>
@@ -95,6 +96,7 @@
         android:layout_marginEnd="@dimen/default_16_dp"
         android:layout_marginTop="@dimen/default_16_dp"
         android:background="@drawable/ripple"
+        android:contentDescription="@string/edit_note_button_bottom_sheet"
         app:layout_constraintEnd_toStartOf="@+id/archiveTab"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_edit_black_24dp"/>
@@ -106,7 +108,7 @@
         android:layout_marginBottom="@dimen/default_16_dp"
         android:layout_marginStart="@dimen/default_16_dp"
         android:layout_marginTop="@dimen/default_16_dp"
-        android:text="Entry"
+        android:text="@string/entry_header_text"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/text_size_32_sp"
         android:textStyle="bold|italic"

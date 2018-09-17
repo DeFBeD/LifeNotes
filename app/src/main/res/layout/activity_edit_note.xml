@@ -43,6 +43,7 @@
                         android:layout_width="@dimen/default_35_dp"
                         android:layout_height="@dimen/default_35_dp"
                         android:layout_marginEnd="@dimen/default_8_dp"
+                        android:contentDescription="@string/add_a_bookmark_button"
                         android:background="@drawable/ripple"
                         app:layout_constraintEnd_toStartOf="@+id/launchCameraButton"
                         app:layout_constraintTop_toTopOf="parent"
@@ -51,6 +52,7 @@
                     <!-- take pic button -->
                     <ImageButton
                         android:id="@+id/launchCameraButton"
+                        android:contentDescription="@string/launch_the_camera_button"
                         android:layout_width="@dimen/default_35_dp"
                         android:layout_height="@dimen/default_35_dp"
                         android:layout_marginEnd="@dimen/default_8_dp"
@@ -63,6 +65,7 @@
                     <ImageButton
                         android:id="@+id/shareNoteContentsButton"
                         android:layout_width="@dimen/default_35_dp"
+                        android:contentDescription="@string/share_note_text_button"
                         android:layout_height="@dimen/default_35_dp"
                         android:layout_marginEnd="@dimen/default_8_dp"
                         android:background="@drawable/ripple"
@@ -87,6 +90,7 @@
         android:layout_marginBottom="@dimen/default_16_dp"
         android:layout_marginEnd="@dimen/default_16_dp"
         android:elevation="@dimen/fab_elevation"
+        android:contentDescription="@string/save_or_edit_a_note_button"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_add_black_24dp"/>

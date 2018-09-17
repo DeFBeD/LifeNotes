@@ -15,4 +15,19 @@
     <string name="fragment_title_bookmarks">Bookmarks</string>
     <string name="fragment_title_search">Search Notes</string>
     <string name="search_note_hint">Search notes by date</string>
+    <string name="add_a_note_activity_header">Add a Note</string>
+    <string name="add_a_note_activity_edit_note_header">Edit Note</string>
+    <string name="fab_main_content_description">add a new note button</string>
+    <string name="save_or_edit_a_note_button">Save or Edit a note button</string>
+    <string name="share_note_text_button">Share note text button</string>
+    <string name="launch_the_camera_button">Launch the camera button</string>
+    <string name="add_a_bookmark_button">Add a bookmark button</string>
+    <string name="Note_is_bookmarked_widget">note is bookmarked</string>
+    <string name="edit_note_button_bottom_sheet">Edit Note Button</string>
+    <string name="entry_header_text">Entry</string>
+    <string name="bookmark_indicator">bookmark indicator</string>
+    <string name="remove_picture_button">remove picture button</string>
+    <string name="your_favorite_s_is_empty_add_some">Your favorite\'s is empty, add some</string>
+    <string name="image_in_note">Image in note</string>
+    <string name="app_logo">App Logo</string>
 </resources>

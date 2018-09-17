@@ -18,6 +18,7 @@
             android:padding="@dimen/default_16_dp">
 
             <ImageView
+                android:contentDescription="@string/app_logo"
                 android:id="@+id/widget_img_launcher"
                 android:layout_width="42dp"
                 android:layout_height="42dp"

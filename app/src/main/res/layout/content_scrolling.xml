@@ -35,7 +35,7 @@
             android:layout_marginEnd="@dimen/default_16_dp"
             android:layout_marginTop="@dimen/default_16_dp"
             android:paddingTop="@dimen/default_8_dp"
-            android:textSize="@dimen/default_16_dp"
+            android:textSize="@dimen/text_size_16_sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header_text_editNote"
@@ -68,7 +68,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editedDateTextView"/>
+            app:layout_constraintTop_toBottomOf="@+id/editedDateTextView"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,6 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ripple"
+                android:contentDescription="@string/remove_picture_button"
                 app:srcCompat="@drawable/ic_delete_black_24dp"/>
 
             <ImageView
