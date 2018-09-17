@@ -63,7 +63,6 @@
             android:layout_marginEnd="@dimen/default_8_dp"
             android:layout_marginStart="@dimen/default_8_dp"
             android:background="@android:color/transparent"
-            android:gravity="center"
             android:hint="@string/edit_text"
             android:paddingBottom="@dimen/activity_horizontal_margin"
             android:textStyle="bold"
