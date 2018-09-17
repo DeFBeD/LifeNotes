@@ -2,7 +2,6 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parentView"
     android:layout_width="match_parent"
@@ -14,24 +13,38 @@
         android:id="@+id/widget_date_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_gravity="start"
-        android:layout_marginStart="@dimen/default_8_dp"
-        android:layout_marginTop="@dimen/default_16_dp"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/text_size_24_sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Title"/>
+        android:textSize="@dimen/text_size_16_sp"
+        android:textStyle="italic"
+        tools:text="11/11/11"/>
+
+    <TextView
+        android:id="@+id/widget_detail_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/widget_date_TextView"
+        android:layout_gravity="start"
+        android:layout_marginTop="@dimen/default_4_dp"
+        android:layout_toStartOf="@+id/widget_bookmark"
+        android:maxLines="1"
+        android:paddingEnd="@dimen/default_16_dp"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_size_16_sp"
+        tools:text="Content of note"/>
 
     <ImageView
         android:id="@+id/widget_bookmark"
-        android:layout_width="@dimen/default_35_dp"
-        android:layout_height="@dimen/default_35_dp"
+        android:layout_width="@dimen/default_24_dp"
+        android:layout_height="@dimen/default_24_dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_gravity="end"
         android:layout_marginEnd="@dimen/default_8_dp"
-        android:layout_marginTop="@dimen/default_16_dp"
+        android:layout_marginTop="@dimen/default_8_dp"
         android:contentDescription="@string/Note_is_bookmarked_widget"
         tools:src="@drawable/ic_bookmark_border_black_24dp"/>
 

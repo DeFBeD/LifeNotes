@@ -61,12 +61,15 @@ class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
         NoteEntry savedNotes = notes.get(position);
 
         String date = dateFormat.format(savedNotes.getDateView());
+        String noteText = savedNotes.getDescription();
+
         String isFavorite = String.valueOf(savedNotes.getIsFavorite());
         int favorite = Integer.parseInt(isFavorite);
 
         RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.list_item_widget);
 
         views.setTextViewText(R.id.widget_date_TextView, date);
+        views.setTextViewText(R.id.widget_detail_TextView,noteText);
 
         if (favorite == 1) {
             views.setImageViewResource(R.id.widget_bookmark, R.drawable.ic_bookmark_black_24dp);

@@ -10,6 +10,7 @@ import android.widget.RemoteViews;
 
 import com.example.jburgos.life_notes.MainFragment;
 import com.example.jburgos.life_notes.R;
+import com.example.jburgos.life_notes.activities.MainActivity;
 
 /**
  * Implementation of App Widget functionality.
@@ -23,9 +24,9 @@ public class WidgetProvider extends AppWidgetProvider {
 
         views.setEmptyView(R.id.widget_list, R.id.empty_widget);
 
-        Intent intent = new Intent(context, MainFragment.class);
+        Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        views.setOnClickPendingIntent(R.id.parentView, pendingIntent);
+        views.setOnClickPendingIntent(R.id.widget_detail_TextView, pendingIntent);
 
         // Set up the collection
         setRemoteAdapter(context, views);
