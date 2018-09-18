@@ -1,6 +1,8 @@
 package com.example.jburgos.life_notes.activities;
 
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -16,6 +18,13 @@ import com.example.jburgos.life_notes.fragments.FavoriteFragment;
 import com.example.jburgos.life_notes.R;
 import com.example.jburgos.life_notes.fragments.SearchFragment;
 import com.example.jburgos.life_notes.reminderNotification.ReminderNotificationJob;
+import com.firebase.jobdispatcher.Constraint;
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.Lifetime;
+import com.firebase.jobdispatcher.RetryStrategy;
+import com.firebase.jobdispatcher.Trigger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +32,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
+    static final String TAG = "show_notification";
     //fragments
     SearchFragment searchFragment;
     MainFragment mainFragment;
@@ -34,13 +44,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @BindView(R.id.viewpager)
     ViewPager viewPager;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         //schedule reminder
-        ReminderNotificationJob.schedule();
+        scheduleJob(this);
 
         bottomBar.setOnNavigationItemSelectedListener(this);
 
@@ -115,4 +126,38 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         adapter.addFragment(favoriteFragment);
         viewPager.setAdapter(adapter);
     }
+
+    public static void scheduleJob(Context context) {
+        //creating new firebase job dispatcher
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
+        //creating new job and adding it with dispatcher
+        Job job = createJob(dispatcher);
+        dispatcher.mustSchedule(job);
+    }
+
+    public static Job createJob(FirebaseJobDispatcher dispatcher) {
+
+        Job job = dispatcher.newJobBuilder()
+                //persist the task across boots
+                .setLifetime(Lifetime.FOREVER)
+                //.setLifetime(Lifetime.UNTIL_NEXT_BOOT)
+                //call this service when the criteria are met.
+                .setService(ReminderNotificationJob.class)
+                //unique id of the task
+                .setTag(TAG)
+                //don't overwrite an existing job with the same tag
+                .setReplaceCurrent(false)
+                // We are mentioning that the job is periodic.
+                .setRecurring(true)
+                // Run between 30 - 60 seconds from now.
+                .setTrigger(Trigger.executionWindow(30, 60))
+                // retry with exponential backoff
+                .setRetryStrategy(RetryStrategy.DEFAULT_LINEAR)
+                //.setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
+                //Run this job only when the network is available.
+                .setConstraints(Constraint.ON_ANY_NETWORK)
+                .build();
+        return job;
+    }
+
 }

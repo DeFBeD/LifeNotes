@@ -6,68 +6,72 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.util.Log;
 
-import com.evernote.android.job.DailyJob;
-import com.evernote.android.job.JobManager;
-import com.evernote.android.job.JobRequest;
-import com.example.jburgos.life_notes.activities.MainActivity;
 import com.example.jburgos.life_notes.R;
+import com.example.jburgos.life_notes.activities.MainActivity;
+import com.firebase.jobdispatcher.JobParameters;
+import com.firebase.jobdispatcher.JobService;
 
 import java.util.Objects;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
-public class ReminderNotificationJob extends DailyJob {
-    static final String TAG = "show_notification_job_tag";
-    private ReminderProvider dailyString;
+public class ReminderNotificationJob extends JobService {
+    static final String TAG = "show_notification";
 
-    @NonNull
     @Override
-    protected DailyJobResult onRunDailyJob(@NonNull final Params params) {
-        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0,
-                new Intent(getContext(), MainActivity.class), 0);
+    public boolean onStartJob(final JobParameters params) {
+        //Offloading work to a new thread.
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                friendlyReminder(params);
+            }
+        }).start();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(TAG, "Life-Notes Reminder", NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription("Life-Notes Friendly Reminders");
-            Objects.requireNonNull(getContext().getSystemService(NotificationManager.class)).createNotificationChannel(channel);
-        }
-
-        Notification notification = new NotificationCompat.Builder(getContext(), TAG)
-                .setContentTitle("Friendly Reminder")
-                .setContentText(dailyString.changeDailyReminder())
-                .setAutoCancel(true)
-                .setChannelId(TAG)
-                .setSound(null)
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_stat_name)
-                .setShowWhen(true)
-                .setLocalOnly(true)
-                .build();
-
-        NotificationManagerCompat.from(getContext())
-                .notify(new Random().nextInt(), notification);
-
-        return DailyJobResult.SUCCESS;
+        return true;
     }
 
-    public static void schedule() {
-
-        if (!JobManager.instance().getAllJobRequestsForTag(TAG).isEmpty()) {
-            // job is already scheduled, there is nothing to do
-            return;
-        }
-
-        JobRequest.Builder builder = new JobRequest.Builder(ReminderNotificationJob.TAG)
-                .setUpdateCurrent(true);
-
-        // run job between 7pm and 8am
-        DailyJob.schedule(builder, TimeUnit.HOURS.toMillis(7), TimeUnit.HOURS.toMillis(11));
+    @Override
+    public boolean onStopJob(JobParameters params) {
+        return false;
     }
 
+    public void friendlyReminder(final JobParameters parameters) {
+
+        try {
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0,
+                    new Intent(getBaseContext(), MainActivity.class), 0);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel(TAG, "Life-Notes Reminder", NotificationManager.IMPORTANCE_DEFAULT);
+                channel.setDescription(getString(R.string.channel_description));
+                Objects.requireNonNull(getBaseContext().getSystemService(NotificationManager.class)).createNotificationChannel(channel);
+            }
+
+            Notification notification = new NotificationCompat.Builder(getBaseContext(), TAG)
+                    .setContentTitle(getString(R.string.notification_Title))
+                    .setContentText(new ReminderProvider().changeDailyReminder())
+                    .setAutoCancel(true)
+                    .setChannelId(TAG)
+                    .setSound(null)
+                    .setContentIntent(pendingIntent)
+                    .setSmallIcon(R.drawable.ic_stat_name)
+                    .setShowWhen(true)
+                    .setLocalOnly(true)
+                    .build();
+
+            NotificationManagerCompat.from(getBaseContext())
+                    .notify(new Random().nextInt(), notification);
+
+        } finally {
+            jobFinished(parameters, true);
+        }
+    }
 }
+
 
 

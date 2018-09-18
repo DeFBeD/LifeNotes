@@ -169,5 +169,7 @@
     <string name="your_favorite_s_is_empty_add_some">Your favorite\'s is empty, add some</string>
     <string name="image_in_note">Image in note</string>
     <string name="app_logo">App Logo</string>
+    <string name="notification_Title">Friendly Reminder</string>
+    <string name="channel_description">Life-Notes Friendly Reminders</string>
 
 </resources>
